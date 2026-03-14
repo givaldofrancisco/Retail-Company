@@ -33,7 +33,7 @@ TEST_PROMPTS = [
 
 DEFAULT_USER = "manager_a"
 
-st.set_page_config(title="Retail Analytics Assistant", layout="wide", page_icon="🧠")
+st.set_page_config(page_title="Retail Analytics Assistant", layout="wide", page_icon="🧠")
 
 st.markdown(
     """
