@@ -182,13 +182,27 @@ def display_debug() -> None:
 
 
 def send_prompt(prompt: str) -> None:
+    """Executes the prompt logic without clearing state (done in callbacks)."""
     if not prompt:
         return
     append_message("user", prompt)
     handle_question(prompt)
+
+
+def on_submit_callback() -> None:
+    """Callback for the form submission."""
+    chosen = st.session_state.get("preset_selector") or st.session_state.get("question_input")
+    if chosen:
+        send_prompt(chosen)
+        st.session_state.question_input = ""
+        st.session_state.preset_selector = ""
+
+
+def on_test_button_click(prompt: str) -> None:
+    """Callback for guided test buttons."""
+    send_prompt(prompt)
     st.session_state.question_input = ""
     st.session_state.preset_selector = ""
-    st.rerun()
 
 
 initialize_state()
@@ -212,14 +226,10 @@ with tabs[0]:
                 f"{msg['text']}" + "</div>",
                 unsafe_allow_html=True,
             )
-        with st.form(key="question_form"):
+        with st.form(key="question_form", clear_on_submit=True):
             st.text_input("Digite sua pergunta", key="question_input")
             st.selectbox("Ou escolha um prompt pré-definido", options=[""] + PROMPT_LIBRARY, key="preset_selector")
-            submitted = st.form_submit_button("Enviar")
-            if submitted:
-                chosen = st.session_state.preset_selector or st.session_state.question_input
-                if chosen:
-                    send_prompt(chosen)
+            st.form_submit_button("Enviar", on_click=on_submit_callback)
     with summary_col:
         display_summary()
         display_debug()
@@ -231,8 +241,7 @@ with tabs[1]:
     st.markdown("### Testes guiados")
     for prompt in TEST_PROMPTS:
         key = f"test_{prompt.replace(' ', '_')}"
-        if st.button(prompt, key=key):
-            send_prompt(prompt)
+        st.button(prompt, key=key, on_click=on_test_button_click, args=(prompt,))
     st.markdown(
         "Use os comandos abaixo para rodar os testes em lote:<br/>"
         "<code>.venv/bin/python run_tests.py</code> ou "
