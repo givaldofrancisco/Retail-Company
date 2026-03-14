@@ -53,7 +53,24 @@ st.markdown(
         font-family: 'Space Grotesk', 'Inter', sans-serif;
         background: radial-gradient(circle at 10% 10%, rgba(15, 96, 255, 0.2), transparent 45%),
                     radial-gradient(circle at 90% 0%, rgba(255, 187, 51, 0.25), transparent 40%),
-                    #f0f4ff;
+    .chat-bubble {
+        border-radius: 18px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        max-width: 90%;
+        margin-bottom: 12px;
+        word-break: break-word;
+    }
+
+    .chat-user {
+        background: linear-gradient(135deg, rgba(15, 96, 255, 0.9), rgba(78, 144, 255, 0.9));
+        color: #fff;
+        margin-left: auto;
+    }
+
+    .chat-assistant {
+        background: var(--surface);
+        color: var(--text);
     }
 
     .debug-details {
@@ -129,10 +146,12 @@ def send_prompt(prompt: str) -> None:
     handle_question(prompt)
 
 
-def on_submit_callback(chosen: str) -> None:
-    """Callback for the chat submission."""
+def on_submit_callback() -> None:
+    """Callback for the chat form submission."""
+    chosen = st.session_state.get("preset_selector") or st.session_state.get("question_input")
     if chosen:
         send_prompt(chosen)
+        # Clear selected presets and text input from session state if necessary.
 
 
 def on_test_button_click(prompt: str) -> None:
@@ -156,17 +175,22 @@ with tabs[0]:
     chat_col, summary_col = st.columns([2, 1])
     
     with chat_col:
-        chat_container = st.container()
+        # Chat history with fixed height and scroll
+        chat_container = st.container(height=450, border=False)
         
         with chat_container:
             for msg in st.session_state.messages:
-                with st.chat_message(msg["role"]):
-                    st.write(msg["text"])
+                st.markdown(
+                    f"<div class='chat-bubble {'chat-user' if msg['role'] == 'user' else 'chat-assistant'}'>"
+                    f"{msg['text']}</div>",
+                    unsafe_allow_html=True,
+                )
         
-        # Fixed input at the bottom
-        if prompt := st.chat_input("Digite sua pergunta..."):
-            on_submit_callback(prompt)
-            st.rerun()
+        # Fixed input form below the scrollable area
+        with st.form(key="question_form", clear_on_submit=True):
+            st.selectbox("Perguntas rápidas", options=[""] + PROMPT_LIBRARY, key="preset_selector")
+            st.text_area("Digite sua pergunta", placeholder="Ex: Como estão as 10 maiores fontes de receita hoje?", key="question_input", height=100)
+            st.form_submit_button("Enviar", on_click=on_submit_callback)
 
     with summary_col:
         display_debug()
