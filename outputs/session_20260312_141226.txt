@@ -1,0 +1,24 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+Use '/confirm <TOKEN>' to confirm destructive Saved Reports actions
+
+You> Delete all reports mentioning Client X
+
+Assistant>
+Destructive action detected for Saved Reports.
+Scope: 'Client X'
+Matching reports: 2
+To execute, type: /confirm DEL-0FF459
+No action was executed yet.
+
+[debug]
+status=requires_confirmation
+retry_count=0
+elapsed_ms=3.86
+sql=
+trace_id=ac539ec8-9d6d-494c-b53a-b220372b9102
+spans=3
+
+You> exit
+Session ended.

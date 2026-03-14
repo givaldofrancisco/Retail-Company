@@ -1,0 +1,17 @@
+[
+  {
+    "id": "rpt-001",
+    "title": "Client X weekly revenue snapshot",
+    "content": "Revenue summary and anomalies for Client X across stores."
+  },
+  {
+    "id": "rpt-002",
+    "title": "Top products by region",
+    "content": "Regional product ranking and trend notes."
+  },
+  {
+    "id": "rpt-003",
+    "title": "Client X churn watchlist",
+    "content": "Retention risk report for Client X segment."
+  }
+]

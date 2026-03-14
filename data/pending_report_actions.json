@@ -1,0 +1,155 @@
+[
+  {
+    "token": "DEL-0FF459",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773324746,
+    "expires_at": 1773325346,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-A7D256",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773325471,
+    "expires_at": 1773326071,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-86E44D",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773325482,
+    "expires_at": 1773326082,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-C0AF87",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773325517,
+    "expires_at": 1773326117,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-F0D8F8",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773325523,
+    "expires_at": 1773326123,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-49A246",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773325538,
+    "expires_at": 1773326138,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-D946B4",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773326327,
+    "expires_at": 1773326927,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-A145A1",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773326330,
+    "expires_at": 1773326930,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-567FA2",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773358738,
+    "expires_at": 1773359338,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-456466",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773359078,
+    "expires_at": 1773359678,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-6A814E",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773359748,
+    "expires_at": 1773360348,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-0B20A4",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773359872,
+    "expires_at": 1773360472,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-388ADA",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773359889,
+    "expires_at": 1773360489,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-CDAE8B",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773360802,
+    "expires_at": 1773361402,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-3E5C02",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773360826,
+    "expires_at": 1773361426,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-F96E60",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773488866,
+    "expires_at": 1773489466,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-57D047",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773488927,
+    "expires_at": 1773489527,
+    "raw_question": "Delete all reports mentioning Client X"
+  }
+]

@@ -1,0 +1,22 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+
+You> Compare this month's revenue vs previous month.
+
+Assistant>
+Question: Compare this month's revenue vs previous month.
+Rows analyzed: 3
+Top row snapshot: {'product_id': 101, 'product_name': 'Widget A', 'revenue': 15000.5}
+Summary: Results are generated from validated read-only SQL over approved retail tables.
+
+[debug]
+status=success
+retry_count=0
+elapsed_ms=10.63
+sql=WITH monthly AS (SELECT FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month, SUM(oi.sale_price) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH) GROUP BY month) SELECT month, ROUND(revenue, 2) AS revenue FROM monthly ORDER BY month LIMIT 200
+trace_id=15ac4f19-7329-4729-807e-44ea5bb8c955
+spans=13
+
+You> exit
+Session ended.

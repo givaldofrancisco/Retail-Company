@@ -1,0 +1,61 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+
+You> What columns exist in the users table?
+
+Assistant>
+Schema for `users` (16 columns):
+- id (INTEGER)
+- first_name (STRING)
+- last_name (STRING)
+- email (STRING)
+- age (INTEGER)
+- gender (STRING)
+- state (STRING)
+- street_address (STRING)
+- postal_code (STRING)
+- city (STRING)
+- country (STRING)
+- latitude (FLOAT)
+- longitude (FLOAT)
+- traffic_source (STRING)
+- created_at (TIMESTAMP)
+- user_geom (GEOGRAPHY)
+
+[debug]
+status=success
+retry_count=0
+elapsed_ms=1748.52
+sql=
+trace_id=abea4e7d-d71b-41d7-ae96-f18621de93ee
+spans=10
+
+You> List customer emails with highest spend.
+
+Assistant>
+I hit a query execution issue after retry attempts. Please rephrase the request or try a narrower question.
+
+[debug]
+status=failed_execution
+retry_count=2
+elapsed_ms=1952.07
+sql=SELECT DATE(o.created_at) AS order_date, ROUND(SUM(oi.sale_price), 2) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY) GROUP BY order_date ORDER BY order_date DESC LIMIT 200
+trace_id=0887724d-5e89-4014-8966-c9c1dfd80a4e
+spans=26
+
+You> Compare this month's revenue vs previous month.
+
+Assistant>
+I hit a query execution issue after retry attempts. Please rephrase the request or try a narrower question.
+
+[debug]
+status=failed_execution
+retry_count=2
+elapsed_ms=1796.24
+sql=WITH monthly AS (SELECT FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month, SUM(oi.sale_price) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH) GROUP BY month) SELECT month, ROUND(revenue, 2) AS revenue FROM monthly ORDER BY month LIMIT 200
+trace_id=1bc210ba-5600-4ae2-af79-d0c716d090e8
+spans=26
+
+You> exit
+Session ended.

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Observability Report - Retail AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ===== CSS Variables — Light & Dark ===== */
+        :root,
+        [data-theme="light"] {
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --bg-hover: #e2e8f0;
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #3B82F6;
+            --accent-dim: rgba(59, 130, 246, 0.1);
+            --ok-bg: rgba(16, 185, 129, 0.1);
+            --ok-tx: #059669;
+            --ok-border: rgba(5, 150, 105, 0.25);
+            --part-bg: rgba(245, 158, 11, 0.1);
+            --part-tx: #d97706;
+            --part-border: rgba(217, 119, 6, 0.25);
+            --danger-bg: rgba(239, 68, 68, 0.1);
+            --danger-tx: #dc2626;
+            --danger-border: rgba(220, 38, 38, 0.25);
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+            --ctw-primary: var(--accent);
+            --ctw-bg: var(--bg-primary);
+            --ctw-surface: var(--bg-secondary);
+            --ctw-title: var(--text-primary);
+            --ctw-text-main: var(--text-secondary);
+            --ctw-text-muted: var(--text-muted);
+            --ctw-orange: #f97316;
+            --card-bg: var(--bg-secondary);
+            --card-border: var(--border-color);
+            --code-bg: #f1f5f9;
+            --radius: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-hover: #475569;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #60A5FA;
+            --accent-dim: rgba(96, 165, 250, 0.1);
+            --ok-bg: rgba(16, 185, 129, 0.15);
+            --ok-tx: #34d399;
+            --ok-border: rgba(52, 211, 153, 0.3);
+            --part-bg: rgba(245, 158, 11, 0.15);
+            --part-tx: #fbbf24;
+            --part-border: rgba(251, 191, 36, 0.3);
+            --danger-bg: rgba(239, 68, 68, 0.15);
+            --danger-tx: #f87171;
+            --danger-border: rgba(239, 68, 68, 0.3);
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+            --ctw-primary: var(--accent);
+            --ctw-bg: var(--bg-primary);
+            --ctw-surface: var(--bg-secondary);
+            --ctw-title: var(--text-primary);
+            --ctw-text-main: var(--text-secondary);
+            --ctw-text-muted: var(--text-muted);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: var(--border-color);
+            --code-bg: rgba(15, 23, 42, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fira Sans', -apple-system, sans-serif;
+            background: var(--ctw-bg);
+            color: var(--ctw-text-main);
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(var(--bg-secondary), 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            height: 60px;
+        }
+
+        .slide-nav {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 2rem 60px;
+        }
+
+        .ctw-badge {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .ctw-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--ctw-title);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ctw-title);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--ctw-title);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            margin: 1.2rem 0;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--ctw-primary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .label {
+            color: var(--ctw-text-muted);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .stat-card .value {
+            color: var(--ctw-title);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 0.3rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            color: var(--ctw-title);
+            text-align: left;
+            padding: 1rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--ctw-text-main);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        code,
+        pre {
+            font-family: 'Fira Code', monospace;
+            background: var(--code-bg);
+            border-radius: 6px;
+        }
+
+        code {
+            padding: 3px 6px;
+            font-size: 0.88rem;
+            color: var(--ctw-orange);
+        }
+
+        pre {
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid var(--card-border);
+            color: var(--ctw-text-main);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.pass {
+            background: var(--ok-bg);
+            color: var(--ok-tx);
+            border: 1px solid var(--ok-border);
+        }
+
+        .badge.fail {
+            background: var(--danger-bg);
+            color: var(--danger-tx);
+            border: 1px solid var(--danger-border);
+        }
+
+        .badge.warn {
+            background: var(--part-bg);
+            color: var(--part-tx);
+            border: 1px solid var(--part-border);
+        }
+
+        details {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--bg-tertiary);
+            color: var(--ctw-title);
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .details-content {
+            padding: 1.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--ctw-text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 4rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            gap: 8px;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--bg-hover);
+        }
+
+        .theme-toggle-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        [data-theme="dark"] .theme-toggle-btn .icon-moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle-btn .icon-sun {
+            display: inline;
+        }
+
+        [data-theme="light"] .theme-toggle-btn .icon-moon {
+            display: inline;
+        }
+
+        [data-theme="light"] .theme-toggle-btn .icon-sun {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 24px;">
+            <a href="#top"
+                style="font-size: 1.1rem; display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--ctw-title); text-decoration: none;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--ctw-primary);">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                </svg>
+                <span>Retail AI Assistant</span>
+            </a>
+            <div class="slide-nav">
+                <a href="assignment_validation_dashboard.html"
+                    style="padding:4px 12px; font-weight:600; font-size:0.9rem; color:var(--ctw-text-main);">Validation</a>
+                <a href="manual_execution_results.html"
+                    style="padding:4px 12px; font-weight:600; font-size:0.9rem; color:var(--ctw-text-main);">Execution</a>
+                <a href="project_structure.html"
+                    style="padding:4px 12px; font-weight:600; font-size:0.9rem; color:var(--ctw-text-main);">Structure</a>
+                <a href="observability_results.html"
+                    style="padding:4px 12px; font-weight:800; font-size:0.9rem; color:var(--ctw-primary);">Observability</a>
+            </div>
+        </div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <span>Theme</span>
+        </button>
+    </nav>
+
+    <div class="container" id="top">
+        <div style="margin-bottom: 2.5rem;">
+            <div class="ctw-badge">Complete Evidence Report</div>
+            <h1>Observability System Validation</h1>
+            <p class="ctw-subtitle">Evaluation of telemetry data, structured logging, system health, and AI quality
+                checks.</p>
+            <p
+                style="font-family: 'Fira Code', monospace; font-size: 0.85rem; margin-top: 10px; color: var(--text-muted);">
+                Source:
+                <code>python3 app.py --user-id manager_a --debug --observability --input-file tests/manual_cli_inputs_en.txt</code><br>
+                Output: <code>observability_20260311_231434.json</code>
+            </p>
+        </div>
+
+        <div class="card-grid">
+            <div class="stat-card">
+                <div class="label">Checks Passed</div>
+                <div class="value" style="color: var(--ok-tx);">72 / 72</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Trace Success Rate</div>
+                <div class="value" style="color: var(--ok-tx);">80.0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Avg Groundedness</div>
+                <div class="value" style="color: var(--ctw-primary);">0.315</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Avg LLM Latency</div>
+                <div class="value" style="color: var(--ctw-orange);">4420 ms</div>
+            </div>
+        </div>
+
+        <h2>Executive Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Section</th>
+                    <th>Passed</th>
+                    <th>Failed</th>
+                    <th>Warnings</th>
+                    <th>Total Checks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Part A – Observability Instrumentation</strong></td>
+                    <td><span class="badge pass">53</span></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>53</td>
+                </tr>
+                <tr>
+                    <td><strong>Part B – Functional / System Health</strong></td>
+                    <td><span class="badge pass">19</span></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>19</td>
+                </tr>
+                <tr style="background: var(--bg-tertiary); font-weight: bold;">
+                    <td>TOTAL</td>
+                    <td><span class="badge pass">72</span></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>72</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="card" style="border-left: 4px solid var(--ok-tx); background: var(--ok-bg);">
+            <p style="color: var(--ok-tx); font-weight: 600;">✅ Both observability instrumentation and functional health
+                checks passed successfully. The system correctly generates distributed traces, structured logs, and
+                quality evaluations.</p>
+        </div>
+
+        <h2>Evaluation Checklists</h2>
+        <div class="grid-2-col">
+
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">Part A: Instrumentation Coverage</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">Verifies that telemetry data is present and
+                    correctly structured in the generated JSON logs.</p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>A1: End-to-End Tracing (10 traces, 20 spans max)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A2: Structured Logging (debug output, status, sql)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A3: Operational Metrics (22 distinct metrics)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A4: Retrieval Observability (Few-shot & schemas)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A5: Tool/Action Observability (4 tools tracked)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A6: Quality Evaluation Signals (Groundedness, etc.)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A7: Security & Audit (PII handling, actor trace)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A8: Versioning & Comparison (Snapshot ID tracked)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>A9: Cross-Block Integration (Consistent session ID)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">Part B: System Health</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">Verifies that the application logic handles requests
+                    correctly based on observability logs.</p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>B1: Execution Success Rate (≥ 50%)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>B2: BigQuery Execution Health (0 permission errors)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>B3: Quality Thresholds (Completeness > 0.5)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>B4: Status Consistency (No inflated success)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>B5: PII Handling (Direct identifiers blocked)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td>B6: Error Handling (Destructive actions blocked)</td>
+                            <td><span class="badge pass">PASS</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2>Aggregated Metrics & Tools</h2>
+        <div class="grid-2-col">
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">Key Latency & Tokens</h3>
+                <ul>
+                    <li><strong>Node Latency:</strong> Avg = 871.31ms | P95 = 4850.15ms</li>
+                    <li><strong>LLM Latency:</strong> Avg = 4419.97ms | P95 = 7925.17ms</li>
+                    <li><strong>BQ Query Time:</strong> Avg = 1221.45ms | P95 = 1428.20ms</li>
+                    <li><strong>LLM Input Tokens:</strong> Avg = 1489.08 | P95 = 2131.00</li>
+                    <li><strong>LLM Cost:</strong> $0.00 (Mocked/Free Tier limits applied)</li>
+                </ul>
+            </div>
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">Tool Invocations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Calls</th>
+                            <th>Success</th>
+                            <th>Avg Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>bigquery_get_schema</code></td>
+                            <td>32</td>
+                            <td>100%</td>
+                            <td>280ms</td>
+                        </tr>
+                        <tr>
+                            <td><code>llm_invoke</code></td>
+                            <td>12</td>
+                            <td>100%</td>
+                            <td>4420ms</td>
+                        </tr>
+                        <tr>
+                            <td><code>sql_validator</code></td>
+                            <td>7</td>
+                            <td>100%</td>
+                            <td>0ms</td>
+                        </tr>
+                        <tr>
+                            <td><code>bigquery_execute</code></td>
+                            <td>7</td>
+                            <td>100%</td>
+                            <td>1221ms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2>Trace Spans Viewer</h2>
+        <p>Below is the hierarchical representation of spans collected during execution. Expand to view performance
+            breakdown.</p>
+
+        <details>
+            <summary>
+                <div>
+                    <strong>Intent: Analysis</strong> | Question: "What are the top 10 products by revenue?"
+                    <div
+                        style="font-family: 'Fira Code', monospace; font-size: 0.8rem; font-weight: 400; margin-top: 5px;">
+                        Trace ID: 23e0c088-f80d-4b62-9dc1-35f15112d62b</div>
+                </div>
+                <div>
+                    <span class="badge pass" style="margin-right: 10px;">SUCCESS</span>
+                    <span style="color: var(--ctw-primary);">12228.46 ms</span>
+                </div>
+            </summary>
+            <div class="details-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Span Name</th>
+                            <th>Status</th>
+                            <th>Latency (ms)</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>classify_intent</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>0.26</td>
+                            <td>Intent resolved to: <code>analysis</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>schema_fetch</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>1605.48</td>
+                            <td>Fetched 4 tables: <code>order_items</code>, <code>orders</code>, <code>products</code>,
+                                <code>users</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>fewshot_retrieve</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>0.12</td>
+                            <td>Top K: 3 golden examples retrieved</td>
+                        </tr>
+                        <tr>
+                            <td><code>llm_invoke (SQL Gen)</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>3189.36</td>
+                            <td>Prompt sent to <code>gpt-4o-mini</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>bq_execute</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>1300.76</td>
+                            <td>SQL Length: 260 chars. Returned 10 rows.</td>
+                        </tr>
+                        <tr>
+                            <td><code>llm_invoke (Report Gen)</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>6113.07</td>
+                            <td>Generated final executive bullet points.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <div>
+                    <strong>Intent: Invalid/Blocked</strong> | Question: "What is the weather in Lisbon today?"
+                    <div
+                        style="font-family: 'Fira Code', monospace; font-size: 0.8rem; font-weight: 400; margin-top: 5px;">
+                        Trace ID: 748a417a-bedf-4524-8fc8-56c55f85afd8</div>
+                </div>
+                <div>
+                    <span class="badge warn" style="margin-right: 10px;">REJECTED</span>
+                    <span style="color: var(--ctw-orange);">2.16 ms</span>
+                </div>
+            </summary>
+            <div class="details-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Span Name</th>
+                            <th>Status</th>
+                            <th>Latency (ms)</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>classify_intent</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>0.08</td>
+                            <td>Intent resolved to: <code>off_topic</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>reject_or_route</code></td>
+                            <td><span class="badge pass">OK</span></td>
+                            <td>0.01</td>
+                            <td>Triggered guardrail: <em>"I can only answer analytical retail questions and schema
+                                    requests."</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <h2>Real-world Trace Examples: Proving Efficacy</h2>
+        <p>To prove the practical efficacy of the observability system, here are extracted scenarios from the logs demonstrating deep system visibility:</p>
+
+        <div class="grid-2-col">
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">1. Granular Latency & Step Tracing</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">The observability system correctly tracks each internal state evolution. Below is an example emitted during the intent classification phase:</p>
+                <pre><code>{"timestamp": "2026-03-11T23:13:25...", "level": "INFO", "logger": "src.graph.nodes", "message": "classify_intent", "event": "classify_intent", "request_id": "fe66b9a9-26ba-44cb-...", "user_id": "manager_a", "question": "What are the top 10 products by revenue?", "intent": "analysis"}</code></pre>
+                <div style="margin-top: 1rem; border-left: 3px solid var(--ctw-primary); padding-left: 10px; font-size: 0.9rem;">
+                    <strong>Efficacy demonstrated:</strong> We can perfectly trace <em>when</em> the model decided to route a specific query. The <code>request_id</code> links subsequent SQL generation to this initial classification.
+                </div>
+            </div>
+
+            <div class="card" style="margin: 0;">
+                <h3 style="margin-top: 0;">2. Safeguard & Error Blocking</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">When a user attempts an out-of-scope question, the system captures the rejection with extremely low latency (~2ms):</p>
+                <pre><code>{"timestamp": "2026-03-11T23:14:02...", "level": "INFO", "logger": "src.graph.nodes", "message": "completed", "event": "completed", "request_id": "748a417a-bedf-...", "status": "rejected"}</code></pre>
+                <div style="margin-top: 1rem; border-left: 3px solid var(--ok-tx); padding-left: 10px; font-size: 0.9rem;">
+                    <strong>Efficacy demonstrated:</strong> Accurate measurement of blocked requests guarantees that zero LLM tokens were wasted on unauthorized prompts, keeping the system safe and cost-efficient.
+                </div>
+            </div>
+            
+            <div class="card" style="margin: 0; grid-column: 1 / -1;">
+                <h3 style="margin-top: 0;">3. Auditable PII and Data Sanitization</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 1rem;">The system provides an auditable footprint of <em>when</em> safety mechanisms kick in, which is crucial for compliance.</p>
+                <pre><code>{"timestamp": "2026-03-11T23:13:54...", "level": "INFO", "logger": "src.graph.nodes", "message": "results_sanitized", "event": "results_sanitized", "request_id": "a1df9904-326c-...", "removed_pii_columns": ["email", "phone", "first_name", "last_name"]}</code></pre>
+                <div style="margin-top: 1rem; border-left: 3px solid var(--part-tx); padding-left: 10px; font-size: 0.9rem;">
+                    <strong>Efficacy demonstrated:</strong> If a data leak issue is ever suspected, the structured JSON logs definitively prove that the <code>results_sanitized</code> event fired and stripped out the sensitive columns <em>before</em> the data reached the LLM for report generation.
+                </div>
+            </div>
+        </div>
+
+        <h2>Raw Logs Evidence (JSON)</h2>
+        <p>This snippet demonstrates what is actually being captured by the observability system, including PII
+            protection rules and structured LLM API calls.</p>
+
+        <pre><code>{
+  "timestamp": "2026-03-11T23:13:[REDACTED_PHONE]+00:00",
+  "level": "DEBUG",
+  "logger": "openai._base_client",
+  "message": "Request options",
+  "json_data": {
+    "messages": [
+      {
+        "content": "You are preparing an executive report for retail managers.\n\nPersona:\n{\n  \"name\": \"executive_default\",\n  \"safety_instructions\": \"Never reveal direct personal identifiers such as email addresses or phone numbers. If user asks for PII, provide an aggregated safe alternative.\"\n}\n\nUser format preference: bullets\n\nQuestion:\nList customer emails with highest spend.",
+        "role": "user"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "temperature": 0.1
+  }
+}
+
+{
+  "timestamp": "2026-03-11T23:13:[REDACTED_PHONE]+00:00",
+  "level": "INFO",
+  "logger": "src.graph.nodes",
+  "message": "results_sanitized",
+  "event": "results_sanitized",
+  "request_id": "fe66b9a9-26ba-44cb-9dba-30870c3ba2ae",
+  "removed_pii_columns": ["email", "phone"]
+}</code></pre>
+
+        <div class="footer">Observability Validation Report generated for the Retail Company AI Technical Assignment.
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved) document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</body>
+
+</html>

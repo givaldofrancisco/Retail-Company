@@ -1,0 +1,4980 @@
+{
+  "export_timestamp": "2026-03-11T22:12:45.245381+00:00",
+  "session_id": "127624b3",
+  "version_snapshot": {
+    "version_id": "132cdd5818fb5f4a",
+    "timestamp": 1773267148.522013,
+    "components": {
+      "agent_version": "0.1.0",
+      "model_name": "gemini-2.0-flash",
+      "temperature": "0.1",
+      "prompts": "cd74c29e125eccd6",
+      "workflow": "88551276ad647761",
+      "guardrails": "5cfca97332401633",
+      "persona": "ee1844920180b9a6",
+      "golden_trios": "27135215ab7396bc",
+      "pii_masker": "8e5041151a04c02e",
+      "sql_validator": "1254b220970e8214",
+      "schema_tool": "c899c8da4fdee4df",
+      "golden_retriever": "814fa98bd9b05ac2",
+      "report_generator": "9e4bc0164e8ac212"
+    }
+  },
+  "traces": [
+    {
+      "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+      "session_id": "127624b3",
+      "conversation_id": "c721b055",
+      "user_id": "manager_a",
+      "start_time": 33215.809036208,
+      "end_time": 33218.625150166,
+      "spans": [
+        {
+          "span_id": "00e962aa-e593-4619-9a7e-f0d5f65e9679",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33215.811353125,
+          "end_time": 33215.811635333,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.28
+          },
+          "events": []
+        },
+        {
+          "span_id": "54a900da-40f3-4852-a68f-889d345728bf",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33215.811928541,
+          "end_time": 33215.811931458,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "c409c859-a9f0-48df-bd1b-097741941feb",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33215.812191541,
+          "end_time": 33217.391407625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 1579.22
+          },
+          "events": []
+        },
+        {
+          "span_id": "adec0921-8655-4562-8a68-326eee5150e6",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "schema_fetch",
+          "parent_span_id": "c409c859-a9f0-48df-bd1b-097741941feb",
+          "start_time": 33215.812203041,
+          "end_time": 33217.391079291,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1578.88
+          },
+          "events": []
+        },
+        {
+          "span_id": "7c7df8f1-6236-451c-87a4-1dcaf89472b3",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_get_schema",
+          "parent_span_id": "adec0921-8655-4562-8a68-326eee5150e6",
+          "start_time": 33215.812212375,
+          "end_time": 33216.49967925,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 687.47
+          },
+          "events": []
+        },
+        {
+          "span_id": "4743f2e1-d93a-4fe6-be00-d7fd0b4d0b6e",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_get_schema",
+          "parent_span_id": "adec0921-8655-4562-8a68-326eee5150e6",
+          "start_time": 33216.499724416,
+          "end_time": 33216.793523125,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 293.8
+          },
+          "events": []
+        },
+        {
+          "span_id": "5e80ef6c-071a-49ba-8198-61299c330bc4",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_get_schema",
+          "parent_span_id": "adec0921-8655-4562-8a68-326eee5150e6",
+          "start_time": 33216.793571833,
+          "end_time": 33217.072052208,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 278.48
+          },
+          "events": []
+        },
+        {
+          "span_id": "9ae33737-d221-4ff2-be04-95d75b40a7c5",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_get_schema",
+          "parent_span_id": "adec0921-8655-4562-8a68-326eee5150e6",
+          "start_time": 33217.072106416,
+          "end_time": 33217.390947333,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 318.83
+          },
+          "events": []
+        },
+        {
+          "span_id": "3585e51d-efa8-40dd-9ca3-9863bcf41c9d",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33217.392841041,
+          "end_time": 33217.393216916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.37
+          },
+          "events": []
+        },
+        {
+          "span_id": "622e0888-b229-4207-9ef4-d1e3a5304ba6",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "3585e51d-efa8-40dd-9ca3-9863bcf41c9d",
+          "start_time": 33217.392890916,
+          "end_time": 33217.393037458,
+          "status": "ok",
+          "attributes": {
+            "query": "What are the top 10 products by revenue?",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              7,
+              4,
+              2
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.14
+          },
+          "events": []
+        },
+        {
+          "span_id": "93281300-f159-407e-b601-7a57bb8ae12b",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33217.39394325,
+          "end_time": 33217.394429333,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.48
+          },
+          "events": []
+        },
+        {
+          "span_id": "b27bc7c4-bf61-4a0c-b7f3-ed1e76678d98",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33217.395071,
+          "end_time": 33217.396176083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 1.1
+          },
+          "events": []
+        },
+        {
+          "span_id": "213634db-b96a-4e80-ba07-0fd4da620221",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "sql_validate",
+          "parent_span_id": "b27bc7c4-bf61-4a0c-b7f3-ed1e76678d98",
+          "start_time": 33217.395093,
+          "end_time": 33217.39598625,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 332,
+            "validation_success": true,
+            "latency_ms": 0.89
+          },
+          "events": []
+        },
+        {
+          "span_id": "f00d334f-f9ad-4f98-8ea5-bdb3b06a5d29",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33217.396906958,
+          "end_time": 33217.702094375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 305.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "df6007c4-5eec-4789-b1e9-7c2beee92143",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_execute",
+          "parent_span_id": "f00d334f-f9ad-4f98-8ea5-bdb3b06a5d29",
+          "start_time": 33217.396927083,
+          "end_time": 33217.701937416,
+          "status": "error",
+          "attributes": {
+            "sql_len": 338,
+            "rows_returned": 0,
+            "sql_length": 338,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 7bcfd8ba-1ce4-4efa-9185-8145f44578c5\n",
+            "latency_ms": 305.01
+          },
+          "events": []
+        },
+        {
+          "span_id": "9c9ce6d6-3725-4d5b-87aa-22c509f73f06",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33217.703370458,
+          "end_time": 33217.703578833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "f00373ef-4d28-434f-84ff-358807f58092",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33217.704117875,
+          "end_time": 33217.704516333,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.39
+          },
+          "events": []
+        },
+        {
+          "span_id": "160d7d4f-f031-4ac3-b2a6-e47ce6ef78e2",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "sql_validate",
+          "parent_span_id": "f00373ef-4d28-434f-84ff-358807f58092",
+          "start_time": 33217.70414075,
+          "end_time": 33217.704342291,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 332,
+            "validation_success": true,
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "2cc0f4b3-2c69-4cfd-bc7b-0814925997eb",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33217.705466416,
+          "end_time": 33218.253555416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 548.09
+          },
+          "events": []
+        },
+        {
+          "span_id": "0a3fd42d-0cbc-4f81-84b0-56f6246e4cb3",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_execute",
+          "parent_span_id": "2cc0f4b3-2c69-4cfd-bc7b-0814925997eb",
+          "start_time": 33217.70549025,
+          "end_time": 33218.253407083,
+          "status": "error",
+          "attributes": {
+            "sql_len": 338,
+            "rows_returned": 0,
+            "sql_length": 338,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: df897369-f6b1-491b-be86-3703a577699c\n",
+            "latency_ms": 547.92
+          },
+          "events": []
+        },
+        {
+          "span_id": "38e217f6-e7d7-4fd1-8947-52f382d1d7d9",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33218.254439875,
+          "end_time": 33218.254598916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "b59a4919-29fa-4a9e-a7be-a2a86f0521fc",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33218.255017541,
+          "end_time": 33218.255317708,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "579a7b49-d7b7-449c-9b67-0038064d0829",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "sql_validate",
+          "parent_span_id": "b59a4919-29fa-4a9e-a7be-a2a86f0521fc",
+          "start_time": 33218.255038666,
+          "end_time": 33218.255187208,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 332,
+            "validation_success": true,
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "8e80206d-02c7-44c9-b073-ee6b16c169e8",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33218.25632375,
+          "end_time": 33218.623631125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 367.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "ee496d33-e908-4477-af92-3cf34b57b3a5",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "bq_execute",
+          "parent_span_id": "8e80206d-02c7-44c9-b073-ee6b16c169e8",
+          "start_time": 33218.256342625,
+          "end_time": 33218.623516333,
+          "status": "error",
+          "attributes": {
+            "sql_len": 338,
+            "rows_returned": 0,
+            "sql_length": 338,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 1d6de563-e2f9-464d-b0bf-9da8ebc9b19a\n",
+            "latency_ms": 367.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "a6dc1cc9-10c6-4fbb-b579-919f7aa4a94d",
+          "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33218.624292,
+          "end_time": 33218.624298875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "a4a723fb-12e5-4b70-b32c-73969f180dbc",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What are the top 10 products by revenue?",
+        "final_status": "failed_execution"
+      }
+    },
+    {
+      "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+      "session_id": "127624b3",
+      "conversation_id": "d67b933f",
+      "user_id": "manager_a",
+      "start_time": 33218.62545225,
+      "end_time": 33220.75627725,
+      "spans": [
+        {
+          "span_id": "d2d50e61-69a2-48e6-a423-8820de6c1504",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33218.626930041,
+          "end_time": 33218.627080291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "ba1e1599-2b1d-4709-9113-17cedf36892c",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33218.627408541,
+          "end_time": 33218.627412416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "4e5a8ad3-7185-4981-880d-41426b8991be",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33218.628443458,
+          "end_time": 33220.096237208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 1467.79
+          },
+          "events": []
+        },
+        {
+          "span_id": "d639d234-d6ae-4547-a4f7-5a556b5bbfb1",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "schema_fetch",
+          "parent_span_id": "4e5a8ad3-7185-4981-880d-41426b8991be",
+          "start_time": 33218.628460666,
+          "end_time": 33220.095992791,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1467.53
+          },
+          "events": []
+        },
+        {
+          "span_id": "50ab7788-e167-4f2c-831c-ba6a0f30ec14",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_get_schema",
+          "parent_span_id": "d639d234-d6ae-4547-a4f7-5a556b5bbfb1",
+          "start_time": 33218.628472,
+          "end_time": 33218.970306875,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 341.84
+          },
+          "events": []
+        },
+        {
+          "span_id": "1cd60277-34e6-41eb-a384-1e45daefde29",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_get_schema",
+          "parent_span_id": "d639d234-d6ae-4547-a4f7-5a556b5bbfb1",
+          "start_time": 33218.970370916,
+          "end_time": 33219.316364791,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 345.99
+          },
+          "events": []
+        },
+        {
+          "span_id": "7dd4790f-d7ed-45fa-8477-549f8d06742a",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_get_schema",
+          "parent_span_id": "d639d234-d6ae-4547-a4f7-5a556b5bbfb1",
+          "start_time": 33219.316414083,
+          "end_time": 33219.686564833,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 370.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "bdd1ea35-5da3-4765-b6ac-6a03a3280d5c",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_get_schema",
+          "parent_span_id": "d639d234-d6ae-4547-a4f7-5a556b5bbfb1",
+          "start_time": 33219.68664075,
+          "end_time": 33220.095951,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 409.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "94d14309-58f6-4cc2-9d68-aadcaec2ee28",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33220.097299875,
+          "end_time": 33220.097563916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "1f89f71e-8e45-4c3c-9b96-a71e6f3ad6b9",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "94d14309-58f6-4cc2-9d68-aadcaec2ee28",
+          "start_time": 33220.097335958,
+          "end_time": 33220.097414625,
+          "status": "ok",
+          "attributes": {
+            "query": "Show monthly revenue trend for the last 12 months.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              9,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "4f256c48-1ded-4962-98aa-29f3556c39de",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33220.097990416,
+          "end_time": 33220.098123958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "24b75925-d8af-40e1-ac03-3905cd8fcd4e",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33220.098773708,
+          "end_time": 33220.099117875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.34
+          },
+          "events": []
+        },
+        {
+          "span_id": "0ffaa80b-e6d0-4413-843b-25bdf797d1be",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "sql_validate",
+          "parent_span_id": "24b75925-d8af-40e1-ac03-3905cd8fcd4e",
+          "start_time": 33220.098790458,
+          "end_time": 33220.098975458,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "f80395e9-540a-4f28-8450-653452a67e6b",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33220.099593333,
+          "end_time": 33220.293071541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 193.48
+          },
+          "events": []
+        },
+        {
+          "span_id": "f0c5887a-0bc8-4b58-ad1b-fad0632680e8",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_execute",
+          "parent_span_id": "f80395e9-540a-4f28-8450-653452a67e6b",
+          "start_time": 33220.099607708,
+          "end_time": 33220.292774583,
+          "status": "error",
+          "attributes": {
+            "sql_len": 353,
+            "rows_returned": 0,
+            "sql_length": 353,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: d5c58fc9-5b6d-4545-a379-48b494455c21\n",
+            "latency_ms": 193.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "5280a949-9ee7-408f-b80c-7ea7d64f72c0",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33220.29481875,
+          "end_time": 33220.295018625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.19
+          },
+          "events": []
+        },
+        {
+          "span_id": "885bfd89-7810-4367-9ae0-bf84f5eb5789",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33220.295419333,
+          "end_time": 33220.295710541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "7efc10af-64cb-4bfc-8b3a-7f6e0b7f5c71",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "sql_validate",
+          "parent_span_id": "885bfd89-7810-4367-9ae0-bf84f5eb5789",
+          "start_time": 33220.295434666,
+          "end_time": 33220.2955975,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "82ed9c4e-16c1-4dbb-9938-a4d5a9015246",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33220.296115875,
+          "end_time": 33220.524095166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 227.98
+          },
+          "events": []
+        },
+        {
+          "span_id": "7de00af8-9a19-4e55-a2fb-5432b353fc6a",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_execute",
+          "parent_span_id": "82ed9c4e-16c1-4dbb-9938-a4d5a9015246",
+          "start_time": 33220.296132708,
+          "end_time": 33220.523980041,
+          "status": "error",
+          "attributes": {
+            "sql_len": 353,
+            "rows_returned": 0,
+            "sql_length": 353,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 2e040466-c56a-4930-a664-5272228d7b34\n",
+            "latency_ms": 227.85
+          },
+          "events": []
+        },
+        {
+          "span_id": "90c72c3b-3dc4-475b-aa47-ecccc5b9f791",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33220.524979333,
+          "end_time": 33220.525239833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "84b29aea-d6c5-4073-9ebb-12d11a4885aa",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33220.525659041,
+          "end_time": 33220.52588625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.23
+          },
+          "events": []
+        },
+        {
+          "span_id": "14ec60e6-d195-403c-aeec-d5e02c8a98f9",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "sql_validate",
+          "parent_span_id": "84b29aea-d6c5-4073-9ebb-12d11a4885aa",
+          "start_time": 33220.52567125,
+          "end_time": 33220.525781666,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.11
+          },
+          "events": []
+        },
+        {
+          "span_id": "766655d9-3f87-4e85-b345-eb95429f455d",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33220.526256708,
+          "end_time": 33220.75499775,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 228.74
+          },
+          "events": []
+        },
+        {
+          "span_id": "79ca116c-139f-4f86-8331-c7387f08300c",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "bq_execute",
+          "parent_span_id": "766655d9-3f87-4e85-b345-eb95429f455d",
+          "start_time": 33220.526269166,
+          "end_time": 33220.754881041,
+          "status": "error",
+          "attributes": {
+            "sql_len": 353,
+            "rows_returned": 0,
+            "sql_length": 353,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: dec15abf-1273-41cf-92e4-a4d5ae0ef597\n",
+            "latency_ms": 228.61
+          },
+          "events": []
+        },
+        {
+          "span_id": "5dec1c3a-b019-45c9-a740-401b0869a525",
+          "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33220.755579791,
+          "end_time": 33220.755585958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e40f182a-9502-4caa-8101-43a0547fb663",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Show monthly revenue trend for the last 12 months.",
+        "final_status": "failed_execution"
+      }
+    },
+    {
+      "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+      "session_id": "127624b3",
+      "conversation_id": "973cff76",
+      "user_id": "manager_a",
+      "start_time": 33220.756496333,
+      "end_time": 33222.679572916,
+      "spans": [
+        {
+          "span_id": "953f439a-d088-46d5-8cd7-42ed12324ac6",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33220.757174541,
+          "end_time": 33220.757246,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "283f3a2f-b265-44e6-9e34-7c90945aba43",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33220.757506041,
+          "end_time": 33220.7575105,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "98fee77a-c2d0-4c11-90fc-06ea8d724d63",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33220.758042291,
+          "end_time": 33222.043222625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 1285.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "855644d1-65d0-42e7-a85c-73a9f0b39c5c",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "schema_fetch",
+          "parent_span_id": "98fee77a-c2d0-4c11-90fc-06ea8d724d63",
+          "start_time": 33220.758087708,
+          "end_time": 33222.042957083,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1284.86
+          },
+          "events": []
+        },
+        {
+          "span_id": "476d56b8-4034-4f3e-bccf-c32297266bf7",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_get_schema",
+          "parent_span_id": "855644d1-65d0-42e7-a85c-73a9f0b39c5c",
+          "start_time": 33220.758111375,
+          "end_time": 33221.040584875,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 282.47
+          },
+          "events": []
+        },
+        {
+          "span_id": "368c6e1e-274e-4bff-840f-d02a25d3b253",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_get_schema",
+          "parent_span_id": "855644d1-65d0-42e7-a85c-73a9f0b39c5c",
+          "start_time": 33221.040654875,
+          "end_time": 33221.354506083,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 313.85
+          },
+          "events": []
+        },
+        {
+          "span_id": "ddabe379-19e1-4a24-8254-146a436a30de",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_get_schema",
+          "parent_span_id": "855644d1-65d0-42e7-a85c-73a9f0b39c5c",
+          "start_time": 33221.354580916,
+          "end_time": 33221.657876541,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 303.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "7e82de9f-bbae-4dca-9dae-3705abda956b",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_get_schema",
+          "parent_span_id": "855644d1-65d0-42e7-a85c-73a9f0b39c5c",
+          "start_time": 33221.657980375,
+          "end_time": 33222.042900583,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 384.92
+          },
+          "events": []
+        },
+        {
+          "span_id": "cb6a7b90-fc6c-4d84-a684-7a3625aff059",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33222.045213291,
+          "end_time": 33222.045547625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.33
+          },
+          "events": []
+        },
+        {
+          "span_id": "8fe8f857-19d7-40b5-935f-60e143f340d6",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "cb6a7b90-fc6c-4d84-a684-7a3625aff059",
+          "start_time": 33222.045240333,
+          "end_time": 33222.045361041,
+          "status": "ok",
+          "attributes": {
+            "query": "Who are the top customers by total spend?",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              7,
+              4,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.12
+          },
+          "events": []
+        },
+        {
+          "span_id": "c0acbcd4-a2ff-4593-a742-92813b4404b7",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33222.046057541,
+          "end_time": 33222.046214083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "4e851567-4760-4776-b68e-526cb960cb64",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33222.046940833,
+          "end_time": 33222.047312791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.37
+          },
+          "events": []
+        },
+        {
+          "span_id": "4369c8cd-864b-4d4a-9d4b-a26cec62ead5",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "sql_validate",
+          "parent_span_id": "4e851567-4760-4776-b68e-526cb960cb64",
+          "start_time": 33222.046962791,
+          "end_time": 33222.047136125,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "2b8c25af-dcb7-4cb7-ab97-3afbe70ed52c",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33222.047871041,
+          "end_time": 33222.243426375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 195.55
+          },
+          "events": []
+        },
+        {
+          "span_id": "b6b6972e-7ac9-47fa-99a6-429ca2bd0f16",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_execute",
+          "parent_span_id": "2b8c25af-dcb7-4cb7-ab97-3afbe70ed52c",
+          "start_time": 33222.047888458,
+          "end_time": 33222.243266666,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cc1124f9-917c-4bb3-9304-035e8257e9a6\n",
+            "latency_ms": 195.38
+          },
+          "events": []
+        },
+        {
+          "span_id": "47bc9979-e16b-44a3-92fa-822eaa9763ad",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33222.244255208,
+          "end_time": 33222.244412291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "b839220e-3354-4ba9-9caf-e258481e97d0",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33222.245443125,
+          "end_time": 33222.245745416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "07b912fe-189a-4485-8e5a-3bdb3325e0f3",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "sql_validate",
+          "parent_span_id": "b839220e-3354-4ba9-9caf-e258481e97d0",
+          "start_time": 33222.245461708,
+          "end_time": 33222.245621416,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "eef0928c-2741-4684-b5b7-bf6adb0f9105",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33222.246652708,
+          "end_time": 33222.469437166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 222.78
+          },
+          "events": []
+        },
+        {
+          "span_id": "769448dc-ab52-4ea4-a9a6-f8cbb83a7fea",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_execute",
+          "parent_span_id": "eef0928c-2741-4684-b5b7-bf6adb0f9105",
+          "start_time": 33222.246667666,
+          "end_time": 33222.469298625,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: c15eadce-4d17-469b-bc68-a2ac2b0f8195\n",
+            "latency_ms": 222.63
+          },
+          "events": []
+        },
+        {
+          "span_id": "2a92c73f-6d2b-421c-8470-bc41fc776dc9",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33222.470607875,
+          "end_time": 33222.470748125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "1629e57e-2d2f-4673-8d36-524409c43c16",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33222.471101958,
+          "end_time": 33222.471387958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.28
+          },
+          "events": []
+        },
+        {
+          "span_id": "e8782ebb-f122-4ddc-9daa-608696c995fe",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "sql_validate",
+          "parent_span_id": "1629e57e-2d2f-4673-8d36-524409c43c16",
+          "start_time": 33222.471116916,
+          "end_time": 33222.471283166,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "f0ec5f84-dc36-43de-b5ad-de62a93ad498",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33222.471752458,
+          "end_time": 33222.678034125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 206.28
+          },
+          "events": []
+        },
+        {
+          "span_id": "919df3aa-2de1-4329-9665-127762f6ba79",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "bq_execute",
+          "parent_span_id": "f0ec5f84-dc36-43de-b5ad-de62a93ad498",
+          "start_time": 33222.47176275,
+          "end_time": 33222.677916666,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 666a210f-bf00-4c5f-a3ca-a3c184e0112a\n",
+            "latency_ms": 206.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "b67c99f3-9dbe-4951-9077-bc868d63428d",
+          "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33222.6788455,
+          "end_time": 33222.678855208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d698e08d-197d-414e-ae5e-526c9c5feb24",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Who are the top customers by total spend?",
+        "final_status": "failed_execution"
+      }
+    },
+    {
+      "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+      "session_id": "127624b3",
+      "conversation_id": "1b024164",
+      "user_id": "manager_a",
+      "start_time": 33222.679819666,
+      "end_time": 33223.855856708,
+      "spans": [
+        {
+          "span_id": "08709a4a-836a-4480-bc57-d68f2971ae13",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33222.681082208,
+          "end_time": 33222.681320916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.23
+          },
+          "events": []
+        },
+        {
+          "span_id": "178a1ceb-eaa5-44e6-918f-bf05ef41f3f4",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33222.681922666,
+          "end_time": 33222.681928958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "ec34d910-7665-42fa-b244-979c1f9801ec",
+            "user_id": "manager_a",
+            "latency_ms": 0.05
+          },
+          "events": []
+        },
+        {
+          "span_id": "8c79ab3c-d18d-4d0e-895d-015f47c0344d",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33222.682365125,
+          "end_time": 33223.853541875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "ec34d910-7665-42fa-b244-979c1f9801ec",
+            "user_id": "manager_a",
+            "latency_ms": 1171.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "050b66a7-1963-4b3b-b5c0-4eddcb4e4f3c",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "schema_fetch",
+          "parent_span_id": "8c79ab3c-d18d-4d0e-895d-015f47c0344d",
+          "start_time": 33222.68238175,
+          "end_time": 33223.85338025,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1171.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "86c388fc-5463-49f4-abd1-ea96088d0a85",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "bq_get_schema",
+          "parent_span_id": "050b66a7-1963-4b3b-b5c0-4eddcb4e4f3c",
+          "start_time": 33222.682402,
+          "end_time": 33223.017591416,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 335.19
+          },
+          "events": []
+        },
+        {
+          "span_id": "60fbb71a-3e50-47d3-b692-8ea7aba1c94a",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "bq_get_schema",
+          "parent_span_id": "050b66a7-1963-4b3b-b5c0-4eddcb4e4f3c",
+          "start_time": 33223.017613875,
+          "end_time": 33223.292486958,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 274.87
+          },
+          "events": []
+        },
+        {
+          "span_id": "a068cb12-ea31-4acb-aba5-55f6c9a1c950",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "bq_get_schema",
+          "parent_span_id": "050b66a7-1963-4b3b-b5c0-4eddcb4e4f3c",
+          "start_time": 33223.292524208,
+          "end_time": 33223.583212791,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 290.69
+          },
+          "events": []
+        },
+        {
+          "span_id": "dd1eb616-ff51-4835-ae5b-2907b2202cb0",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "bq_get_schema",
+          "parent_span_id": "050b66a7-1963-4b3b-b5c0-4eddcb4e4f3c",
+          "start_time": 33223.583264083,
+          "end_time": 33223.853348791,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 270.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "27ecb35e-b4cb-4f18-bfe1-7c236752e617",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "generate_schema_response",
+          "parent_span_id": null,
+          "start_time": 33223.85439875,
+          "end_time": 33223.854449375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "ec34d910-7665-42fa-b244-979c1f9801ec",
+            "user_id": "manager_a",
+            "latency_ms": 0.05
+          },
+          "events": []
+        },
+        {
+          "span_id": "3d8c1d9b-b9db-4de9-b365-4264f33d504d",
+          "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33223.8550635,
+          "end_time": 33223.855183291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "ec34d910-7665-42fa-b244-979c1f9801ec",
+            "user_id": "manager_a",
+            "latency_ms": 0.12
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What columns exist in the users table?",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+      "session_id": "127624b3",
+      "conversation_id": "d5d94e34",
+      "user_id": "manager_a",
+      "start_time": 33223.856140333,
+      "end_time": 33226.316087,
+      "spans": [
+        {
+          "span_id": "863e76fb-6ba9-487a-8ff3-cf0c1a014bd9",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33223.857635416,
+          "end_time": 33223.857745041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.11
+          },
+          "events": []
+        },
+        {
+          "span_id": "42369f04-c688-446b-8127-ec860e3b223b",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33223.857981166,
+          "end_time": 33223.857984041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "9afbd741-626d-49ac-b48a-c4b843dc1580",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33223.858447208,
+          "end_time": 33225.240717708,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 1382.27
+          },
+          "events": []
+        },
+        {
+          "span_id": "09a406bc-410a-4762-9133-d9e961f98084",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "schema_fetch",
+          "parent_span_id": "9afbd741-626d-49ac-b48a-c4b843dc1580",
+          "start_time": 33223.858464625,
+          "end_time": 33225.24051825,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1382.05
+          },
+          "events": []
+        },
+        {
+          "span_id": "ea4aabe5-8f1c-4560-87f7-74e6b1ba95cd",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_get_schema",
+          "parent_span_id": "09a406bc-410a-4762-9133-d9e961f98084",
+          "start_time": 33223.858476458,
+          "end_time": 33224.108406833,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 249.93
+          },
+          "events": []
+        },
+        {
+          "span_id": "bea45bee-fd21-4f3b-9274-cec9ea428706",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_get_schema",
+          "parent_span_id": "09a406bc-410a-4762-9133-d9e961f98084",
+          "start_time": 33224.10844875,
+          "end_time": 33224.382866833,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 274.42
+          },
+          "events": []
+        },
+        {
+          "span_id": "ef399137-fe3c-4a0d-bb21-0c7171576bfd",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_get_schema",
+          "parent_span_id": "09a406bc-410a-4762-9133-d9e961f98084",
+          "start_time": 33224.38291425,
+          "end_time": 33224.90891975,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 526.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "88bd14e9-eef8-411a-a93a-c904f4b7ef83",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_get_schema",
+          "parent_span_id": "09a406bc-410a-4762-9133-d9e961f98084",
+          "start_time": 33224.908965416,
+          "end_time": 33225.240488958,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 331.52
+          },
+          "events": []
+        },
+        {
+          "span_id": "9dd6f1d1-a371-4406-9002-3533053be580",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33225.241602375,
+          "end_time": 33225.241907958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "e59ed699-c25a-46f0-9425-318103a76d1f",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "9dd6f1d1-a371-4406-9002-3533053be580",
+          "start_time": 33225.241625333,
+          "end_time": 33225.241699,
+          "status": "ok",
+          "attributes": {
+            "query": "List customer emails with highest spend.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              1,
+              0,
+              0
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "20e1cd34-ff13-40eb-96a4-9f615624f875",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33225.242514125,
+          "end_time": 33225.242685083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "ed8a41ca-1cfe-457a-b29f-ea734c021cb8",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33225.2435975,
+          "end_time": 33225.243963166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.36
+          },
+          "events": []
+        },
+        {
+          "span_id": "d8442a7e-6e05-413c-8833-5115c8c144fd",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "sql_validate",
+          "parent_span_id": "ed8a41ca-1cfe-457a-b29f-ea734c021cb8",
+          "start_time": 33225.243616375,
+          "end_time": 33225.243786458,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "689acfe6-571b-4474-bc9b-b69469032273",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33225.244562416,
+          "end_time": 33225.483002916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 238.44
+          },
+          "events": []
+        },
+        {
+          "span_id": "065cbe2a-7d75-42da-aa65-de33e421666f",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_execute",
+          "parent_span_id": "689acfe6-571b-4474-bc9b-b69469032273",
+          "start_time": 33225.244578166,
+          "end_time": 33225.482865125,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 0c509848-a0a8-49f5-987f-7ade64e747f4\n",
+            "latency_ms": 238.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "2736ceeb-60dc-4150-a3b4-6491d20fd6f8",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33225.483744208,
+          "end_time": 33225.483953458,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "e15f4a19-b58f-473b-baa7-04aa87820e88",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33225.484406958,
+          "end_time": 33225.484699833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "49e7ed46-96c8-45ea-80dc-572a2426e746",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "sql_validate",
+          "parent_span_id": "e15f4a19-b58f-473b-baa7-04aa87820e88",
+          "start_time": 33225.484417291,
+          "end_time": 33225.484502,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 335,
+            "validation_success": true,
+            "latency_ms": 0.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "3b46136b-87a2-4485-9f67-ee99a3d20e40",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33225.484982125,
+          "end_time": 33225.922897208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 437.92
+          },
+          "events": []
+        },
+        {
+          "span_id": "c69bde49-1525-4d7f-adc3-ba16ae1bd177",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_execute",
+          "parent_span_id": "3b46136b-87a2-4485-9f67-ee99a3d20e40",
+          "start_time": 33225.484990083,
+          "end_time": 33225.922718208,
+          "status": "error",
+          "attributes": {
+            "sql_len": 349,
+            "rows_returned": 0,
+            "sql_length": 349,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: f9e645d7-2464-4cd0-afe5-93fb151bf786\n",
+            "latency_ms": 437.73
+          },
+          "events": []
+        },
+        {
+          "span_id": "26ec14e9-9612-4119-a491-44ce5ca00e2a",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33225.923813583,
+          "end_time": 33225.924019791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "2b2c1ba0-e755-4b2f-b271-4e077201d985",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33225.924511458,
+          "end_time": 33225.925084583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.57
+          },
+          "events": []
+        },
+        {
+          "span_id": "9d55d07d-d3be-412f-b88f-b0bf79b70a32",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "sql_validate",
+          "parent_span_id": "2b2c1ba0-e755-4b2f-b271-4e077201d985",
+          "start_time": 33225.92453025,
+          "end_time": 33225.9247375,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 335,
+            "validation_success": true,
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "27c86543-fa25-4bd0-8bcc-e1f27b5228f7",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33225.925732333,
+          "end_time": 33226.314547291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 388.81
+          },
+          "events": []
+        },
+        {
+          "span_id": "eb3930bc-81b3-4002-ab99-8c2084b4d830",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "bq_execute",
+          "parent_span_id": "27c86543-fa25-4bd0-8bcc-e1f27b5228f7",
+          "start_time": 33225.925745458,
+          "end_time": 33226.314435,
+          "status": "error",
+          "attributes": {
+            "sql_len": 349,
+            "rows_returned": 0,
+            "sql_length": 349,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 46f16417-7552-46ca-ad10-42531cf64291\n",
+            "latency_ms": 388.69
+          },
+          "events": []
+        },
+        {
+          "span_id": "7a0de5d9-eec7-453f-82f0-4610af0ba6e2",
+          "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33226.315188583,
+          "end_time": 33226.315399041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "9a4b32a9-2b0f-4ad6-b4c2-811115eb6fe8",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "List customer emails with highest spend.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+      "session_id": "127624b3",
+      "conversation_id": "1d4efcc7",
+      "user_id": "manager_a",
+      "start_time": 33226.316333083,
+      "end_time": 33228.407733583,
+      "spans": [
+        {
+          "span_id": "6ad0fcc1-46d4-49d7-9ef6-d0cde2049360",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33226.318062625,
+          "end_time": 33226.318233916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "36cfa39b-def8-4bd2-acf1-1ce8860bb50b",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33226.31855225,
+          "end_time": 33226.318556041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "40104615-e521-472d-98b1-046c114f80f7",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33226.319206166,
+          "end_time": 33227.674237375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 1355.03
+          },
+          "events": []
+        },
+        {
+          "span_id": "eb614152-646f-43cd-b394-a1c7f8b0ef98",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "schema_fetch",
+          "parent_span_id": "40104615-e521-472d-98b1-046c114f80f7",
+          "start_time": 33226.319217416,
+          "end_time": 33227.67399975,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1354.78
+          },
+          "events": []
+        },
+        {
+          "span_id": "5eae82cf-5b5b-4ffc-9d85-15ccaadb9d1d",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_get_schema",
+          "parent_span_id": "eb614152-646f-43cd-b394-a1c7f8b0ef98",
+          "start_time": 33226.319223833,
+          "end_time": 33226.651564583,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 332.34
+          },
+          "events": []
+        },
+        {
+          "span_id": "0301ee0b-6b93-4a93-a05f-9b6067143a5e",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_get_schema",
+          "parent_span_id": "eb614152-646f-43cd-b394-a1c7f8b0ef98",
+          "start_time": 33226.651607,
+          "end_time": 33226.943846041,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 292.24
+          },
+          "events": []
+        },
+        {
+          "span_id": "5bacadea-be9a-48e0-bd05-2a0ba75e454a",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_get_schema",
+          "parent_span_id": "eb614152-646f-43cd-b394-a1c7f8b0ef98",
+          "start_time": 33226.943889791,
+          "end_time": 33227.40666725,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 462.77
+          },
+          "events": []
+        },
+        {
+          "span_id": "397bf8e5-4ec1-40fa-9f8a-fbbf0aaa1f79",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_get_schema",
+          "parent_span_id": "eb614152-646f-43cd-b394-a1c7f8b0ef98",
+          "start_time": 33227.406704208,
+          "end_time": 33227.673964125,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 267.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "8e617ee6-9380-4637-bf58-4180890be94d",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33227.675380625,
+          "end_time": 33227.675655166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.27
+          },
+          "events": []
+        },
+        {
+          "span_id": "784c4513-54be-4cf8-b1d5-c4696b9a2b55",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "8e617ee6-9380-4637-bf58-4180890be94d",
+          "start_time": 33227.675410458,
+          "end_time": 33227.675492416,
+          "status": "ok",
+          "attributes": {
+            "query": "Show phone numbers for top customers.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              2,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "c7859857-c4dc-432d-a9d9-4c9c93d9a18b",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33227.676516916,
+          "end_time": 33227.67669175,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "281623f7-6cd3-416b-aece-6fcad549fde2",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33227.677064291,
+          "end_time": 33227.677353416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "525ddafa-8b39-4728-9a45-7b9ff8b2d220",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "sql_validate",
+          "parent_span_id": "281623f7-6cd3-416b-aece-6fcad549fde2",
+          "start_time": 33227.677078208,
+          "end_time": 33227.677232625,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "b6a47e40-f5a1-4e8e-904e-a256b4c45557",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33227.677961041,
+          "end_time": 33227.893714,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 215.75
+          },
+          "events": []
+        },
+        {
+          "span_id": "abbfbeed-d5e2-4a3e-a041-342bbdbefc55",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_execute",
+          "parent_span_id": "b6a47e40-f5a1-4e8e-904e-a256b4c45557",
+          "start_time": 33227.677982791,
+          "end_time": 33227.893567791,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: b0893e0f-a83a-472e-8234-55ef5d851714\n",
+            "latency_ms": 215.59
+          },
+          "events": []
+        },
+        {
+          "span_id": "7d5a5d0f-78d6-4650-8af5-5d039cbce120",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33227.894957125,
+          "end_time": 33227.895171916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "e6e434ae-849e-43bf-8d15-2c8d65b2a515",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33227.895676833,
+          "end_time": 33227.895943916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "32f2ff05-c348-43fc-afd1-fb160add4809",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "sql_validate",
+          "parent_span_id": "e6e434ae-849e-43bf-8d15-2c8d65b2a515",
+          "start_time": 33227.895693958,
+          "end_time": 33227.895848541,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "77499e60-1f4e-4dda-99b5-b17788fd6131",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33227.896383125,
+          "end_time": 33228.167552875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 271.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "6122d59a-ed40-4f82-9cea-db3527386216",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_execute",
+          "parent_span_id": "77499e60-1f4e-4dda-99b5-b17788fd6131",
+          "start_time": 33227.896397083,
+          "end_time": 33228.167377208,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: bfd52455-e53e-4289-922b-3ec3182e1f73\n",
+            "latency_ms": 270.98
+          },
+          "events": []
+        },
+        {
+          "span_id": "f9dc53c5-3a97-49de-af65-bfaf78a74acf",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33228.168426666,
+          "end_time": 33228.168597208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "a35e3584-1696-4a06-88c3-447e8996149c",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33228.169290375,
+          "end_time": 33228.169713041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.42
+          },
+          "events": []
+        },
+        {
+          "span_id": "a4d18950-5b30-4398-b182-06a81a496b02",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "sql_validate",
+          "parent_span_id": "a35e3584-1696-4a06-88c3-447e8996149c",
+          "start_time": 33228.16933725,
+          "end_time": 33228.169535583,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "6647565c-84dc-4b97-a17e-edcb74d5613a",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33228.17076825,
+          "end_time": 33228.4055985,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 234.83
+          },
+          "events": []
+        },
+        {
+          "span_id": "22ec2329-1f07-4ee5-a435-ff5d6188cffe",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "bq_execute",
+          "parent_span_id": "6647565c-84dc-4b97-a17e-edcb74d5613a",
+          "start_time": 33228.17078525,
+          "end_time": 33228.405440458,
+          "status": "error",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 0,
+            "sql_length": 345,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: ef7b17ea-3019-4bc9-8015-7803ae6c9a0e\n",
+            "latency_ms": 234.66
+          },
+          "events": []
+        },
+        {
+          "span_id": "65f9f475-a704-4ba4-aee7-d13f756a67ec",
+          "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33228.406609333,
+          "end_time": 33228.406774541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "59560259-447e-45f8-a250-de16b86060f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Show phone numbers for top customers.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+      "session_id": "127624b3",
+      "conversation_id": "d767e267",
+      "user_id": "manager_a",
+      "start_time": 33228.408103291,
+      "end_time": 33228.412129125,
+      "spans": [
+        {
+          "span_id": "f5284ef2-6805-40ca-bd26-6b02fc395446",
+          "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33228.410496,
+          "end_time": 33228.410656208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "b9657f01-8474-444e-ad53-7356c593414a",
+          "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33228.411017458,
+          "end_time": 33228.411021833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "3c29f879-3593-4669-bf57-f7b08662b8db",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "38af196d-9fc8-409a-99a9-03272b053842",
+          "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33228.411591041,
+          "end_time": 33228.411594916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "3c29f879-3593-4669-bf57-f7b08662b8db",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Delete all reports mentioning Client X",
+        "final_status": "requires_confirmation"
+      }
+    },
+    {
+      "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+      "session_id": "127624b3",
+      "conversation_id": "ec9eb31b",
+      "user_id": "manager_a",
+      "start_time": 33228.412313083,
+      "end_time": 33228.41495075,
+      "spans": [
+        {
+          "span_id": "ba97298a-5ff0-4862-9ce5-163c43904d3a",
+          "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33228.413462291,
+          "end_time": 33228.413596791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "0a226df2-1e96-425e-9f4e-9c0b12a2003e",
+          "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33228.413886333,
+          "end_time": 33228.413890875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "3add074b-02ee-42bf-9549-ab9aeec886b4",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "1f2621ea-c2ff-4b7f-9624-0e118a57819c",
+          "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33228.4144165,
+          "end_time": 33228.414420291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "3add074b-02ee-42bf-9549-ab9aeec886b4",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What is the weather in Lisbon today?",
+        "final_status": "rejected"
+      }
+    },
+    {
+      "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+      "session_id": "127624b3",
+      "conversation_id": "7a943019",
+      "user_id": "manager_a",
+      "start_time": 33228.416332666,
+      "end_time": 33230.30017525,
+      "spans": [
+        {
+          "span_id": "8dbd6cf8-e5ef-4fd4-99a4-f156b5782a4e",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33228.417399458,
+          "end_time": 33228.417514541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.11
+          },
+          "events": []
+        },
+        {
+          "span_id": "4c31afd6-9bd1-4935-83c1-fd45897efdcf",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33228.417775791,
+          "end_time": 33228.4177785,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "9eb7ae1e-630a-4fc6-94f7-b6e6150568ec",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33228.418218291,
+          "end_time": 33229.630208166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 1211.99
+          },
+          "events": []
+        },
+        {
+          "span_id": "a1aadbaf-88fe-442d-9c4c-78b02bc44f01",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "schema_fetch",
+          "parent_span_id": "9eb7ae1e-630a-4fc6-94f7-b6e6150568ec",
+          "start_time": 33228.418232708,
+          "end_time": 33229.630054375,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1211.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "6fd208f0-d149-4b49-bce9-2b8b06c3ec2f",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_get_schema",
+          "parent_span_id": "a1aadbaf-88fe-442d-9c4c-78b02bc44f01",
+          "start_time": 33228.418244,
+          "end_time": 33228.699485333,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 281.24
+          },
+          "events": []
+        },
+        {
+          "span_id": "0aa1bd8d-6f7c-4fd0-a199-ea6a2ab92d4d",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_get_schema",
+          "parent_span_id": "a1aadbaf-88fe-442d-9c4c-78b02bc44f01",
+          "start_time": 33228.699512625,
+          "end_time": 33229.108335625,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 408.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "1849aa97-4214-4e15-a90d-0a24ee5b63c7",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_get_schema",
+          "parent_span_id": "a1aadbaf-88fe-442d-9c4c-78b02bc44f01",
+          "start_time": 33229.108390625,
+          "end_time": 33229.346870708,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 238.48
+          },
+          "events": []
+        },
+        {
+          "span_id": "37ce2eb5-17bf-47a7-a6d3-9ec660826fd4",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_get_schema",
+          "parent_span_id": "a1aadbaf-88fe-442d-9c4c-78b02bc44f01",
+          "start_time": 33229.346939875,
+          "end_time": 33229.630026625,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 283.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "6507d53d-bcf6-4548-a30c-d8579a86f1f2",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33229.630859541,
+          "end_time": 33229.631064166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "a3b1ebe9-b038-4532-9dbd-3868664b77cf",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "6507d53d-bcf6-4548-a30c-d8579a86f1f2",
+          "start_time": 33229.630877625,
+          "end_time": 33229.630945833,
+          "status": "ok",
+          "attributes": {
+            "query": "Compare this month's revenue vs previous month.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              6,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "04256f68-9400-4a17-ae1c-bfa03efc31da",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33229.631817708,
+          "end_time": 33229.6320075,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.19
+          },
+          "events": []
+        },
+        {
+          "span_id": "57e8c696-5c7d-4054-8345-d295d759e53c",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33229.632438041,
+          "end_time": 33229.632800541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.36
+          },
+          "events": []
+        },
+        {
+          "span_id": "b58c3456-3e10-43b9-b944-a8f5947ae826",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "sql_validate",
+          "parent_span_id": "57e8c696-5c7d-4054-8345-d295d759e53c",
+          "start_time": 33229.63245575,
+          "end_time": 33229.632660875,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "e7310e8f-dfcf-4015-914f-a01873728d3f",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33229.63334475,
+          "end_time": 33229.838596583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 205.25
+          },
+          "events": []
+        },
+        {
+          "span_id": "90f679af-6962-42af-94a7-1923144f9685",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_execute",
+          "parent_span_id": "e7310e8f-dfcf-4015-914f-a01873728d3f",
+          "start_time": 33229.633360541,
+          "end_time": 33229.838450791,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 9cedcab0-1ac0-44a7-a700-99455a0854bb\n",
+            "latency_ms": 205.09
+          },
+          "events": []
+        },
+        {
+          "span_id": "3966634e-5036-4197-a104-85624466c8d5",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33229.839562416,
+          "end_time": 33229.839723958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "4d3d3f0d-646e-476f-8717-1f28273ac120",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33229.84017375,
+          "end_time": 33229.840555208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.38
+          },
+          "events": []
+        },
+        {
+          "span_id": "bc34faf3-9634-438e-962c-9fc7c9855d9c",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "sql_validate",
+          "parent_span_id": "4d3d3f0d-646e-476f-8717-1f28273ac120",
+          "start_time": 33229.8401915,
+          "end_time": 33229.840427833,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.24
+          },
+          "events": []
+        },
+        {
+          "span_id": "4e3889e0-34c9-41db-b545-b38ccacf56a1",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33229.841038333,
+          "end_time": 33230.064831833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 223.79
+          },
+          "events": []
+        },
+        {
+          "span_id": "a9b9df99-07fd-4212-8a93-140367a0bbdc",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_execute",
+          "parent_span_id": "4e3889e0-34c9-41db-b545-b38ccacf56a1",
+          "start_time": 33229.841055208,
+          "end_time": 33230.064625083,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cbdffce1-ecd1-40e6-8f33-453722abebf7\n",
+            "latency_ms": 223.57
+          },
+          "events": []
+        },
+        {
+          "span_id": "23196c6d-602f-4cb9-ac83-17f8209e3911",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33230.066550416,
+          "end_time": 33230.066758416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.2
+          },
+          "events": []
+        },
+        {
+          "span_id": "0b739808-919a-4866-b310-9e0575e1784c",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33230.067391208,
+          "end_time": 33230.06784075,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.44
+          },
+          "events": []
+        },
+        {
+          "span_id": "be7b3cbf-2226-41f4-a39b-e1e6ff23df3f",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "sql_validate",
+          "parent_span_id": "0b739808-919a-4866-b310-9e0575e1784c",
+          "start_time": 33230.067426291,
+          "end_time": 33230.067668375,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.24
+          },
+          "events": []
+        },
+        {
+          "span_id": "7838fc3e-bfe2-4a92-8743-2f41749bc414",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33230.068497583,
+          "end_time": 33230.297652416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 229.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "f6776e4f-b792-483e-9cc9-8ec97ef86a21",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "bq_execute",
+          "parent_span_id": "7838fc3e-bfe2-4a92-8743-2f41749bc414",
+          "start_time": 33230.068515958,
+          "end_time": 33230.297460625,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 8158cfea-4f8e-427a-a15f-cbfef760603f\n",
+            "latency_ms": 228.95
+          },
+          "events": []
+        },
+        {
+          "span_id": "75f05206-3509-4e30-896c-2add1a6e6e01",
+          "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33230.2990425,
+          "end_time": 33230.299057,
+          "status": "ok",
+          "attributes": {
+            "request_id": "cc732701-07ce-4d50-ba19-b7e55f0db68b",
+            "user_id": "manager_a",
+            "latency_ms": 0.01
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Compare this month's revenue vs previous month.",
+        "final_status": "rejected"
+      }
+    },
+    {
+      "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+      "session_id": "127624b3",
+      "conversation_id": "2d7ef9b9",
+      "user_id": "manager_a",
+      "start_time": 33230.301357583,
+      "end_time": 33232.524237708,
+      "spans": [
+        {
+          "span_id": "59758fa9-a98b-48c6-97f8-288a1532f585",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 33230.303613916,
+          "end_time": 33230.303785875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "7ff46728-a69f-427a-b39b-6e3272d163f0",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 33230.304124625,
+          "end_time": 33230.304129166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "9d0b212e-37cf-4032-bd5a-29c330a92e91",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 33230.304768208,
+          "end_time": 33231.528593083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 1223.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "815c563f-3f59-4ec6-91de-39006cfc18be",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "schema_fetch",
+          "parent_span_id": "9d0b212e-37cf-4032-bd5a-29c330a92e91",
+          "start_time": 33230.304784458,
+          "end_time": 33231.528410666,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1223.62
+          },
+          "events": []
+        },
+        {
+          "span_id": "7eed850d-592a-4f33-823b-d5d7a39b8c50",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_get_schema",
+          "parent_span_id": "815c563f-3f59-4ec6-91de-39006cfc18be",
+          "start_time": 33230.304798166,
+          "end_time": 33230.642068916,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 337.27
+          },
+          "events": []
+        },
+        {
+          "span_id": "d725ae11-859f-472c-a940-4294b04276e1",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_get_schema",
+          "parent_span_id": "815c563f-3f59-4ec6-91de-39006cfc18be",
+          "start_time": 33230.642108958,
+          "end_time": 33230.9145085,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 272.4
+          },
+          "events": []
+        },
+        {
+          "span_id": "53c566a6-ec13-4223-bc3a-e7a8f344eaf7",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_get_schema",
+          "parent_span_id": "815c563f-3f59-4ec6-91de-39006cfc18be",
+          "start_time": 33230.9145565,
+          "end_time": 33231.257673083,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 343.11
+          },
+          "events": []
+        },
+        {
+          "span_id": "13756fa4-e9f2-4386-b4a9-f75a34b58882",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_get_schema",
+          "parent_span_id": "815c563f-3f59-4ec6-91de-39006cfc18be",
+          "start_time": 33231.257734958,
+          "end_time": 33231.52837925,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 270.64
+          },
+          "events": []
+        },
+        {
+          "span_id": "eafd4bc3-7761-469f-9c51-c0f5626ac73f",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 33231.529560208,
+          "end_time": 33231.529819416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.25
+          },
+          "events": []
+        },
+        {
+          "span_id": "efa00d72-ce62-4fd1-9481-d553b46051cd",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "eafd4bc3-7761-469f-9c51-c0f5626ac73f",
+          "start_time": 33231.52958775,
+          "end_time": 33231.529669375,
+          "status": "ok",
+          "attributes": {
+            "query": "Compare this month's revenue vs previous month.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              6,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "33672608-7513-45ac-ae15-04671ff2dbf6",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 33231.530314916,
+          "end_time": 33231.530469583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "0a892882-ad66-4e37-a4ef-f71b94e954e0",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33231.531018833,
+          "end_time": 33231.531320708,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.3
+          },
+          "events": []
+        },
+        {
+          "span_id": "24106bfa-b6be-46a0-af79-42490e0bdcff",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "sql_validate",
+          "parent_span_id": "0a892882-ad66-4e37-a4ef-f71b94e954e0",
+          "start_time": 33231.531033291,
+          "end_time": 33231.531211458,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "cd947aac-f78d-4bac-95e4-1be9f66ee98a",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33231.531707083,
+          "end_time": 33231.721489708,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 189.78
+          },
+          "events": []
+        },
+        {
+          "span_id": "c3911343-9184-4612-b0a4-3c7d579f1436",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_execute",
+          "parent_span_id": "cd947aac-f78d-4bac-95e4-1be9f66ee98a",
+          "start_time": 33231.531720208,
+          "end_time": 33231.721319375,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cc473ebd-0df1-4e2b-8ddb-2b3f681dfdba\n",
+            "latency_ms": 189.61
+          },
+          "events": []
+        },
+        {
+          "span_id": "4c2fb61b-4887-4f47-b57a-f3fa629cac63",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33231.722573291,
+          "end_time": 33231.722785041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "b6093b01-41e9-4917-9358-b9f69f29fe6c",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33231.723274916,
+          "end_time": 33231.723652125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.37
+          },
+          "events": []
+        },
+        {
+          "span_id": "0fb26041-51f5-466d-a2bb-26183c0d4195",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "sql_validate",
+          "parent_span_id": "b6093b01-41e9-4917-9358-b9f69f29fe6c",
+          "start_time": 33231.723293583,
+          "end_time": 33231.723511166,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.22
+          },
+          "events": []
+        },
+        {
+          "span_id": "8d286e41-820c-4810-b4ca-75b3020c5a2e",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33231.724142916,
+          "end_time": 33232.179515833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 455.37
+          },
+          "events": []
+        },
+        {
+          "span_id": "17872c8a-6c5a-444a-9582-4353968dd329",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_execute",
+          "parent_span_id": "8d286e41-820c-4810-b4ca-75b3020c5a2e",
+          "start_time": 33231.724157416,
+          "end_time": 33232.179409791,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 97f11e66-c9cc-49fd-9ee6-98636d256095\n",
+            "latency_ms": 455.25
+          },
+          "events": []
+        },
+        {
+          "span_id": "c9f34932-1e30-4144-8a14-a3781bc9813b",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "repair_sql",
+          "parent_span_id": null,
+          "start_time": 33232.180249041,
+          "end_time": 33232.180386166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "1a2c4afd-20fd-4f62-a6db-4c0772d0fcaf",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 33232.180733166,
+          "end_time": 33232.18102275,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "b17e5bf6-eb99-42f3-9276-1bd3c869955b",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "sql_validate",
+          "parent_span_id": "1a2c4afd-20fd-4f62-a6db-4c0772d0fcaf",
+          "start_time": 33232.180748916,
+          "end_time": 33232.180927291,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "a05a3885-9eac-4893-a03f-7b591851b0bb",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 33232.181401,
+          "end_time": 33232.522167,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 340.77
+          },
+          "events": []
+        },
+        {
+          "span_id": "1d987194-a7a3-444e-b445-6c609254bb32",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "bq_execute",
+          "parent_span_id": "a05a3885-9eac-4893-a03f-7b591851b0bb",
+          "start_time": 33232.1814115,
+          "end_time": 33232.522014583,
+          "status": "error",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 0,
+            "sql_length": 416,
+            "error_type": "BigQueryExecutionError",
+            "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 2c048592-6fc8-4a54-b253-2666a5206319\n",
+            "latency_ms": 340.61
+          },
+          "events": []
+        },
+        {
+          "span_id": "e4c89d3a-ad80-4df9-907c-128730e853cf",
+          "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 33232.523256916,
+          "end_time": 33232.52326825,
+          "status": "ok",
+          "attributes": {
+            "request_id": "5703ef71-fb66-47d3-90f5-6e840fe1dbeb",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Compare this month's revenue vs previous month.",
+        "final_status": "rejected"
+      }
+    }
+  ],
+  "metrics_summary": {
+    "node_latency_ms": {
+      "count": 109,
+      "sum": 16619.047328043962,
+      "mean": 152.46832411049508,
+      "min": 0.0014999968698248267,
+      "max": 1579.2165829989244,
+      "p50": 0.2645419954205863,
+      "p95": 1223.8227499983623
+    },
+    "bq_schema_time_ms": {
+      "count": 32,
+      "sum": 10671.909126998798,
+      "mean": 333.49716021871245,
+      "min": 238.40874999586958,
+      "max": 687.4322500007111,
+      "p50": 313.82016600400675,
+      "p95": 525.9817920014029
+    },
+    "bq_get_schema_latency_ms": {
+      "count": 32,
+      "sum": 10672.756460990058,
+      "mean": 333.5236394059393,
+      "min": 238.47954200027743,
+      "max": 687.4669999961043,
+      "p50": 313.8472080026986,
+      "p95": 526.0034169987193
+    },
+    "schema_fetch_time_ms": {
+      "count": 8,
+      "sum": 10674.2892090042,
+      "mean": 1334.286151125525,
+      "min": 1170.9784170016064,
+      "max": 1578.767125000013,
+      "p50": 1354.7616670039133,
+      "p95": 1578.767125000013
+    },
+    "schema_tables_fetched": {
+      "count": 8,
+      "sum": 32,
+      "mean": 4.0,
+      "min": 4,
+      "max": 4,
+      "p50": 4,
+      "p95": 4
+    },
+    "schema_fallback_count": {
+      "count": 8,
+      "sum": 0,
+      "mean": 0.0,
+      "min": 0,
+      "max": 0,
+      "p50": 0,
+      "p95": 0
+    },
+    "schema_fetch_latency_ms": {
+      "count": 8,
+      "sum": 10674.549459006812,
+      "mean": 1334.3186823758515,
+      "min": 1170.9969579969766,
+      "max": 1578.876208004658,
+      "p50": 1354.7831660034717,
+      "p95": 1578.876208004658
+    },
+    "retrieval_time_ms": {
+      "count": 7,
+      "sum": 0.4700419885921292,
+      "mean": 0.06714885551316131,
+      "min": 0.049041998863685876,
+      "max": 0.10737499542301521,
+      "p50": 0.056958000641316175,
+      "p95": 0.10737499542301521
+    },
+    "retrieval_docs_count": {
+      "count": 7,
+      "sum": 21,
+      "mean": 3.0,
+      "min": 3,
+      "max": 3,
+      "p50": 3,
+      "p95": 3
+    },
+    "retrieval_top_score": {
+      "count": 7,
+      "sum": 38,
+      "mean": 5.428571428571429,
+      "min": 1,
+      "max": 9,
+      "p50": 6,
+      "p95": 9
+    },
+    "fewshot_retrieve_latency_ms": {
+      "count": 7,
+      "sum": 0.6410399946616963,
+      "mean": 0.09157714209452804,
+      "min": 0.06629100244026631,
+      "max": 0.1445419984520413,
+      "p50": 0.07983300019986928,
+      "p95": 0.1445419984520413
+    },
+    "llm_fallback_used": {
+      "count": 19,
+      "sum": 19,
+      "mean": 1.0,
+      "min": 1,
+      "max": 1,
+      "p50": 1,
+      "p95": 1
+    },
+    "validation_time_ms": {
+      "count": 21,
+      "sum": 4.171916989434976,
+      "mean": 0.1986627137826179,
+      "min": 0.0777080058469437,
+      "max": 0.8757910036365502,
+      "p50": 0.16920900088734925,
+      "p95": 0.2266670053359121
+    },
+    "sql_validate_latency_ms": {
+      "count": 21,
+      "sum": 4.4053719902876765,
+      "mean": 0.20977961858512745,
+      "min": 0.08433299808530137,
+      "max": 0.8932919954531826,
+      "p50": 0.17691600078251213,
+      "p95": 0.2397499993094243
+    },
+    "bq_query_time_ms": {
+      "count": 21,
+      "sum": 5922.043040016433,
+      "mean": 282.00204952459205,
+      "min": 189.5621250005206,
+      "max": 547.8792080029962,
+      "p50": 228.8950410002144,
+      "p95": 455.22508299472975
+    },
+    "bq_rows_returned": {
+      "count": 21,
+      "sum": 0,
+      "mean": 0.0,
+      "min": 0,
+      "max": 0,
+      "p50": 0,
+      "p95": 0
+    },
+    "bq_error_count": {
+      "count": 21,
+      "sum": 21,
+      "mean": 1.0,
+      "min": 1,
+      "max": 1,
+      "p50": 1,
+      "p95": 1
+    },
+    "bq_execute_latency_ms": {
+      "count": 21,
+      "sum": 5922.948374012776,
+      "mean": 282.04516066727507,
+      "min": 189.60854200122412,
+      "max": 547.9163330019219,
+      "p50": 228.94745800294913,
+      "p95": 455.25241699942853
+    },
+    "total_latency_ms": {
+      "count": 10,
+      "sum": 16710.508959004073,
+      "mean": 1671.0508959004073,
+      "min": 2.620125000248663,
+      "max": 2816.076916999009,
+      "p50": 2091.340624996519,
+      "p95": 2816.076916999009
+    }
+  },
+  "tool_invocations_summary": {
+    "bigquery_get_schema": {
+      "call_count": 32,
+      "success_count": 32,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 333.49716021871245,
+      "total_time_ms": 10671.909126998798,
+      "error_types": []
+    },
+    "llm_heuristic_fallback": {
+      "call_count": 5,
+      "success_count": 5,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 0.0,
+      "total_time_ms": 0,
+      "error_types": []
+    },
+    "sql_validator": {
+      "call_count": 21,
+      "success_count": 21,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 0.1986627137826179,
+      "total_time_ms": 4.171916989434976,
+      "error_types": []
+    },
+    "bigquery_execute": {
+      "call_count": 21,
+      "success_count": 0,
+      "failure_count": 21,
+      "success_rate": 0.0,
+      "avg_time_ms": 282.00204952459205,
+      "total_time_ms": 5922.043040016433,
+      "error_types": [
+        "BigQueryExecutionError"
+      ]
+    }
+  },
+  "tool_invocations": [
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 687.4322500007111,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 293.77137499977835,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 278.45579200220527,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 318.80762500077253,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 40
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 332
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.8757910036365502,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 338
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 304.94225000438746,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 7bcfd8ba-1ce4-4efa-9185-8145f44578c5\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 332
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.18283299868926406,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 338
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 547.8792080029962,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: df897369-f6b1-491b-be86-3703a577699c\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 332
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.13920799392508343,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 338
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 367.1498330004397,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 1d6de563-e2f9-464d-b0bf-9da8ebc9b19a\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 341.8132090009749,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 345.97245899931295,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 370.11133399937535,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 409.2832919995999,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 50
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.1729159994283691,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 353
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 193.04412500059698,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: d5c58fc9-5b6d-4545-a379-48b494455c21\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.152291999256704,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 353
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 227.81154200492892,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 2e040466-c56a-4930-a664-5272228d7b34\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.10245799785479903,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 353
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 228.59299999981886,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: dec15abf-1273-41cf-92e4-a4d5ae0ef597\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 282.42799999861745,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 313.82016600400675,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 303.2453749983688,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 384.8752499980037,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 41
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.16075000166893005,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 195.34891699731816,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cc1124f9-917c-4bb3-9304-035e8257e9a6\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.1489589994889684,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 222.59533300530165,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: c15eadce-4d17-469b-bc68-a2ac2b0f8195\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.15691699809394777,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 206.12733300367836,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 666a210f-bf00-4c5f-a3ca-a3c184e0112a\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 335.17995799775235,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 274.85841599991545,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 290.6625420000637,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 270.06100000289734,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 249.9114579986781,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 274.3956669946783,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 525.9817920014029,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 331.47795800323365,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.15433399676112458,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 238.24374999821885,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 0c509848-a0a8-49f5-987f-7ade64e747f4\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 335
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.0777080058469437,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 349
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 437.69916600285796,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: f9e645d7-2464-4cd0-afe5-93fb151bf786\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 335
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.18166700465371832,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 349
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 388.66608300304506,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 46f16417-7552-46ca-ad10-42531cf64291\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 332.3225000058301,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 292.21712500293506,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 462.7638340025442,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 267.2336249961518,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.14379200001712888,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 215.5468339988147,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: b0893e0f-a83a-472e-8234-55ef5d851714\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.14599999849451706,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 270.95016700332053,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: bfd52455-e53e-4289-922b-3ec3182e1f73\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.18512499809730798,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 234.6204170025885,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: ef7b17ea-3019-4bc9-8015-7803ae6c9a0e\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 281.2292910020915,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 408.7811249992228,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 238.40874999586958,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 283.06687499571126,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 47
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.1939169960678555,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 205.06012499390636,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 9cedcab0-1ac0-44a7-a700-99455a0854bb\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.22466600057668984,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 223.52291599963792,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cbdffce1-ecd1-40e6-8f33-453722abebf7\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.2266670053359121,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 228.8950410002144,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 8158cfea-4f8e-427a-a15f-cbfef760603f\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 337.2505419974914,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 272.37912499549566,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 343.088292000175,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 270.62312500493135,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 47
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.16920900088734925,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 189.5621250005206,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: cc473ebd-0df1-4e2b-8ddb-2b3f681dfdba\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.20545799634419382,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 455.22508299472975,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 97f11e66-c9cc-49fd-9ee6-98636d256095\n",
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.17124999430961907,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=0",
+      "execution_time_ms": 340.55979199911235,
+      "success": false,
+      "error_type": "BigQueryExecutionError",
+      "error_message": "403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigquery-public-data/jobs?prettyPrint=false: Access Denied: Project bigquery-public-data: User does not have bigquery.jobs.create permission in project bigquery-public-data.\n\nLocation: None\nJob ID: 2c048592-6fc8-4a54-b253-2666a5206319\n",
+      "node_name": "execute_sql",
+      "reason": null
+    }
+  ],
+  "rag_observations_summary": {
+    "total_retrievals": 15,
+    "no_relevant_docs_count": 0,
+    "no_relevant_docs_rate": 0.0,
+    "avg_top_score": 5.429,
+    "avg_retrieval_time_ms": 711.65
+  },
+  "rag_observations": [
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1578.77,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "What are the top 10 products by revenue?",
+      "docs_retrieved": 3,
+      "top_scores": [
+        7,
+        4,
+        2
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.11,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1467.5,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Show monthly revenue trend for the last 12 months.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        9,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.06,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1284.83,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Who are the top customers by total spend?",
+      "docs_retrieved": 3,
+      "top_scores": [
+        7,
+        4,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.09,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1170.98,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1382.03,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "List customer emails with highest spend.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        1,
+        0,
+        0
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1354.76,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Show phone numbers for top customers.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        2,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.06,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1211.8,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Compare this month's revenue vs previous month.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        6,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1223.61,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Compare this month's revenue vs previous month.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        6,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.06,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    }
+  ],
+  "quality_summary": {
+    "total_evaluations": 10,
+    "avg_groundedness": 0.0,
+    "avg_relevance": 0.098,
+    "avg_completeness": 0.65,
+    "success_rate": 0.3,
+    "fallback_rate": 1.0,
+    "empty_response_rate": 0.0
+  },
+  "quality_signals": [
+    {
+      "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+      "groundedness": 0.0,
+      "relevance": 0.125,
+      "completeness": 0.75,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+      "groundedness": 0.0,
+      "relevance": 0.111,
+      "completeness": 0.75,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+      "groundedness": 0.0,
+      "relevance": 0.125,
+      "completeness": 0.75,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+      "groundedness": 0.0,
+      "relevance": 0.286,
+      "completeness": 0.75,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.75,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+      "groundedness": 0.0,
+      "relevance": 0.167,
+      "completeness": 0.75,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+      "groundedness": 0.0,
+      "relevance": 0.167,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    }
+  ],
+  "audit_log": [
+    {
+      "timestamp": 1773267151.345812,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "8ca82bfb-da39-4d7d-a67f-f2c89c05a492",
+      "details": {
+        "question": "What are the top 10 products by revenue?",
+        "status": "failed_execution",
+        "elapsed_ms": 2816.08
+      }
+    },
+    {
+      "timestamp": 1773267153.476935,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "25e5e176-79a8-4af1-a2c7-a243c4257945",
+      "details": {
+        "question": "Show monthly revenue trend for the last 12 months.",
+        "status": "failed_execution",
+        "elapsed_ms": 2130.8
+      }
+    },
+    {
+      "timestamp": 1773267155.400227,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "ab6f2afb-a9d2-452d-93f4-a1cea4036f2a",
+      "details": {
+        "question": "Who are the top customers by total spend?",
+        "status": "failed_execution",
+        "elapsed_ms": 1923.06
+      }
+    },
+    {
+      "timestamp": 1773267156.576512,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "56c655a4-966a-4301-948a-261dd6fad4c2",
+      "details": {
+        "question": "What columns exist in the users table?",
+        "status": "success",
+        "elapsed_ms": 1176.02
+      }
+    },
+    {
+      "timestamp": 1773267159.036741,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "200f4317-ef9c-4296-aed8-f6ed8671e1eb",
+      "details": {
+        "question": "List customer emails with highest spend.",
+        "status": "success",
+        "elapsed_ms": 2459.92
+      }
+    },
+    {
+      "timestamp": 1773267161.128387,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "09e9819c-39c6-4e50-997e-6bf636b63d78",
+      "details": {
+        "question": "Show phone numbers for top customers.",
+        "status": "success",
+        "elapsed_ms": 2091.34
+      }
+    },
+    {
+      "timestamp": 1773267161.1327791,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "8e943890-fd6d-417a-a9ec-3b23dc8f27d4",
+      "details": {
+        "question": "Delete all reports mentioning Client X",
+        "status": "requires_confirmation",
+        "elapsed_ms": 4.0
+      }
+    },
+    {
+      "timestamp": 1773267161.1356008,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "a5102b8f-29f5-416c-b87a-8234e7e5fd09",
+      "details": {
+        "question": "What is the weather in Lisbon today?",
+        "status": "rejected",
+        "elapsed_ms": 2.62
+      }
+    },
+    {
+      "timestamp": 1773267163.02083,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "f47f650c-fc41-41d5-b217-fc8004c9e4d1",
+      "details": {
+        "question": "Compare this month's revenue vs previous month.",
+        "status": "rejected",
+        "elapsed_ms": 1883.81
+      }
+    },
+    {
+      "timestamp": 1773267165.2448902,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "7164ec06-3d69-45bd-9c05-0aa6b397e99b",
+      "details": {
+        "question": "Compare this month's revenue vs previous month.",
+        "status": "rejected",
+        "elapsed_ms": 2222.85
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+
+You> What are the top 10 products by revenue?
+
+Assistant>
+Question: What are the top 10 products by revenue?
+Rows analyzed: 3
+Top row snapshot: {'product_id': 101, 'product_name': 'Widget A', 'revenue': 15000.5}
+Summary: Results are generated from validated read-only SQL over approved retail tables.
+
+Top results (preview):
+| product_id | product_name | revenue |
+| --- | --- | --- |
+| 101 | Widget A | 15000.5 |
+| 102 | Widget B | 12300.75 |
+| 103 | Widget C | 9800.0 |
+
+[debug]
+status=success
+retry_count=0
+elapsed_ms=34395.08
+sql=SELECT p.id, p.name, ROUND(SUM(oi.sale_price), 2) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id JOIN `bigquery-public-data.thelook_ecommerce.products` p ON oi.product_id = p.id GROUP BY p.id, p.name ORDER BY revenue DESC LIMIT 10
+trace_id=a4da28f6-a640-414e-a2f0-474b43d71d3d
+spans=15
+
+You> exit
+Session ended.

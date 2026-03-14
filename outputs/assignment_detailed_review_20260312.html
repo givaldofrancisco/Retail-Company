@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Company - Assignment Review Detalhado</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; margin: 24px; color: #1f2937; line-height: 1.5; }
+    h1, h2, h3 { color: #0f172a; }
+    .meta { color: #475569; margin-bottom: 20px; }
+    .ok { color: #166534; font-weight: 600; }
+    .partial { color: #92400e; font-weight: 600; }
+    .gap { color: #991b1b; font-weight: 600; }
+    .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin: 12px 0; background: #ffffff; }
+    code { background: #f1f5f9; padding: 1px 4px; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; }
+    pre { white-space: pre-wrap; background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Análise detalhada do assignment (implementação x adequação)</h1>
+  <div class="meta">Projeto analisado em 12/03/2026 • Escopo: <code>My Projects/Retail Company</code></div>
+
+  <h2>1) Resultado executivo</h2>
+  <table>
+    <thead>
+      <tr><th>Bloco</th><th>Status</th><th>Resumo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Requirements (1-8)</td><td class="partial">Parcialmente adequado</td><td>Itens 2, 3, 5, 6, 7 e 8 estão cobertos no protótipo; itens 1 e 4 ainda têm lacunas de produção (automação/escala).</td></tr>
+      <tr><td>Deliverables (1-6)</td><td class="ok">Adequado no escopo de protótipo</td><td>Documentação, arquitetura, CLI, LangGraph, confirmação destrutiva com token e QA gate executável estão presentes.</td></tr>
+      <tr><td>Execução de testes no ambiente atual</td><td class="ok">Aprovado</td><td>Suite core executada com um único comando (<code>make test</code>) usando apenas a venv do projeto.</td></tr>
+      <tr><td>Execução E2E (Gemini + BigQuery real)</td><td class="ok">Aprovado</td><td>Replay completo executado com sucesso em ambiente real: 8 <code>success</code>, 1 <code>requires_confirmation</code>, 1 <code>rejected</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2) Evidência de validação executada</h2>
+  <div class="card">
+    <p><strong>Comando executado:</strong> <code>make test</code></p>
+    <p><strong>Resultado:</strong> 11/11 suítes aprovadas (core suite completa) usando <code>.venv/bin/python</code> e <code>.venv/bin/pytest</code>.</p>
+    <p><strong>Referências:</strong> <code>Makefile:1-19</code>, <code>run_tests.py:10-22</code>, <code>README.md:272-290</code>.</p>
+  </div>
+  <div class="card">
+    <p><strong>Comando executado:</strong> <code>make qa-gate</code></p>
+    <p><strong>Resultado:</strong> gate aprovado com <code>intent_accuracy=1.0</code>, <code>status_success_rate=1.0</code>, <code>safety_rate=1.0</code>.</p>
+    <p><strong>Referências:</strong> <code>Makefile:14-19</code>, <code>src/evaluation/qa_gate.py:120-200</code>, <code>outputs/qa_gate_summary.json:1-39</code>.</p>
+  </div>
+  <div class="card">
+    <p><strong>Comando executado:</strong> <code>.venv/bin/python app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_en.txt --transcript-file outputs/full_run_after_gcp.txt</code></p>
+    <p><strong>Resultado:</strong> fluxo E2E aprovado com BigQuery real e Gemini ativo; 1 recusa esperada (weather) e 1 confirmação destrutiva esperada.</p>
+    <p><strong>Evidências no transcript:</strong> <code>outputs/full_run_after_gcp.txt:41</code>, <code>outputs/full_run_after_gcp.txt:74</code>, <code>outputs/full_run_after_gcp.txt:123</code>, <code>outputs/full_run_after_gcp.txt:246</code>, <code>outputs/full_run_after_gcp.txt:259</code>, <code>outputs/full_run_after_gcp.txt:302</code>, <code>outputs/full_run_after_gcp.txt:349</code>.</p>
+  </div>
+
+  <h2>3) Requirements — texto original + análise</h2>
+
+  <div class="card">
+    <h3>1. Hybrid Intelligence: The agent cannot rely on SQL alone. It must use the "Golden Bucket" to understand how analysts previously interpreted questions and apply similar logic to new queries. Explain how you will update the golden bucket over time.</h3>
+    <p><strong>Status:</strong> <span class="partial">Parcialmente adequado</span></p>
+    <p><strong>Implementado em:</strong> <code>src/graph/nodes.py:141-149</code>, <code>src/tools/golden_retriever.py:26-43</code>, <code>src/memory/learning_loop.py:24-85</code>, <code>app.py:329-348</code>, <code>app.py:460-468</code>, <code>data/golden_trios.json:1-32</code></p>
+    <p><strong>Avaliação:</strong> há uso real do bucket e já existe ciclo de atualização com captura de candidatos + aprovação humana para promoção ao golden bucket.</p>
+    <p><strong>Assunção explicitada:</strong> em produção considerar escala <code>&gt;10K</code> trios, com pipeline de indexação, recuperação vetorial e reranking.</p>
+    <p><strong>Precisa melhorar:</strong> versionamento/auditoria mais forte, promoção automática baseada em score e busca semântica (embeddings).</p>
+  </div>
+
+  <div class="card">
+    <h3>2. Safety & PII Masking: The raw transaction logs contain Customer Phones and Emails. The agent is strictly forbidden from displaying this PII in the final output, even if the SQL query retrieves it. Furthermore, it is only allowed to answer analysis questions</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado em:</strong> <code>src/safety/pii_masker.py:29-47</code>, <code>src/graph/nodes.py:153-168</code>, <code>src/graph/nodes.py:245-262</code>, <code>src/graph/nodes.py:284-289</code>, <code>src/safety/guardrails.py:59-80</code>, <code>src/tools/sql_validator.py:12-25</code>, <code>src/tools/sql_validator.py:47-55</code></p>
+    <p><strong>Teste relacionado:</strong> <code>tests/test_pii_masking.py:19-52</code>, <code>tests/test_assignment_acceptance.py:165-171</code>, <code>tests/test_assignment_acceptance.py:190-204</code></p>
+    <p><strong>Avaliação:</strong> possui defesa em camadas (remoção de colunas + máscara textual + boundaries de conversa para manter escopo analítico, sem exigir aprovação humana por query).</p>
+  </div>
+
+  <div class="card">
+    <h3>3. High-Stakes Oversight (Destructive Ops): While the DB is read-only, the agent manages a "Saved Reports" library. The agent must support commands like "Delete all reports mentioning Client X" (GDPR compliance). This is a destructive action and requires a strict confirmation flow before execution.</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado em:</strong> <code>src/safety/guardrails.py:48-66</code>, <code>src/graph/nodes.py:65-91</code>, <code>src/memory/report_actions.py:26-84</code>, <code>app.py:316-327</code></p>
+    <p><strong>Teste relacionado:</strong> <code>tests/test_assignment_acceptance.py:173-188</code></p>
+    <p><strong>Avaliação:</strong> agora existe fluxo real de 2 etapas com token (`/confirm`), preview de impacto e execução apenas após confirmação.</p>
+    <p><strong>Precisa melhorar:</strong> integrar com backend corporativo de reports e RBAC em produção.</p>
+  </div>
+
+  <div class="card">
+    <h3>4. Continuous Improvement (The Learning Loop): 1. User Level: The agent should remember that "Manager A" prefers tables while "Manager B" prefers bullet points. 2. System Level: The agent should be able to learn from past interactions.</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado (User Level):</strong> <code>app.py:301-307</code>, <code>src/memory/user_preferences.py:18-25</code>, <code>src/graph/nodes.py:276-283</code>, <code>src/reporting/report_generator.py:65-73</code></p>
+    <p><strong>Implementado (System Level):</strong> <code>app.py:329-350</code>, <code>app.py:460-468</code>, <code>src/memory/learning_loop.py:24-85</code>, <code>tests/test_learning_loop.py:18-53</code></p>
+    <p><strong>Avaliação:</strong> memória de preferência e learning loop com aprovação humana já operam no CLI; ainda faltam automações de escala/curadoria para produção.</p>
+  </div>
+
+  <div class="card">
+    <h3>5. Resilience & Graceful Error Handling: The system must detect SQL syntax errors or empty returns and attempt to self-correct before giving up, without crashing the user interface and without inflating costs. The system should be resilient to API/3rd party services failures/downtime</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado em:</strong> <code>src/graph/workflow.py:29-35</code>, <code>src/graph/workflow.py:96</code>, <code>src/graph/nodes.py:157-176</code>, <code>src/graph/nodes.py:177-201</code>, <code>src/graph/nodes.py:204-220</code>, <code>src/graph/nodes.py:305-334</code>, <code>src/llm/client.py:133-143</code>, <code>src/llm/client.py:144-205</code>, <code>app.py:60-95</code>, <code>app.py:398-425</code></p>
+    <p><strong>Teste relacionado:</strong> <code>tests/test_repair_loop.py:5-16</code>, <code>tests/test_assignment_acceptance.py:143-164</code>, <code>tests/test_llm_resilience.py:17-44</code></p>
+    <p><strong>Avaliação:</strong> retry limitado, fallback heurístico e mensagens finais de erro estão corretos para MVP.</p>
+  </div>
+
+  <div class="card">
+    <h3>6. Quality Assurance: How do you evaluate the agent before deployment? How do you verify that the generated reports answer users intent correctly?</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado em:</strong> <code>src/evaluation/eval_cases.json:1-33</code>, <code>src/evaluation/qa_gate.py:120-200</code>, <code>Makefile:14-19</code>, <code>outputs/qa_gate_summary.json:1-39</code>, <code>tests/test_qa_gate.py:8-14</code></p>
+    <p><strong>Avaliação:</strong> existe benchmark automatizado pré-deploy com thresholds explícitos (intent, status e safety) e artefatos de evidência versionáveis; critérios centrais de aceitação incluem correção SQL e interpretação de negócio alinhada à pergunta.</p>
+    <p><strong>Precisa melhorar:</strong> incluir revisão humana amostral e execução do gate em CI corporativo.</p>
+  </div>
+
+  <div class="card">
+    <h3>7. Observability: We need to know when the agent is failing and why. Define the metrics you would track at the agent level and how you would support deep dive analysis (understanding what the message correspondence is and what went wrong).</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Implementado em:</strong> <code>src/observability/tracer.py:87-113</code>, <code>src/observability/decorators.py:14-51</code>, <code>src/observability/metrics.py:21-51</code>, <code>src/observability/logger.py:9-29</code>, <code>src/observability/tool_observer.py:24-55</code>, <code>src/observability/retrieval_observer.py:87-124</code>, <code>src/observability/security.py:84-103</code>, <code>src/observability/exporter.py:39-73</code>, <code>app.py:402-430</code></p>
+    <p><strong>Teste relacionado:</strong> <code>tests/test_observability_system.py:47-417</code></p>
+    <p><strong>Avaliação:</strong> cobertura forte para diagnóstico técnico (trace, spans, métricas, auditoria, export JSON).</p>
+  </div>
+
+  <div class="card">
+    <h3>8. Agility (Persona Management): The CEO wants to change the "tone" of the reports weekly. The system must allow non-developers to update the agent's instructions without redeployment.</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado</span></p>
+    <p><strong>Implementado em:</strong> <code>config/personas/default.yaml:1-15</code>, <code>src/reporting/report_generator.py:25-27</code>, <code>src/reporting/report_generator.py:39-46</code></p>
+    <p><strong>Avaliação:</strong> persona externa em YAML e leitura em tempo de execução permitem ajuste de tom sem alterar código.</p>
+  </div>
+
+  <h2>4) Deliverables — texto original + análise</h2>
+
+  <div class="card">
+    <h3>1. Architecture Diagram (Mermaid etc): Highlighting the building blocks, services and flow of the system based on the requirements above. In case you are planning to use a framework / service for one of the building blocks, specify which one and include an explanation.</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado</span></p>
+    <p><strong>Evidência:</strong> <code>README.md:31-62</code>, <code>architecture.md:16-89</code></p>
+  </div>
+
+  <div class="card">
+    <h3>2. Detailed technical explanation covering: 1. Reasoning for the chosen Cloud services / LLM models / frameworks used. 2. Data flow between components (if needs to elaborate on HLD). 3. Error handling and fallback strategies. 4. Setup Instructions and example run 5. Make sure to include how you handle/solve each of the requirements</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado (com lacunas de produção já mapeadas)</span></p>
+    <p><strong>Evidência:</strong> <code>README.md:64-137</code>, <code>README.md:138-237</code>, <code>architecture.md:90-178</code></p>
+  </div>
+
+  <div class="card">
+    <h3>3. Working Code/Prototype: Build a chat agent that can generate and run SQL queries against the DB listed below and create a report. The prototype needs to support 2 of the following requirements (defined above): 1. Safety & PII Masking 2. High-Stakes Oversight 3. Resilience & Graceful Error Handling 4. Quality Assurance 5. Observability</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado</span></p>
+    <p><strong>Evidência:</strong> fluxo principal em <code>src/graph/workflow.py:37-105</code> + nós em <code>src/graph/nodes.py:40-344</code>. Cobertura operacional de requisitos 2, 3, 5, 6 e 7 no protótipo.</p>
+  </div>
+
+  <div class="card">
+    <h3>4. Simple CLI-based interface for chat interactions. (UI's won't gain any additional points)</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado</span></p>
+    <p><strong>Evidência:</strong> <code>app.py:135-437</code></p>
+  </div>
+
+  <div class="card">
+    <h3>5. Your solution must be runnable on another machine (Docker is not a must, just proper setup instructions).</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado no escopo de protótipo</span></p>
+    <p><strong>Evidência:</strong> setup em <code>README.md:141-237</code>, dependências em <code>requirements.txt:1-10</code>, Docker em <code>Dockerfile:1-14</code>.</p>
+    <p><strong>Observação:</strong> validado neste ambiente com um comando único (<code>make test</code>) e execução exclusiva da venv do projeto.</p>
+  </div>
+
+  <div class="card">
+    <h3>6. Use a framework of your choice (preferably Lang Graph / Lang Chain V1).</h3>
+    <p><strong>Status:</strong> <span class="ok">Adequado</span></p>
+    <p><strong>Evidência:</strong> <code>src/graph/workflow.py:3-5</code>, <code>src/llm/client.py:10-18</code>, <code>tests/test_langgraph_memory_setup.py:12-24</code></p>
+  </div>
+
+  <h2>5) Dataset e capacidades esperadas</h2>
+  <div class="card">
+    <p><strong>Dataset/tabelas exigidas:</strong> explicitamente fixados em <code>app.py:51-53</code> e validados em <code>src/tools/sql_validator.py:84-129</code>.</p>
+    <p><strong>Capacidades (customer/product/time/schema):</strong> suportadas por geração SQL + exemplos heurísticos e testes de replay em <code>tests/test_manual_cli_replay.py:12-43</code>.</p>
+  </div>
+
+  <h2>6) Melhorias prioritárias (ordem sugerida)</h2>
+  <ol>
+    <li>Integrar fluxo destrutivo com RBAC e trilha de auditoria corporativa (Requirement 3 em produção).</li>
+    <li>Evoluir learning loop para ranqueamento automático + curadoria semântica (Requirement 1 e 4.2).</li>
+    <li>Executar QA gate no CI e adicionar revisão humana amostral por release (Requirement 6).</li>
+    <li>Publicar dashboard externo/alertas para observabilidade contínua em produção (Requirement 7).</li>
+  </ol>
+
+  <h2>7) Assignment original (texto integral sem alterações)</h2>
+  <pre>
+AI Technical Assignment - Retail Company 
+
+The Challenge: Design and Build a Data Analysis Chat Assistant
+
+You are building an internal data agent for a Retail Company's non-technical executive team (Store and Regional Managers). These managers need to ask complex questions about sales, inventory, and performance (e.g., "Why is the Tel Aviv branch underperforming?")
+The agent will have access to:
+
+* The Database: A read-only connection to a SQL database containing raw transaction logs.
+* The "Golden Knowledge" Bucket: A data lake containing historical "Trios" (Question → SQL Query → Analyst Report) created by human experts.
+
+The Task: Design a production-ready full High-Level Design (HLD), accompanied by a detailed technical explanation, and build a prototype that allows executives to query this data naturally.
+
+Requirements:
+
+1. Hybrid Intelligence: The agent cannot rely on SQL alone. It must use the "Golden Bucket" to understand how analysts previously interpreted questions and apply similar logic to new queries. Explain how you will update the golden bucket over time.
+
+2. Safety &amp; PII Masking: The raw transaction logs contain Customer Phones and Emails. The agent is strictly forbidden from displaying this PII in the final output, even if the SQL query retrieves it. Furthermore, it is only allowed to answer analysis questions
+
+3. High-Stakes Oversight (Destructive Ops): While the DB is read-only, the agent manages a "Saved Reports" library. The agent must support commands like "Delete all reports mentioning Client X" (GDPR compliance). This is a destructive action and requires a strict confirmation flow before execution.
+
+4. Continuous Improvement (The Learning Loop):
+    1. User Level: The agent should remember that "Manager A" prefers tables while "Manager B" prefers bullet points.
+    2. System Level: The agent should be able to learn from past interactions.
+
+5. Resilience &amp; Graceful Error Handling: The system must detect SQL syntax errors or empty returns and attempt to self-correct before giving up, without crashing the user interface and without inflating costs. The system should be resilient to API/3rd party services failures/downtime 
+
+6. Quality Assurance: How do you evaluate the agent before deployment? How do you verify that the generated reports answer users intent correctly?
+
+7. Observability: We need to know when the agent is failing and why. Define the metrics you would track at the agent level and how you would support deep dive analysis (understanding what the message correspondence is and what went wrong).
+
+8. Agility (Persona Management): The CEO wants to change the "tone" of the reports weekly. The system must allow non-developers to update the agent's instructions without redeployment.
+
+ Deliverables:
+
+1. Architecture Diagram (Mermaid etc): Highlighting the building blocks, services and flow of the system based on the requirements above. In case you are planning to use a framework / service for one of the building blocks, specify which one and include an explanation.
+
+2. Detailed technical explanation covering:
+    1. Reasoning for the chosen Cloud services / LLM models / frameworks used.
+    2. Data flow between components (if needs to elaborate on HLD).
+    3. Error handling and fallback strategies.
+    4. Setup Instructions and example run
+    5. Make sure to include how you handle/solve each of the requirements
+
+3.  Working Code/Prototype: Build a chat agent that can generate and run SQL queries against the DB listed below and create a report. The prototype needs to support 2 of the following requirements (defined above): 
+    1. Safety &amp; PII Masking
+    2. High-Stakes Oversight
+    3. Resilience &amp; Graceful Error Handling
+    4. Quality Assurance
+    5. Observability
+
+4. Simple CLI-based interface for chat interactions. (UI's won't gain any additional points)
+
+5. Your solution must be runnable on another machine (Docker is not a must, just proper setup instructions).
+
+6. Use a framework of your choice (preferably Lang Graph / Lang Chain V1).
+
+Note: the prototype needs to be simple and working.
+Our assessment will focus mainly on system design, the technical explanation, and an elegant Prototype
+
+Dataset Specification:
+
+* Dataset: bigquery-public-data.thelook_ecommerce
+* Required Tables:
+    * orders - Customer order information
+    * order_items - Individual items within orders
+    * products - Product catalog and details
+    * users - Customer demographics and information
+
+Expected Agent Capabilities:
+
+Your prototype agent should be able to perform data analysis and generate insights such as:
+
+* Customer behavior (e.g., top customers, total spend)
+* Product performance
+* Time-based metrics (e.g., monthly revenue, up-to-date revenue by product)
+* Answer questions about the general structure of the database
+
+1. Use BigQuery integration to query and analyze the specified tables. Your agent should be able to construct and execute SQL queries dynamically based on the analysis requirements.
+2. You should preferably use one of the newer Google Gemini models. You can get a free API key from Google AI Studio. Please be mindful of the rate limits. Alternatively, you can use OpenRouter or Ollama if you prefer (or have issues with rate limits) . We have created a simple client for your convenience:  https://github.com/Opsfleet/lc-openrouter-ollama-client
+
+Setup Instructions
+
+Environment Setup
+
+1. Install Python dependencies:
+
+pip install -r requirements.txt
+
+GCP/BigQuery Setup
+
+1. Set up BigQuery access by following the BigQuery Client Libraries documentation if you don't already have BigQuery access configured.
+2. Free Tier: Google Cloud provides 1TB of free BigQuery compute per month, which is more than sufficient for this challenge.
+3. Authentication: Ensure your environment is authenticated with Google Cloud to access the public datasets.
+
+
+Time Expectation
+
+We expect this assignment to take between 6 to 12 hours of work.
+
+Submission
+
+Share (make it public or invite us with our emails) with us a your Git repository (GitHub, GitLab, etc) with:
+
+* Documentation
+* Source code
+* Architecture diagram
+
+Resources
+
+Quick Starts
+
+* https://docs.langchain.com/oss/python/langchain/quickstart
+* https://docs.langchain.com/oss/python/langgraph/quickstart
+* https://docs.langchain.com/oss/python/langgraph/add-memory
+
+
+
+
+bq_client.py
+Owned by Alex Freidman
+Created on August 11th, 2025
+import logging
+from typing import Optional, List, Dict, Any
+import pandas as pd
+from google.cloud import bigquery
+​
+​
+class BigQueryRunner:
+    """A lean BigQuery client for executing SQL queries and returning DataFrame results."""
+    
+    def __init__(self, project_id: Optional[str] = None, dataset_id: Optional[str] = "bigquery-public-data.thelook_ecommerce") -&gt; None:
+        """Initialize BigQuery client.
+        
+        Args:
+            project_id: Google Cloud project ID. If None, uses default credentials.
+            dataset_id: BigQuery dataset ID. If None, uses default dataset.
+        """
+        logging.info("Initializing BigQuery client")
+        try:
+            self.client = bigquery.Client(project=project_id)
+            self.dataset_id = dataset_id
+            logging.info(f"BigQuery client initialized for dataset: {self.dataset_id}")
+        except Exception as e:
+            logging.error(f"Failed to initialize BigQuery client: {str(e)}")
+            raise
+    
+    def execute_query(self, sql_query: str) -&gt; pd.DataFrame:
+        """Execute a SQL query and return results as a DataFrame.
+        
+        Args:
+            sql_query: The SQL query to execute.
+            
+        Returns:
+            DataFrame containing the query results.
+            
+        Raises:
+            Exception: If query execution fails.
+        """
+        try:
+            logging.info(f"Executing BigQuery query")
+            query_job = self.client.query(sql_query)
+            df = query_job.result().to_dataframe()
+            logging.info(f"Query completed successfully, returned {len(df)} rows")
+            return df
+        except Exception as e:
+            logging.error(f"BigQuery execution failed: {str(e)}")
+            raise 
+​
+    def get_table_schema(self, table_name: str) -&gt; List[Dict[str, Any]]:
+        """Get schema information for a specific table.
+        
+        Args:
+            table_name: Name of the table (orders, order_items, products, users).
+            
+        Returns:
+            List of dictionaries containing column information.
+        """
+        try:
+            table_ref = f"{self.dataset_id}.{table_name}"
+            table = self.client.get_table(table_ref)
+            schema_info = []
+            for field in table.schema:
+                schema_info.append({
+                    "name": field.name,
+                    "type": field.field_type,
+                    "mode": field.mode,
+                    "description": field.description or ""
+                })
+            logging.info(f"Retrieved schema for table {table_name}")
+            return schema_info
+        except Exception as e:
+            logging.error(f"Failed to get schema for table {table_name}: {str(e)}")
+            raise
+  </pre>
+</body>
+</html>

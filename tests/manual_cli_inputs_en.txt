@@ -1,0 +1,13 @@
+What are the top 10 products by revenue?
+Show monthly revenue trend for the last 12 months.
+Who are the top customers by total spend?
+What columns exist in the users table?
+List customer emails with highest spend.
+Show phone numbers for top customers.
+Delete all reports mentioning Client X
+What is the weather in Lisbon today?
+/format table
+Compare this month's revenue vs previous month.
+/format bullets
+Compare this month's revenue vs previous month.
+exit

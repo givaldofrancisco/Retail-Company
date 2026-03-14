@@ -1,0 +1,25 @@
+mermaid
+graph TD
+    User([User/Executive]) --> CLI[Chat Interface / CLI]
+    CLI --> Agent[LangGraph Agent]
+    
+    subgraph "Knowledge & Data"
+        Agent --> GB[(Golden Bucket: Knowledge Base)]
+        Agent --> BQ[(BigQuery Retail Dataset)]
+        GB --> LLM[LLM / Gemini]
+        BQ --> Agent
+    end
+    
+    subgraph "Processing Logic"
+        Agent --> PII[PII Masking & Safety]
+        Agent --> Handler[Error Handler / Self-Correction]
+        Agent --> Mem[Memory: User & System]
+    end
+    
+    subgraph "High-Stakes Oversight"
+        Agent --> CC[Confirmation Checker]
+        CC --> DB_Delete[(Library Manager: Delete Op)]
+    end
+    
+    PII --> Report[Final report / Insight]
+    Report --> CLI

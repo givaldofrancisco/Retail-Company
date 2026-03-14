@@ -1,0 +1,3709 @@
+{
+  "export_timestamp": "2026-03-11T22:54:42.302395+00:00",
+  "session_id": "0620d557",
+  "version_snapshot": {
+    "version_id": "132cdd5818fb5f4a",
+    "timestamp": 1773269664.911768,
+    "components": {
+      "agent_version": "0.1.0",
+      "model_name": "gemini-2.0-flash",
+      "temperature": "0.1",
+      "prompts": "cd74c29e125eccd6",
+      "workflow": "88551276ad647761",
+      "guardrails": "5cfca97332401633",
+      "persona": "ee1844920180b9a6",
+      "golden_trios": "27135215ab7396bc",
+      "pii_masker": "8e5041151a04c02e",
+      "sql_validator": "1254b220970e8214",
+      "schema_tool": "c899c8da4fdee4df",
+      "golden_retriever": "814fa98bd9b05ac2",
+      "report_generator": "9e4bc0164e8ac212"
+    }
+  },
+  "traces": [
+    {
+      "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+      "session_id": "0620d557",
+      "conversation_id": "ab78de55",
+      "user_id": "manager_a",
+      "start_time": 35732.199937958,
+      "end_time": 35734.681133,
+      "spans": [
+        {
+          "span_id": "2e8db287-cb85-4db1-842a-26111cd93f24",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35732.2027805,
+          "end_time": 35732.203132625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.35
+          },
+          "events": []
+        },
+        {
+          "span_id": "732118ea-d4c9-4c39-b95e-bf275303ecf4",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35732.2035605,
+          "end_time": 35732.203564125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "bed884be-2e8d-489f-8ffd-fd6f8f6eb5be",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35732.203938625,
+          "end_time": 35733.53431225,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 1330.37
+          },
+          "events": []
+        },
+        {
+          "span_id": "afacc817-be92-41f5-afd2-b7135b5b43ac",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "schema_fetch",
+          "parent_span_id": "bed884be-2e8d-489f-8ffd-fd6f8f6eb5be",
+          "start_time": 35732.203955791,
+          "end_time": 35733.534105333,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1330.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "064a1268-0745-4607-9683-551e81d6473f",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "bq_get_schema",
+          "parent_span_id": "afacc817-be92-41f5-afd2-b7135b5b43ac",
+          "start_time": 35732.203966541,
+          "end_time": 35732.769747541,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 565.78
+          },
+          "events": []
+        },
+        {
+          "span_id": "ab6d3519-f8a9-4e67-bd53-00e1d8200063",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "bq_get_schema",
+          "parent_span_id": "afacc817-be92-41f5-afd2-b7135b5b43ac",
+          "start_time": 35732.769793375,
+          "end_time": 35733.04803375,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 278.24
+          },
+          "events": []
+        },
+        {
+          "span_id": "38a9b4f8-a3e3-4804-a57e-33f48888117c",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "bq_get_schema",
+          "parent_span_id": "afacc817-be92-41f5-afd2-b7135b5b43ac",
+          "start_time": 35733.04807475,
+          "end_time": 35733.286109583,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 238.03
+          },
+          "events": []
+        },
+        {
+          "span_id": "3cd14834-4c8f-439e-8a3d-b129ee5ccef1",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "bq_get_schema",
+          "parent_span_id": "afacc817-be92-41f5-afd2-b7135b5b43ac",
+          "start_time": 35733.286165166,
+          "end_time": 35733.534041875,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 247.87
+          },
+          "events": []
+        },
+        {
+          "span_id": "d3544e36-799e-4cd2-9b66-99f7f51aa4bd",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35733.535667708,
+          "end_time": 35733.535962958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "1c011802-5856-4819-a7c8-314778c7108d",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "d3544e36-799e-4cd2-9b66-99f7f51aa4bd",
+          "start_time": 35733.535698666,
+          "end_time": 35733.535787625,
+          "status": "ok",
+          "attributes": {
+            "query": "What are the top 10 products by revenue?",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              7,
+              4,
+              2
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.09
+          },
+          "events": []
+        },
+        {
+          "span_id": "0d30cc4b-c4f0-4e16-a1dc-f5008b13513e",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35733.536591625,
+          "end_time": 35733.536759583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "3c693072-5d6c-4195-b0a0-1162d22d7db7",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35733.537187875,
+          "end_time": 35733.538212375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 1.02
+          },
+          "events": []
+        },
+        {
+          "span_id": "e1b02d9a-e8e8-48fb-a742-032d44e364b0",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "sql_validate",
+          "parent_span_id": "3c693072-5d6c-4195-b0a0-1162d22d7db7",
+          "start_time": 35733.537214666,
+          "end_time": 35733.537954166,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 332,
+            "validation_success": true,
+            "latency_ms": 0.74
+          },
+          "events": []
+        },
+        {
+          "span_id": "fc47438d-bd4f-43f9-9ddf-6db763b12f98",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35733.538896416,
+          "end_time": 35734.672426125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 1133.53
+          },
+          "events": []
+        },
+        {
+          "span_id": "44c41734-e040-4781-961c-8f06c52c8ead",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "bq_execute",
+          "parent_span_id": "fc47438d-bd4f-43f9-9ddf-6db763b12f98",
+          "start_time": 35733.538914666,
+          "end_time": 35734.669047416,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 338,
+            "rows_returned": 10,
+            "sql_length": 338,
+            "latency_ms": 1130.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "6db0ffad-7aa5-413a-991b-7b0103384755",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35734.673221083,
+          "end_time": 35734.675938291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 2.71
+          },
+          "events": []
+        },
+        {
+          "span_id": "06a9c176-4a53-48dc-bc48-83f9cce32492",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35734.676457666,
+          "end_time": 35734.679785125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 3.32
+          },
+          "events": []
+        },
+        {
+          "span_id": "f0b9fd54-7605-4e9b-91fd-65858047e49f",
+          "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35734.680266208,
+          "end_time": 35734.680462666,
+          "status": "ok",
+          "attributes": {
+            "request_id": "d654e82a-ebcb-4ec6-aa81-ca55615602d6",
+            "user_id": "manager_a",
+            "latency_ms": 0.19
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What are the top 10 products by revenue?",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+      "session_id": "0620d557",
+      "conversation_id": "209849fe",
+      "user_id": "manager_a",
+      "start_time": 35734.68151725,
+      "end_time": 35737.363454375,
+      "spans": [
+        {
+          "span_id": "e7162f61-b891-4f4b-9fff-ded52d5508ff",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35734.682996083,
+          "end_time": 35734.683139541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.14
+          },
+          "events": []
+        },
+        {
+          "span_id": "9eb874b9-f0fe-4991-9ac5-28fa2438f27d",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35734.683507458,
+          "end_time": 35734.683512625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "660f536c-933a-4611-bcc8-84ab25565ad2",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35734.684071333,
+          "end_time": 35735.753774875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 1069.71
+          },
+          "events": []
+        },
+        {
+          "span_id": "abd67d79-6ca1-4d84-ada4-39de02b0b25b",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "schema_fetch",
+          "parent_span_id": "660f536c-933a-4611-bcc8-84ab25565ad2",
+          "start_time": 35734.68408125,
+          "end_time": 35735.753629375,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1069.55
+          },
+          "events": []
+        },
+        {
+          "span_id": "42e082ca-5bfc-47f3-86bc-55d743b640c1",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "bq_get_schema",
+          "parent_span_id": "abd67d79-6ca1-4d84-ada4-39de02b0b25b",
+          "start_time": 35734.684140416,
+          "end_time": 35734.928576333,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 244.43
+          },
+          "events": []
+        },
+        {
+          "span_id": "c767394c-1a73-4a19-83eb-a85e206210ae",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "bq_get_schema",
+          "parent_span_id": "abd67d79-6ca1-4d84-ada4-39de02b0b25b",
+          "start_time": 35734.928613916,
+          "end_time": 35735.218746875,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 290.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "b6ddfb8f-3b7d-4eac-8157-a733024ed027",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "bq_get_schema",
+          "parent_span_id": "abd67d79-6ca1-4d84-ada4-39de02b0b25b",
+          "start_time": 35735.218789583,
+          "end_time": 35735.464615791,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 245.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "354c5a15-d728-4220-b894-162448b417c9",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "bq_get_schema",
+          "parent_span_id": "abd67d79-6ca1-4d84-ada4-39de02b0b25b",
+          "start_time": 35735.464654083,
+          "end_time": 35735.753595458,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 288.94
+          },
+          "events": []
+        },
+        {
+          "span_id": "770b7b69-985a-4262-a274-20a86e474997",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35735.754417125,
+          "end_time": 35735.754614458,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 0.19
+          },
+          "events": []
+        },
+        {
+          "span_id": "542da4f3-10fc-4803-99db-f62562235455",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "770b7b69-985a-4262-a274-20a86e474997",
+          "start_time": 35735.754435791,
+          "end_time": 35735.75450075,
+          "status": "ok",
+          "attributes": {
+            "query": "Show monthly revenue trend for the last 12 months.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              9,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "85502db1-b56a-4311-9712-b6239762e1e8",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35735.755607166,
+          "end_time": 35735.755773958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "6110d6c1-c756-41f8-b2f4-af42b6913611",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35735.756286416,
+          "end_time": 35735.756597541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 0.31
+          },
+          "events": []
+        },
+        {
+          "span_id": "d3a270f2-5fa8-4b62-bbfb-2e0694a52ac7",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "sql_validate",
+          "parent_span_id": "6110d6c1-c756-41f8-b2f4-af42b6913611",
+          "start_time": 35735.756306625,
+          "end_time": 35735.7564665,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "4e365b80-fba8-4da7-a6c2-170dd2d84e42",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35735.757068083,
+          "end_time": 35737.356461416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 1599.39
+          },
+          "events": []
+        },
+        {
+          "span_id": "90682539-5397-45ca-baa6-aff71ac05a4b",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "bq_execute",
+          "parent_span_id": "4e365b80-fba8-4da7-a6c2-170dd2d84e42",
+          "start_time": 35735.757084791,
+          "end_time": 35737.355621583,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 353,
+            "rows_returned": 13,
+            "sql_length": 353,
+            "latency_ms": 1598.54
+          },
+          "events": []
+        },
+        {
+          "span_id": "169b24be-aa77-4132-8b3c-df28f1967e6b",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35737.35727325,
+          "end_time": 35737.359534416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 2.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "1b29cc99-18cb-4ddb-9a14-defc7e0b716a",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35737.360195,
+          "end_time": 35737.362174375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 1.97
+          },
+          "events": []
+        },
+        {
+          "span_id": "305d9891-2ad4-47fa-90c0-f1cd8f43e97f",
+          "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35737.362762208,
+          "end_time": 35737.3628615,
+          "status": "ok",
+          "attributes": {
+            "request_id": "f33b8911-d6ad-4e6d-b770-bf57a55d8cb4",
+            "user_id": "manager_a",
+            "latency_ms": 0.09
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Show monthly revenue trend for the last 12 months.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+      "session_id": "0620d557",
+      "conversation_id": "25d3b52f",
+      "user_id": "manager_a",
+      "start_time": 35737.363694583,
+      "end_time": 35739.580511916,
+      "spans": [
+        {
+          "span_id": "fa98ba36-81d4-4960-bc40-7b95ea5f8993",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35737.364649375,
+          "end_time": 35737.364759666,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.11
+          },
+          "events": []
+        },
+        {
+          "span_id": "14600bb0-10a7-4529-81ca-5ca5bb1043f8",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35737.364982583,
+          "end_time": 35737.364985666,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "da4b7eac-f2b5-439d-a666-486f325303ea",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35737.365310625,
+          "end_time": 35738.380165458,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 1014.86
+          },
+          "events": []
+        },
+        {
+          "span_id": "af2716e1-4480-4d66-8888-71776efe3e07",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "schema_fetch",
+          "parent_span_id": "da4b7eac-f2b5-439d-a666-486f325303ea",
+          "start_time": 35737.365319583,
+          "end_time": 35738.379923125,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1014.6
+          },
+          "events": []
+        },
+        {
+          "span_id": "8a645c54-4626-4fbe-9436-1034709ed0b9",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "bq_get_schema",
+          "parent_span_id": "af2716e1-4480-4d66-8888-71776efe3e07",
+          "start_time": 35737.365327875,
+          "end_time": 35737.623267375,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 257.94
+          },
+          "events": []
+        },
+        {
+          "span_id": "56476344-1523-4c28-843e-a750d1073688",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "bq_get_schema",
+          "parent_span_id": "af2716e1-4480-4d66-8888-71776efe3e07",
+          "start_time": 35737.62330675,
+          "end_time": 35737.899351458,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 276.04
+          },
+          "events": []
+        },
+        {
+          "span_id": "5b1e96f7-3d9b-463a-bd01-ad77c1844965",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "bq_get_schema",
+          "parent_span_id": "af2716e1-4480-4d66-8888-71776efe3e07",
+          "start_time": 35737.899420291,
+          "end_time": 35738.140157916,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 240.73
+          },
+          "events": []
+        },
+        {
+          "span_id": "b966d14e-7db5-4447-81ec-a6d91bf7c912",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "bq_get_schema",
+          "parent_span_id": "af2716e1-4480-4d66-8888-71776efe3e07",
+          "start_time": 35738.1402025,
+          "end_time": 35738.379861791,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 239.66
+          },
+          "events": []
+        },
+        {
+          "span_id": "66d57f54-4cc0-40da-9709-f3d089dc5981",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35738.3808765,
+          "end_time": 35738.381089,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "83390aa7-ae1a-4fab-b2bb-a2adff0948ef",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "66d57f54-4cc0-40da-9709-f3d089dc5981",
+          "start_time": 35738.380893833,
+          "end_time": 35738.380958,
+          "status": "ok",
+          "attributes": {
+            "query": "Who are the top customers by total spend?",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              7,
+              4,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "e07a2de0-e310-429c-8437-19013c232d5f",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35738.38174275,
+          "end_time": 35738.381910041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 0.14
+          },
+          "events": []
+        },
+        {
+          "span_id": "418648da-128f-4476-a329-6c2da41a79a5",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35738.382261208,
+          "end_time": 35738.382603958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 0.34
+          },
+          "events": []
+        },
+        {
+          "span_id": "c7db5d3b-dead-4b84-99b1-d53e5670644a",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "sql_validate",
+          "parent_span_id": "418648da-128f-4476-a329-6c2da41a79a5",
+          "start_time": 35738.382274875,
+          "end_time": 35738.382428916,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "56bfab76-566a-4650-bee6-1cefbf18d458",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35738.383361458,
+          "end_time": 35739.574672583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 1191.31
+          },
+          "events": []
+        },
+        {
+          "span_id": "d4ae31e1-fa84-49f4-b159-e76f183a2d39",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "bq_execute",
+          "parent_span_id": "56bfab76-566a-4650-bee6-1cefbf18d458",
+          "start_time": 35738.383379333,
+          "end_time": 35739.573192333,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 10,
+            "sql_length": 345,
+            "latency_ms": 1189.81
+          },
+          "events": []
+        },
+        {
+          "span_id": "f1d83479-25ad-4218-94e5-1be8a7be3c72",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35739.5756435,
+          "end_time": 35739.577469416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 1.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "5d47b4c4-e93a-44ea-8874-e14ce9c471e3",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35739.577928833,
+          "end_time": 35739.579271291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 1.34
+          },
+          "events": []
+        },
+        {
+          "span_id": "dadc265d-0b96-41ba-bc16-cd3fda8157f7",
+          "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35739.579710833,
+          "end_time": 35739.579813666,
+          "status": "ok",
+          "attributes": {
+            "request_id": "49419523-41d9-4a7e-9cd3-0ea8adfa9842",
+            "user_id": "manager_a",
+            "latency_ms": 0.1
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Who are the top customers by total spend?",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+      "session_id": "0620d557",
+      "conversation_id": "6e65d2c5",
+      "user_id": "manager_a",
+      "start_time": 35739.580675041,
+      "end_time": 35740.896031708,
+      "spans": [
+        {
+          "span_id": "6355e1d0-67a2-4e99-97de-334b389af4f2",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35739.581310666,
+          "end_time": 35739.581376208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "d222c32f-206f-4f96-941b-7ee51979a0a5",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35739.581528083,
+          "end_time": 35739.581530208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "690a6dbb-29f7-497c-a18c-56337fc59e63",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "7a4be029-1304-4d12-900f-5f095276e226",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35739.581757708,
+          "end_time": 35740.895022875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "690a6dbb-29f7-497c-a18c-56337fc59e63",
+            "user_id": "manager_a",
+            "latency_ms": 1313.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "ea3ccb2f-2bc6-4cfa-b05a-5673ec5a2a67",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "schema_fetch",
+          "parent_span_id": "7a4be029-1304-4d12-900f-5f095276e226",
+          "start_time": 35739.581764958,
+          "end_time": 35740.894929291,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1313.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "daf27646-e42c-47ca-affb-eddb1ec40f63",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "bq_get_schema",
+          "parent_span_id": "ea3ccb2f-2bc6-4cfa-b05a-5673ec5a2a67",
+          "start_time": 35739.581771875,
+          "end_time": 35740.104357166,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 522.59
+          },
+          "events": []
+        },
+        {
+          "span_id": "bf830979-9977-46f5-9644-e23a7923c195",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "bq_get_schema",
+          "parent_span_id": "ea3ccb2f-2bc6-4cfa-b05a-5673ec5a2a67",
+          "start_time": 35740.104425041,
+          "end_time": 35740.364831833,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 260.39
+          },
+          "events": []
+        },
+        {
+          "span_id": "52b8829c-85c6-4fdd-a0ff-2eaed37e8d49",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "bq_get_schema",
+          "parent_span_id": "ea3ccb2f-2bc6-4cfa-b05a-5673ec5a2a67",
+          "start_time": 35740.364870791,
+          "end_time": 35740.646040916,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 281.17
+          },
+          "events": []
+        },
+        {
+          "span_id": "ecb4b15c-919f-4e3f-9f8d-b2cd6c58e880",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "bq_get_schema",
+          "parent_span_id": "ea3ccb2f-2bc6-4cfa-b05a-5673ec5a2a67",
+          "start_time": 35740.64608825,
+          "end_time": 35740.894914958,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 248.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "1d90a034-63f0-45ba-9dac-f9e3e656e3e5",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "generate_schema_response",
+          "parent_span_id": null,
+          "start_time": 35740.895384333,
+          "end_time": 35740.895404875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "690a6dbb-29f7-497c-a18c-56337fc59e63",
+            "user_id": "manager_a",
+            "latency_ms": 0.02
+          },
+          "events": []
+        },
+        {
+          "span_id": "b35d88fa-7a15-437b-8480-97a9ca0684c6",
+          "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35740.895687625,
+          "end_time": 35740.895729375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "690a6dbb-29f7-497c-a18c-56337fc59e63",
+            "user_id": "manager_a",
+            "latency_ms": 0.04
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What columns exist in the users table?",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+      "session_id": "0620d557",
+      "conversation_id": "cd645223",
+      "user_id": "manager_a",
+      "start_time": 35740.896205458,
+      "end_time": 35742.983603833,
+      "spans": [
+        {
+          "span_id": "41831814-384f-4148-a40b-ac4990d3aefc",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35740.896736875,
+          "end_time": 35740.896792333,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.05
+          },
+          "events": []
+        },
+        {
+          "span_id": "c00e3a38-e73a-4cb1-91d4-56205e217ea1",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35740.896924791,
+          "end_time": 35740.896926333,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "178bdcc0-adcd-49d6-9230-8800d7a97405",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35740.897243,
+          "end_time": 35741.899181416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 1001.94
+          },
+          "events": []
+        },
+        {
+          "span_id": "ec528660-7a66-469a-945c-06f17a27c35e",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "schema_fetch",
+          "parent_span_id": "178bdcc0-adcd-49d6-9230-8800d7a97405",
+          "start_time": 35740.897251708,
+          "end_time": 35741.899014958,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1001.76
+          },
+          "events": []
+        },
+        {
+          "span_id": "3bfcb924-c3e3-4d39-8c80-a511e612ab83",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "bq_get_schema",
+          "parent_span_id": "ec528660-7a66-469a-945c-06f17a27c35e",
+          "start_time": 35740.897259791,
+          "end_time": 35741.12188375,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 224.63
+          },
+          "events": []
+        },
+        {
+          "span_id": "f7c50210-6c37-4e4c-8264-baf025108473",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "bq_get_schema",
+          "parent_span_id": "ec528660-7a66-469a-945c-06f17a27c35e",
+          "start_time": 35741.121930375,
+          "end_time": 35741.376928541,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 254.99
+          },
+          "events": []
+        },
+        {
+          "span_id": "3750dbd3-7b57-48c2-91ff-929d0a5a9f45",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "bq_get_schema",
+          "parent_span_id": "ec528660-7a66-469a-945c-06f17a27c35e",
+          "start_time": 35741.376949583,
+          "end_time": 35741.640771291,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 263.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "6f29cfb6-654d-4ae2-a228-9e0d2eb6e900",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "bq_get_schema",
+          "parent_span_id": "ec528660-7a66-469a-945c-06f17a27c35e",
+          "start_time": 35741.6408375,
+          "end_time": 35741.898983583,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 258.14
+          },
+          "events": []
+        },
+        {
+          "span_id": "789072b8-41ce-4515-90c1-097a5fb03ebf",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35741.900082,
+          "end_time": 35741.900369041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.28
+          },
+          "events": []
+        },
+        {
+          "span_id": "c034a151-ae3a-4325-b2d3-fced8e229fd9",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "789072b8-41ce-4515-90c1-097a5fb03ebf",
+          "start_time": 35741.900100541,
+          "end_time": 35741.900163291,
+          "status": "ok",
+          "attributes": {
+            "query": "List customer emails with highest spend.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              1,
+              0,
+              0
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "7ea8eeae-8b9b-4ef2-888f-aecf7d16ce34",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35741.900805583,
+          "end_time": 35741.900965625,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "f6759bcc-7514-4bb6-8d9c-282a530e55df",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35741.901510625,
+          "end_time": 35741.901827958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.32
+          },
+          "events": []
+        },
+        {
+          "span_id": "09098ada-e23e-4187-bd8e-9e9a377821c5",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "sql_validate",
+          "parent_span_id": "f6759bcc-7514-4bb6-8d9c-282a530e55df",
+          "start_time": 35741.901525083,
+          "end_time": 35741.901685458,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.16
+          },
+          "events": []
+        },
+        {
+          "span_id": "d88b4a95-a646-47d7-872d-73484782aabe",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35741.90211725,
+          "end_time": 35742.97699475,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 1074.88
+          },
+          "events": []
+        },
+        {
+          "span_id": "e8f0d0e9-0f50-4af4-9517-9945968e1ab3",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "bq_execute",
+          "parent_span_id": "d88b4a95-a646-47d7-872d-73484782aabe",
+          "start_time": 35741.902125583,
+          "end_time": 35742.97608525,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 10,
+            "sql_length": 345,
+            "latency_ms": 1073.96
+          },
+          "events": []
+        },
+        {
+          "span_id": "3805eb77-3874-4e5a-b33f-2c6cb68f3894",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35742.977790416,
+          "end_time": 35742.9796355,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 1.84
+          },
+          "events": []
+        },
+        {
+          "span_id": "bb0ccf92-905f-4635-83d4-90f7afd55345",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35742.980434375,
+          "end_time": 35742.982161375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 1.72
+          },
+          "events": []
+        },
+        {
+          "span_id": "70d53f2c-18aa-4b26-a525-d889bec99296",
+          "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35742.982737083,
+          "end_time": 35742.982948375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "eecdb108-95cc-4510-9ea2-8c592799b5f1",
+            "user_id": "manager_a",
+            "latency_ms": 0.21
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "List customer emails with highest spend.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+      "session_id": "0620d557",
+      "conversation_id": "3643cca7",
+      "user_id": "manager_a",
+      "start_time": 35742.983877083,
+      "end_time": 35745.172727583,
+      "spans": [
+        {
+          "span_id": "ee39e05c-3e79-4cc4-867d-f46c2f2b113c",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35742.984747083,
+          "end_time": 35742.984820208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "e896dc44-c024-40d1-b69d-81e7d44e8ade",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35742.984982333,
+          "end_time": 35742.9849845,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "9a6ab788-e915-4a47-9970-79b1af8404a6",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35742.985301333,
+          "end_time": 35744.064961208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 1079.66
+          },
+          "events": []
+        },
+        {
+          "span_id": "31dea2c3-23d6-4697-ac3d-2bf95ab8b5df",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "schema_fetch",
+          "parent_span_id": "9a6ab788-e915-4a47-9970-79b1af8404a6",
+          "start_time": 35742.985310791,
+          "end_time": 35744.064797375,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1079.49
+          },
+          "events": []
+        },
+        {
+          "span_id": "bba67e08-bafa-4b97-862a-7af5d1b7c212",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "bq_get_schema",
+          "parent_span_id": "31dea2c3-23d6-4697-ac3d-2bf95ab8b5df",
+          "start_time": 35742.98531775,
+          "end_time": 35743.222237875,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 236.92
+          },
+          "events": []
+        },
+        {
+          "span_id": "8dc4213e-f0c8-49be-8ed2-8d800a225f5a",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "bq_get_schema",
+          "parent_span_id": "31dea2c3-23d6-4697-ac3d-2bf95ab8b5df",
+          "start_time": 35743.222337708,
+          "end_time": 35743.477240041,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 254.9
+          },
+          "events": []
+        },
+        {
+          "span_id": "c19a47bf-2e69-406e-a51d-755e5ad0fea4",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "bq_get_schema",
+          "parent_span_id": "31dea2c3-23d6-4697-ac3d-2bf95ab8b5df",
+          "start_time": 35743.4772795,
+          "end_time": 35743.752596458,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 275.31
+          },
+          "events": []
+        },
+        {
+          "span_id": "e3312746-fd42-47af-8bad-6254811e0864",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "bq_get_schema",
+          "parent_span_id": "31dea2c3-23d6-4697-ac3d-2bf95ab8b5df",
+          "start_time": 35743.752635791,
+          "end_time": 35744.064764125,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 312.13
+          },
+          "events": []
+        },
+        {
+          "span_id": "c1cd8f61-8715-4533-ae33-507f5758d74e",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35744.065666666,
+          "end_time": 35744.065887541,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 0.22
+          },
+          "events": []
+        },
+        {
+          "span_id": "09c2b9bd-613b-42d4-ba58-d90b776141e9",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "c1cd8f61-8715-4533-ae33-507f5758d74e",
+          "start_time": 35744.0656865,
+          "end_time": 35744.065755208,
+          "status": "ok",
+          "attributes": {
+            "query": "Show phone numbers for top customers.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              2,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "f7b18c0b-aa5e-4804-8685-e5b2b1b5d0de",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35744.066672,
+          "end_time": 35744.066820916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 0.15
+          },
+          "events": []
+        },
+        {
+          "span_id": "067d68c0-a993-4321-9b0b-e0bc5ec27425",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35744.06738125,
+          "end_time": 35744.0679055,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 0.52
+          },
+          "events": []
+        },
+        {
+          "span_id": "6cecd7d8-4828-4519-a484-b1572c00470f",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "sql_validate",
+          "parent_span_id": "067d68c0-a993-4321-9b0b-e0bc5ec27425",
+          "start_time": 35744.067397083,
+          "end_time": 35744.067724541,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 339,
+            "validation_success": true,
+            "latency_ms": 0.33
+          },
+          "events": []
+        },
+        {
+          "span_id": "d0b540e6-6b77-4219-9a37-564ba0741ba4",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35744.068740291,
+          "end_time": 35745.167755083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 1099.02
+          },
+          "events": []
+        },
+        {
+          "span_id": "ab2edd42-77d3-4ea8-a27e-9455b7a83b43",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "bq_execute",
+          "parent_span_id": "d0b540e6-6b77-4219-9a37-564ba0741ba4",
+          "start_time": 35744.068756166,
+          "end_time": 35745.166800958,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 345,
+            "rows_returned": 10,
+            "sql_length": 345,
+            "latency_ms": 1098.05
+          },
+          "events": []
+        },
+        {
+          "span_id": "1f5e2c1f-0030-444e-b9e8-96befd3c455e",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35745.168529625,
+          "end_time": 35745.169848583,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 1.32
+          },
+          "events": []
+        },
+        {
+          "span_id": "9a0c4f64-c28d-4f55-8717-6bc6e88bb95e",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35745.170267,
+          "end_time": 35745.172078375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 1.81
+          },
+          "events": []
+        },
+        {
+          "span_id": "1d579ccb-dcec-4e94-b39f-f706cd68fca6",
+          "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35745.17232125,
+          "end_time": 35745.172379791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "1a2d8567-0433-4cb8-8fa5-11e94a41aaff",
+            "user_id": "manager_a",
+            "latency_ms": 0.06
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Show phone numbers for top customers.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+      "session_id": "0620d557",
+      "conversation_id": "91edd9da",
+      "user_id": "manager_a",
+      "start_time": 35745.172859458,
+      "end_time": 35745.174192166,
+      "spans": [
+        {
+          "span_id": "ac91bf2c-44c5-45c6-9e1d-7ea6b6010c44",
+          "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35745.173442041,
+          "end_time": 35745.173497916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "89ea3aa7-9fcd-4016-8463-3cf2b9b110eb",
+          "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35745.173648083,
+          "end_time": 35745.173650375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e606a3ae-28bd-4e7a-a9c7-183863fa6c66",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "0fed5766-cfac-42c0-988b-c8c3a46eca46",
+          "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35745.173907833,
+          "end_time": 35745.173948125,
+          "status": "ok",
+          "attributes": {
+            "request_id": "e606a3ae-28bd-4e7a-a9c7-183863fa6c66",
+            "user_id": "manager_a",
+            "latency_ms": 0.04
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Delete all reports mentioning Client X",
+        "final_status": "requires_confirmation"
+      }
+    },
+    {
+      "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+      "session_id": "0620d557",
+      "conversation_id": "5a4d674d",
+      "user_id": "manager_a",
+      "start_time": 35745.1743085,
+      "end_time": 35745.175727125,
+      "spans": [
+        {
+          "span_id": "58def09e-a8f6-411c-84cc-616ff91b43d8",
+          "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35745.174965708,
+          "end_time": 35745.175034833,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "98635ec2-a5ae-4b40-b327-abe143959d61",
+          "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35745.175197833,
+          "end_time": 35745.175199875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "7d671722-234b-414b-8271-0c18a6c8f7dc",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "de4e8f98-495a-4c03-8956-31b61f8de79d",
+          "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35745.175448583,
+          "end_time": 35745.175486875,
+          "status": "ok",
+          "attributes": {
+            "request_id": "7d671722-234b-414b-8271-0c18a6c8f7dc",
+            "user_id": "manager_a",
+            "latency_ms": 0.04
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "What is the weather in Lisbon today?",
+        "final_status": "rejected"
+      }
+    },
+    {
+      "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+      "session_id": "0620d557",
+      "conversation_id": "8bc35c12",
+      "user_id": "manager_a",
+      "start_time": 35745.176149458,
+      "end_time": 35747.356617916,
+      "spans": [
+        {
+          "span_id": "01d8d262-e1ab-45f8-8ef6-ff35a8662f10",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35745.1766625,
+          "end_time": 35745.176723166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "bef0232a-6844-4ff6-8b99-11c0c52fc876",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35745.176868333,
+          "end_time": 35745.176870458,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "f38a27ca-1da8-4620-b7d2-a2242c3e8ecf",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35745.177092583,
+          "end_time": 35746.162120791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 985.03
+          },
+          "events": []
+        },
+        {
+          "span_id": "ddf6cf1d-c744-449e-841e-b12496bb34e4",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "schema_fetch",
+          "parent_span_id": "f38a27ca-1da8-4620-b7d2-a2242c3e8ecf",
+          "start_time": 35745.177099916,
+          "end_time": 35746.161877333,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 984.78
+          },
+          "events": []
+        },
+        {
+          "span_id": "d901ba0f-f3a0-459e-a001-fe73d69b0992",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "bq_get_schema",
+          "parent_span_id": "ddf6cf1d-c744-449e-841e-b12496bb34e4",
+          "start_time": 35745.177106083,
+          "end_time": 35745.435977916,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 258.87
+          },
+          "events": []
+        },
+        {
+          "span_id": "3299e5e2-74db-4870-a605-fb848ff53843",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "bq_get_schema",
+          "parent_span_id": "ddf6cf1d-c744-449e-841e-b12496bb34e4",
+          "start_time": 35745.436017041,
+          "end_time": 35745.672712416,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 236.69
+          },
+          "events": []
+        },
+        {
+          "span_id": "a1306015-e6d1-4f3a-aba4-3ea2ee7822fa",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "bq_get_schema",
+          "parent_span_id": "ddf6cf1d-c744-449e-841e-b12496bb34e4",
+          "start_time": 35745.672758208,
+          "end_time": 35745.905289375,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 232.53
+          },
+          "events": []
+        },
+        {
+          "span_id": "052a5373-f1c8-4407-b218-fba62558b7f3",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "bq_get_schema",
+          "parent_span_id": "ddf6cf1d-c744-449e-841e-b12496bb34e4",
+          "start_time": 35745.905340791,
+          "end_time": 35746.161847041,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 256.5
+          },
+          "events": []
+        },
+        {
+          "span_id": "8b5578e5-2a01-4164-a7b2-476d381c8f64",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35746.16383525,
+          "end_time": 35746.16412575,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 0.29
+          },
+          "events": []
+        },
+        {
+          "span_id": "0d3c1032-7521-46ad-ab0d-d77266e83f6c",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "8b5578e5-2a01-4164-a7b2-476d381c8f64",
+          "start_time": 35746.1638625,
+          "end_time": 35746.163927875,
+          "status": "ok",
+          "attributes": {
+            "query": "Compare this month's revenue vs previous month.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              6,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.06
+          },
+          "events": []
+        },
+        {
+          "span_id": "b07cbdbe-5b76-4d37-bc42-7f66e62558f3",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35746.16453625,
+          "end_time": 35746.164719916,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 0.18
+          },
+          "events": []
+        },
+        {
+          "span_id": "dce69a65-43c1-420d-94b6-57896d6b48ab",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35746.165384583,
+          "end_time": 35746.165821041,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 0.43
+          },
+          "events": []
+        },
+        {
+          "span_id": "00ce51cc-e998-4944-b79f-bc5e11adbcd9",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "sql_validate",
+          "parent_span_id": "dce69a65-43c1-420d-94b6-57896d6b48ab",
+          "start_time": 35746.165400208,
+          "end_time": 35746.165612875,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.21
+          },
+          "events": []
+        },
+        {
+          "span_id": "4301f663-8123-4539-8cff-49ec23955ccc",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35746.166417833,
+          "end_time": 35747.346005791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 1179.59
+          },
+          "events": []
+        },
+        {
+          "span_id": "24cbe3ec-d239-49c3-8920-02855c8d1759",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "bq_execute",
+          "parent_span_id": "4301f663-8123-4539-8cff-49ec23955ccc",
+          "start_time": 35746.166441625,
+          "end_time": 35747.345181958,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 3,
+            "sql_length": 416,
+            "latency_ms": 1178.74
+          },
+          "events": []
+        },
+        {
+          "span_id": "7cb409b1-80db-4a80-9853-9ff0181f7368",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35747.347067958,
+          "end_time": 35747.349545958,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 2.47
+          },
+          "events": []
+        },
+        {
+          "span_id": "9e31e196-ddad-4175-bafe-f585552c42e5",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35747.350092208,
+          "end_time": 35747.355913291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 5.82
+          },
+          "events": []
+        },
+        {
+          "span_id": "50e65f55-8b10-491a-8247-209be48a6898",
+          "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35747.356181416,
+          "end_time": 35747.35625025,
+          "status": "ok",
+          "attributes": {
+            "request_id": "967516ec-1a00-43df-9926-244e82e3ebc3",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Compare this month's revenue vs previous month.",
+        "final_status": "success"
+      }
+    },
+    {
+      "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+      "session_id": "0620d557",
+      "conversation_id": "8eec1eb1",
+      "user_id": "manager_a",
+      "start_time": 35747.357000791,
+      "end_time": 35749.579552208,
+      "spans": [
+        {
+          "span_id": "18d9515b-5d01-4cd2-9f24-4b81c3f46355",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "classify_intent",
+          "parent_span_id": null,
+          "start_time": 35747.357688333,
+          "end_time": 35747.357758291,
+          "status": "ok",
+          "attributes": {
+            "request_id": "",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        },
+        {
+          "span_id": "c1f3229d-79f1-4ad4-9062-85d4b483b99b",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "reject_or_route",
+          "parent_span_id": null,
+          "start_time": 35747.357926625,
+          "end_time": 35747.3579285,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 0.0
+          },
+          "events": []
+        },
+        {
+          "span_id": "c19d86d2-07d6-4e7d-946e-6761150dbf3f",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "load_schema",
+          "parent_span_id": null,
+          "start_time": 35747.358251541,
+          "end_time": 35748.390820416,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 1032.57
+          },
+          "events": []
+        },
+        {
+          "span_id": "9ed4fbec-1943-402b-8784-96a4c6ef6afd",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "schema_fetch",
+          "parent_span_id": "c19d86d2-07d6-4e7d-946e-6761150dbf3f",
+          "start_time": 35747.358258333,
+          "end_time": 35748.390633958,
+          "status": "ok",
+          "attributes": {
+            "tables": [
+              "order_items",
+              "orders",
+              "products",
+              "users"
+            ],
+            "tables_fetched": 4,
+            "total_columns": 45,
+            "fallback_count": 0,
+            "latency_ms": 1032.38
+          },
+          "events": []
+        },
+        {
+          "span_id": "a90d1768-e5de-476e-8ec0-391d581381d7",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "bq_get_schema",
+          "parent_span_id": "9ed4fbec-1943-402b-8784-96a4c6ef6afd",
+          "start_time": 35747.358263541,
+          "end_time": 35747.612706,
+          "status": "ok",
+          "attributes": {
+            "table": "order_items",
+            "column_count": 11,
+            "latency_ms": 254.44
+          },
+          "events": []
+        },
+        {
+          "span_id": "7f3bd947-013e-4fc4-a248-a8d0d5b4a709",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "bq_get_schema",
+          "parent_span_id": "9ed4fbec-1943-402b-8784-96a4c6ef6afd",
+          "start_time": 35747.612744458,
+          "end_time": 35747.861603958,
+          "status": "ok",
+          "attributes": {
+            "table": "orders",
+            "column_count": 9,
+            "latency_ms": 248.86
+          },
+          "events": []
+        },
+        {
+          "span_id": "b533baeb-dd9b-4b6a-8c90-3c9f88f3f552",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "bq_get_schema",
+          "parent_span_id": "9ed4fbec-1943-402b-8784-96a4c6ef6afd",
+          "start_time": 35747.861714166,
+          "end_time": 35748.154093125,
+          "status": "ok",
+          "attributes": {
+            "table": "products",
+            "column_count": 9,
+            "latency_ms": 292.38
+          },
+          "events": []
+        },
+        {
+          "span_id": "5aa3149e-56f0-43e5-8bd6-a1a537bd6013",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "bq_get_schema",
+          "parent_span_id": "9ed4fbec-1943-402b-8784-96a4c6ef6afd",
+          "start_time": 35748.154135416,
+          "end_time": 35748.390598041,
+          "status": "ok",
+          "attributes": {
+            "table": "users",
+            "column_count": 16,
+            "latency_ms": 236.46
+          },
+          "events": []
+        },
+        {
+          "span_id": "0d7e853f-46a2-4c37-ad7b-d4918d992781",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "retrieve_golden_examples",
+          "parent_span_id": null,
+          "start_time": 35748.391741958,
+          "end_time": 35748.392156375,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 0.41
+          },
+          "events": []
+        },
+        {
+          "span_id": "83058d36-5a0a-4e67-aba3-bd04bf41c396",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "fewshot_retrieve",
+          "parent_span_id": "0d7e853f-46a2-4c37-ad7b-d4918d992781",
+          "start_time": 35748.391928666,
+          "end_time": 35748.392007958,
+          "status": "ok",
+          "attributes": {
+            "query": "Compare this month's revenue vs previous month.",
+            "top_k": 3,
+            "docs_retrieved": 3,
+            "top_scores": [
+              6,
+              2,
+              1
+            ],
+            "no_relevant_docs": false,
+            "latency_ms": 0.08
+          },
+          "events": []
+        },
+        {
+          "span_id": "8b5e4e8e-39fe-4828-8fa5-0ba6bc3892aa",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "generate_sql",
+          "parent_span_id": null,
+          "start_time": 35748.392719041,
+          "end_time": 35748.392910791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 0.19
+          },
+          "events": []
+        },
+        {
+          "span_id": "338bd982-4997-4628-8b83-fb97bb562c70",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "validate_sql",
+          "parent_span_id": null,
+          "start_time": 35748.393533833,
+          "end_time": 35748.3940985,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 0.56
+          },
+          "events": []
+        },
+        {
+          "span_id": "12e856c0-844c-42d6-b9c0-cd22ec6b6dca",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "sql_validate",
+          "parent_span_id": "338bd982-4997-4628-8b83-fb97bb562c70",
+          "start_time": 35748.393553208,
+          "end_time": 35748.393816416,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 402,
+            "validation_success": true,
+            "latency_ms": 0.26
+          },
+          "events": []
+        },
+        {
+          "span_id": "c58ef2de-aa57-421a-81bc-2c40cae8bdfd",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "execute_sql",
+          "parent_span_id": null,
+          "start_time": 35748.394676583,
+          "end_time": 35749.572420208,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 1177.74
+          },
+          "events": []
+        },
+        {
+          "span_id": "a82a51fa-ed1d-4b72-b207-28bcb6545d68",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "bq_execute",
+          "parent_span_id": "c58ef2de-aa57-421a-81bc-2c40cae8bdfd",
+          "start_time": 35748.39469425,
+          "end_time": 35749.571309625,
+          "status": "ok",
+          "attributes": {
+            "sql_len": 416,
+            "rows_returned": 3,
+            "sql_length": 416,
+            "latency_ms": 1176.62
+          },
+          "events": []
+        },
+        {
+          "span_id": "47390d6d-1f54-4e92-9a09-36107b96a11a",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "sanitize_results",
+          "parent_span_id": null,
+          "start_time": 35749.573284125,
+          "end_time": 35749.575170083,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 1.88
+          },
+          "events": []
+        },
+        {
+          "span_id": "d08e41dc-c814-47d4-86a5-50ee11e9319d",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "generate_report",
+          "parent_span_id": null,
+          "start_time": 35749.575603458,
+          "end_time": 35749.578234791,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 2.63
+          },
+          "events": []
+        },
+        {
+          "span_id": "5b584990-aa93-4caa-8cc8-8d800aafad50",
+          "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+          "name": "finalize_response",
+          "parent_span_id": null,
+          "start_time": 35749.578981291,
+          "end_time": 35749.579050166,
+          "status": "ok",
+          "attributes": {
+            "request_id": "788453c9-5d51-4a0e-a4d4-eabbec3de7fb",
+            "user_id": "manager_a",
+            "latency_ms": 0.07
+          },
+          "events": []
+        }
+      ],
+      "metadata": {
+        "agent_version": "0.1.0",
+        "prompt_version": "cd74c29e125eccd6",
+        "model_name": "gemini-2.0-flash",
+        "workflow_version": "88551276ad647761",
+        "question": "Compare this month's revenue vs previous month.",
+        "final_status": "success"
+      }
+    }
+  ],
+  "metrics_summary": {
+    "node_latency_ms": {
+      "count": 81,
+      "sum": 17324.297003055108,
+      "mean": 213.8802099142606,
+      "min": 0.0009159994078800082,
+      "max": 1599.3917500018142,
+      "p50": 0.28316699899733067,
+      "p95": 1179.58579200058
+    },
+    "bq_schema_time_ms": {
+      "count": 32,
+      "sum": 8823.498335004842,
+      "mean": 275.7343229689013,
+      "min": 224.6053339986247,
+      "max": 565.7527919975109,
+      "p50": 256.485124999017,
+      "p95": 522.5593330033007
+    },
+    "bq_get_schema_latency_ms": {
+      "count": 32,
+      "sum": 8824.176709007588,
+      "mean": 275.75552215648713,
+      "min": 224.6252920012921,
+      "max": 565.781417004473,
+      "p50": 256.5035829975386,
+      "p95": 522.5863750019926
+    },
+    "schema_fetch_time_ms": {
+      "count": 8,
+      "sum": 8825.651209997886,
+      "mean": 1103.2064012497358,
+      "min": 984.7578749977401,
+      "max": 1330.0993329976336,
+      "p50": 1069.5246660034172,
+      "p95": 1330.0993329976336
+    },
+    "schema_tables_fetched": {
+      "count": 8,
+      "sum": 32,
+      "mean": 4.0,
+      "min": 4,
+      "max": 4,
+      "p50": 4,
+      "p95": 4
+    },
+    "schema_fallback_count": {
+      "count": 8,
+      "sum": 0,
+      "mean": 0.0,
+      "min": 0,
+      "max": 0,
+      "p50": 0,
+      "p95": 0
+    },
+    "schema_fetch_latency_ms": {
+      "count": 8,
+      "sum": 8825.864790989726,
+      "mean": 1103.2330988737158,
+      "min": 984.776958997827,
+      "max": 1330.1490830053808,
+      "p50": 1069.5473749947269,
+      "p95": 1330.1490830053808
+    },
+    "retrieval_time_ms": {
+      "count": 7,
+      "sum": 0.3463749962975271,
+      "mean": 0.04948214232821816,
+      "min": 0.04325000190874562,
+      "max": 0.06254199979593977,
+      "p50": 0.04587500006891787,
+      "p95": 0.06254199979593977
+    },
+    "retrieval_docs_count": {
+      "count": 7,
+      "sum": 21,
+      "mean": 3.0,
+      "min": 3,
+      "max": 3,
+      "p50": 3,
+      "p95": 3
+    },
+    "retrieval_top_score": {
+      "count": 7,
+      "sum": 38,
+      "mean": 5.428571428571429,
+      "min": 1,
+      "max": 9,
+      "p50": 6,
+      "p95": 9
+    },
+    "fewshot_retrieve_latency_ms": {
+      "count": 7,
+      "sum": 0.48475000221515074,
+      "mean": 0.06925000031645011,
+      "min": 0.06183399818837643,
+      "max": 0.0877089987625368,
+      "p50": 0.06466700142482296,
+      "p95": 0.0877089987625368
+    },
+    "llm_fallback_used": {
+      "count": 12,
+      "sum": 12,
+      "mean": 1.0,
+      "min": 1,
+      "max": 1,
+      "p50": 1,
+      "p95": 1
+    },
+    "validation_time_ms": {
+      "count": 7,
+      "sum": 1.9261669949628413,
+      "mean": 0.27516671356612016,
+      "min": 0.14312499843072146,
+      "max": 0.7222499989438802,
+      "p50": 0.2001249958993867,
+      "p95": 0.7222499989438802
+    },
+    "sql_validate_latency_ms": {
+      "count": 7,
+      "sum": 2.0118759930483066,
+      "mean": 0.2874108561497581,
+      "min": 0.15308299771277234,
+      "max": 0.7397919980576262,
+      "p50": 0.2119169948855415,
+      "p95": 0.7397919980576262
+    },
+    "bq_query_time_ms": {
+      "count": 7,
+      "sum": 8445.648790002451,
+      "mean": 1206.5212557146358,
+      "min": 1073.9370420051273,
+      "max": 1598.4891660045832,
+      "p50": 1176.5892909970717,
+      "p95": 1598.4891660045832
+    },
+    "bq_rows_returned": {
+      "count": 7,
+      "sum": 59,
+      "mean": 8.428571428571429,
+      "min": 3,
+      "max": 13,
+      "p50": 10,
+      "p95": 13
+    },
+    "bq_execute_latency_ms": {
+      "count": 7,
+      "sum": 8445.843543013325,
+      "mean": 1206.5490775733322,
+      "min": 1073.9607919967966,
+      "max": 1598.5375000018394,
+      "p50": 1176.6152500058524,
+      "p95": 1598.5375000018394
+    },
+    "total_latency_ms": {
+      "count": 10,
+      "sum": 17377.164584002458,
+      "mean": 1737.7164584002458,
+      "min": 1.3242920031188987,
+      "max": 2681.91366699466,
+      "p50": 2188.8318339988473,
+      "p95": 2681.91366699466
+    }
+  },
+  "tool_invocations_summary": {
+    "bigquery_get_schema": {
+      "call_count": 32,
+      "success_count": 32,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 275.7343229689013,
+      "total_time_ms": 8823.498335004842,
+      "error_types": []
+    },
+    "llm_heuristic_fallback": {
+      "call_count": 5,
+      "success_count": 5,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 0.0,
+      "total_time_ms": 0,
+      "error_types": []
+    },
+    "sql_validator": {
+      "call_count": 7,
+      "success_count": 7,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 0.27516671356612016,
+      "total_time_ms": 1.9261669949628413,
+      "error_types": []
+    },
+    "bigquery_execute": {
+      "call_count": 7,
+      "success_count": 7,
+      "failure_count": 0,
+      "success_rate": 1.0,
+      "avg_time_ms": 1206.5212557146358,
+      "total_time_ms": 8445.648790002451,
+      "error_types": []
+    }
+  },
+  "tool_invocations": [
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 565.7527919975109,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 278.21545799815794,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 238.00829199899454,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 247.8473750015837,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 40
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 332
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.7222499989438802,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 338
+      },
+      "response_summary": "rows=10",
+      "execution_time_ms": 1130.1079170007142,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 244.41533400386106,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 290.11049999826355,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 245.8063329977449,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 288.92062500381144,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 50
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.1462500003981404,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 353
+      },
+      "response_summary": "rows=13",
+      "execution_time_ms": 1598.4891660045832,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 257.9213749995688,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 276.01566600060323,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 240.7113750014105,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 239.63779200130375,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 41
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.14312499843072146,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=10",
+      "execution_time_ms": 1189.7848329972476,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 522.5593330033007,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 260.3740420017857,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 281.1388749978505,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 248.81354200624628,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 224.6053339986247,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 254.98524999420624,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 263.79520900081843,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 258.11908299510833,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.14979200204834342,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=10",
+      "execution_time_ms": 1073.9370420051273,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 236.90170799818588,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 254.87725000130013,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 275.2949579953565,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 312.1071249988745,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 339
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.31433299591299146,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 345
+      },
+      "response_summary": "rows=10",
+      "execution_time_ms": 1098.022582998965,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 258.8522500009276,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 236.66983300063293,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 232.50587500660913,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 256.485124999017,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 47
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.2001249958993867,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=3",
+      "execution_time_ms": 1178.7179579987423,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "order_items"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 254.42450000264216,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "orders"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 248.83270900318166,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "products"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 292.35479199996917,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_get_schema",
+      "arguments": {
+        "table": "users"
+      },
+      "response_summary": "ok",
+      "execution_time_ms": 236.43862499739043,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "load_schema",
+      "reason": null
+    },
+    {
+      "tool_name": "llm_heuristic_fallback",
+      "arguments": {
+        "question_len": 47
+      },
+      "response_summary": "heuristic_sql_used",
+      "execution_time_ms": 0,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "generate_sql",
+      "reason": "llm_disabled"
+    },
+    {
+      "tool_name": "sql_validator",
+      "arguments": {
+        "sql_len": 402
+      },
+      "response_summary": "valid",
+      "execution_time_ms": 0.2502920033293776,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "validate_sql",
+      "reason": null
+    },
+    {
+      "tool_name": "bigquery_execute",
+      "arguments": {
+        "sql_len": 416
+      },
+      "response_summary": "rows=3",
+      "execution_time_ms": 1176.5892909970717,
+      "success": true,
+      "error_type": null,
+      "error_message": null,
+      "node_name": "execute_sql",
+      "reason": null
+    }
+  ],
+  "retrieval_observations_summary": {
+    "total_retrievals": 15,
+    "no_relevant_docs_count": 0,
+    "no_relevant_docs_rate": 0.0,
+    "avg_top_score": 5.429,
+    "avg_retrieval_time_ms": 588.4
+  },
+  "retrieval_observations": [
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1330.1,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "What are the top 10 products by revenue?",
+      "docs_retrieved": 3,
+      "top_scores": [
+        7,
+        4,
+        2
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.06,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1069.52,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Show monthly revenue trend for the last 12 months.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        9,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.04,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1014.55,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Who are the top customers by total spend?",
+      "docs_retrieved": 3,
+      "top_scores": [
+        7,
+        4,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1313.15,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1001.74,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "List customer emails with highest spend.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        1,
+        0,
+        0
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.04,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1079.47,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Show phone numbers for top customers.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        2,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 984.76,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Compare this month's revenue vs previous month.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        6,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "schema_fetch",
+      "docs_retrieved": 4,
+      "top_scores": [],
+      "top_k_requested": 4,
+      "retrieval_time_ms": 1032.35,
+      "data_origin": "bigquery_schema",
+      "no_relevant_docs": false
+    },
+    {
+      "query": "Compare this month's revenue vs previous month.",
+      "docs_retrieved": 3,
+      "top_scores": [
+        6,
+        2,
+        1
+      ],
+      "top_k_requested": 3,
+      "retrieval_time_ms": 0.05,
+      "data_origin": "golden_trios.json",
+      "no_relevant_docs": false
+    }
+  ],
+  "quality_summary": {
+    "total_evaluations": 10,
+    "avg_groundedness": 0.564,
+    "avg_relevance": 0.745,
+    "avg_completeness": 0.875,
+    "success_rate": 0.8,
+    "fallback_rate": 1.0,
+    "empty_response_rate": 0.0
+  },
+  "quality_signals": [
+    {
+      "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+      "groundedness": 0.947,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+      "groundedness": 0.8,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+      "groundedness": 0.952,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+      "groundedness": 0.0,
+      "relevance": 0.286,
+      "completeness": 0.75,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+      "groundedness": 0.667,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+      "groundedness": 0.952,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+      "groundedness": 0.0,
+      "relevance": 0.167,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "completeness": 0.5,
+      "tool_success_final_success": false,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+      "groundedness": 0.7,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    },
+    {
+      "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+      "groundedness": 0.625,
+      "relevance": 1.0,
+      "completeness": 1.0,
+      "tool_success_final_success": true,
+      "used_fallback": true,
+      "empty_response": false,
+      "user_feedback": null
+    }
+  ],
+  "audit_log": [
+    {
+      "timestamp": 1773269667.40351,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "2245a5b3-d848-4370-b0e7-24c0548086de",
+      "details": {
+        "question": "What are the top 10 products by revenue?",
+        "status": "success",
+        "elapsed_ms": 2481.15
+      }
+    },
+    {
+      "timestamp": 1773269670.085824,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "86918362-c16c-4699-a3b3-d66849399462",
+      "details": {
+        "question": "Show monthly revenue trend for the last 12 months.",
+        "status": "success",
+        "elapsed_ms": 2681.91
+      }
+    },
+    {
+      "timestamp": 1773269672.3028831,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "4faaa2a2-2582-4398-8ea2-f4ea7f37aad2",
+      "details": {
+        "question": "Who are the top customers by total spend?",
+        "status": "success",
+        "elapsed_ms": 2216.8
+      }
+    },
+    {
+      "timestamp": 1773269673.618399,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "8184269d-6088-4b75-bbd3-054c1d3d061f",
+      "details": {
+        "question": "What columns exist in the users table?",
+        "status": "success",
+        "elapsed_ms": 1315.35
+      }
+    },
+    {
+      "timestamp": 1773269675.705976,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "08e4f6a1-29dc-44cd-ba97-83b43428f60e",
+      "details": {
+        "question": "List customer emails with highest spend.",
+        "status": "success",
+        "elapsed_ms": 2087.39
+      }
+    },
+    {
+      "timestamp": 1773269677.895095,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "18ea3bb6-e678-48b6-a51b-b24a7cb8b9a2",
+      "details": {
+        "question": "Show phone numbers for top customers.",
+        "status": "success",
+        "elapsed_ms": 2188.83
+      }
+    },
+    {
+      "timestamp": 1773269677.896559,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "fb8cb6ca-73e6-4e62-89da-c5f5be31cfda",
+      "details": {
+        "question": "Delete all reports mentioning Client X",
+        "status": "requires_confirmation",
+        "elapsed_ms": 1.32
+      }
+    },
+    {
+      "timestamp": 1773269677.8980942,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "c578ab31-e1c6-4178-bc09-6670222f7351",
+      "details": {
+        "question": "What is the weather in Lisbon today?",
+        "status": "rejected",
+        "elapsed_ms": 1.41
+      }
+    },
+    {
+      "timestamp": 1773269680.078986,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "5ba7e7cd-350d-42e0-b159-e525ac24fc34",
+      "details": {
+        "question": "Compare this month's revenue vs previous month.",
+        "status": "success",
+        "elapsed_ms": 2180.46
+      }
+    },
+    {
+      "timestamp": 1773269682.301919,
+      "action": "query_executed",
+      "actor": "manager_a",
+      "trace_id": "bcfbd135-5fd4-49d4-89d8-e9e206f31797",
+      "details": {
+        "question": "Compare this month's revenue vs previous month.",
+        "status": "success",
+        "elapsed_ms": 2222.54
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+
+You> show users schema
+
+Assistant>
+Schema for `users` (16 columns):
+- id (INTEGER)
+- first_name (STRING)
+- last_name (STRING)
+- email (STRING)
+- age (INTEGER)
+- gender (STRING)
+- state (STRING)
+- street_address (STRING)
+- postal_code (STRING)
+- city (STRING)
+- country (STRING)
+- latitude (FLOAT)
+- longitude (FLOAT)
+- traffic_source (STRING)
+- created_at (TIMESTAMP)
+- user_geom (GEOGRAPHY)
+
+[debug]
+status=success
+retry_count=0
+elapsed_ms=1458.77
+sql=
+trace_id=2c142a6a-8a9b-4bca-aa89-b6033b7b88cd
+spans=10
+
+You> exit
+Session ended.

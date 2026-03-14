@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "retail-tests",
+      "runtimeExecutable": "/opt/homebrew/bin/node",
+      "runtimeArgs": ["/Users/ctw01670/Documents/CTW/Project/My Projects/Retail Company/tests/serve.js"],
+      "port": 8093
+    }
+  ]
+}

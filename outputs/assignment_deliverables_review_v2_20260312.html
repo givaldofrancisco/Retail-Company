@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Assignment - Deliverables Review v2</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; margin: 24px; color: #1f2937; line-height: 1.5; }
+    h1, h2, h3 { color: #0f172a; }
+    .meta { color: #475569; margin-bottom: 20px; }
+    .ok { color: #166534; font-weight: 700; }
+    .partial { color: #92400e; font-weight: 700; }
+    .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin: 12px 0; background: #ffffff; }
+    code { background: #f1f5f9; padding: 1px 4px; border-radius: 4px; }
+    ul { margin-top: 6px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; }
+    .small { color: #64748b; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <h1>Deliverables Response (v2)</h1>
+  <div class="meta">Project: <code>My Projects/Retail Company</code> • Date: 2026-03-12 • Scope: simple working prototype + production-minded design notes</div>
+
+  <h2>Executive Summary</h2>
+  <table>
+    <thead><tr><th>Deliverable</th><th>Status</th><th>Summary</th></tr></thead>
+    <tbody>
+      <tr><td>1. Architecture Diagram</td><td class="ok">Met</td><td>Mermaid diagram and HLD blocks are documented with concrete component mapping.</td></tr>
+      <tr><td>2. Detailed Technical Explanation</td><td class="ok">Met</td><td>Model/framework reasoning, data flow, errors/fallbacks, setup/run, and requirement coverage are documented.</td></tr>
+      <tr><td>3. Working Code/Prototype</td><td class="ok">Met</td><td>CLI agent runs SQL/report flow and covers Safety/PII, Oversight, Resilience, QA, and Observability in prototype scope.</td></tr>
+      <tr><td>4. Simple CLI Interface</td><td class="ok">Met</td><td>Interactive and batch CLI modes are implemented with operational commands.</td></tr>
+      <tr><td>5. Runnable on Another Machine</td><td class="ok">Met</td><td>Venv setup + Docker + one-command tests are available and validated in this environment.</td></tr>
+      <tr><td>6. Use of Framework (LangGraph preferred)</td><td class="ok">Met</td><td>LangGraph StateGraph with explicit nodes, conditional routing, checkpointer, and store is implemented.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <h3>1. Architecture Diagram (Mermaid etc): Highlighting the building blocks, services and flow of the system based on the requirements above. In case you are planning to use a framework / service for one of the building blocks, specify which one and include an explanation.</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>Mermaid architecture diagram is present in <code>README.md:31</code>.</li>
+      <li>Detailed HLD narrative and component list are in <code>architecture.md:16</code>.</li>
+      <li>Framework/service choices are explicit: LangGraph orchestration, Gemini/Ollama LLM layer, BigQuery execution.</li>
+    </ul>
+    <p class="small">How achieved: architecture is split into visual flow + written rationale, with direct mapping from requirements to runtime components.</p>
+  </div>
+
+  <div class="card">
+    <h3>2. Detailed technical explanation covering:<br>1. Reasoning for the chosen Cloud services / LLM models / frameworks used.<br>2. Data flow between components (if needs to elaborate on HLD).<br>3. Error handling and fallback strategies.<br>4. Setup Instructions and example run<br>5. Make sure to include how you handle/solve each of the requirements</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>Tech reasoning: <code>README.md:132</code> and <code>architecture.md:39</code>.</li>
+      <li>Data flow walkthrough: <code>README.md:80</code> and <code>architecture.md:72</code>.</li>
+      <li>Error/fallback strategy: bounded repair routing in <code>src/graph/workflow.py:29</code>, final graceful failures in <code>src/graph/nodes.py:297</code>, provider fallback in <code>src/llm/client.py:72</code>.</li>
+      <li>Setup/run instructions: <code>README.md:139</code> and <code>README.md:219</code>.</li>
+      <li>Requirement-by-requirement handling: <code>README.md:95</code>.</li>
+      <li>Golden Bucket production approach explicitly sized for <code>&gt;10K</code> examples (indexing + vector retrieval + approval workflow) while prototype keeps simpler retrieval.</li>
+    </ul>
+    <p class="small">How achieved: the documentation includes both design-level and implementation-level references, not only conceptual text.</p>
+  </div>
+
+  <div class="card">
+    <h3>3. Working Code/Prototype: Build a chat agent that can generate and run SQL queries against the DB listed below and create a report. The prototype needs to support 2 of the following requirements (defined above):<br>1. Safety &amp; PII Masking<br>2. High-Stakes Oversight<br>3. Resilience &amp; Graceful Error Handling<br>4. Quality Assurance<br>5. Observability</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>Core graph execution is implemented in <code>src/graph/workflow.py:37</code> with nodes in <code>src/graph/nodes.py:28</code>.</li>
+      <li>Safety/PII masking: <code>src/safety/pii_masker.py:29</code> and enforcement paths in <code>src/graph/nodes.py:245</code> and <code>src/graph/nodes.py:284</code>.</li>
+      <li>High-stakes destructive oversight: tokenized confirmation flow in <code>src/memory/report_actions.py:26</code>, routed by <code>src/graph/nodes.py:65</code>, executed by <code>app.py:316</code>.</li>
+      <li>Resilience: retry + repair loop in <code>src/graph/workflow.py:29</code> and <code>src/graph/nodes.py:226</code>.</li>
+      <li>QA: pre-deploy gate in <code>src/evaluation/qa_gate.py:120</code> and <code>Makefile:14</code>.</li>
+      <li>QA emphasis: SQL correctness + business interpretation quality aligned with user goal/metrics.</li>
+      <li>Observability: trace/metrics/audit hooks from <code>app.py:367</code> and modules under <code>src/observability/</code>.</li>
+    </ul>
+    <p class="small">How achieved: more than the required 2 items are implemented in code and exercised by tests/replay artifacts.</p>
+  </div>
+
+  <div class="card">
+    <h3>4. Simple CLI-based interface for chat interactions. (UI's won't gain any additional points)</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>Main CLI loop is implemented in <code>app.py:165</code>.</li>
+      <li>Commands available: <code>/format</code>, <code>/confirm</code>, <code>/candidates</code>, <code>/approve_candidate</code> in <code>app.py:301</code>.</li>
+      <li>Batch replay mode and transcript export are available in <code>app.py:176</code> and <code>app.py:236</code>.</li>
+    </ul>
+    <p class="small">How achieved: intentionally terminal-only interface with deterministic behavior and debug observability support.</p>
+  </div>
+
+  <div class="card">
+    <h3>5. Your solution must be runnable on another machine (Docker is not a must, just proper setup instructions).</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>Setup options documented (Poetry, Docker, venv) in <code>README.md:142</code>.</li>
+      <li>Single command test path is enforced via venv in <code>Makefile:7</code> and <code>run_tests.py:10</code>.</li>
+      <li>Validated result in this environment: <code>make test</code> passed 11/11 suites; <code>make qa-gate</code> passed.</li>
+    </ul>
+    <p class="small">How achieved: reproducible local path with explicit dependency install and deterministic command wrappers.</p>
+  </div>
+
+  <div class="card">
+    <h3>6. Use a framework of your choice (preferably Lang Graph / Lang Chain V1).</h3>
+    <p><strong>Status:</strong> <span class="ok">Met</span></p>
+    <ul>
+      <li>LangGraph is used as the main orchestration framework in <code>src/graph/workflow.py:3</code>.</li>
+      <li>StateGraph + conditional edges implement explicit control flow in <code>src/graph/workflow.py:55</code>.</li>
+      <li>LangGraph checkpointer/store wiring is active in <code>src/graph/workflow.py:101</code>.</li>
+      <li>LLM integration is done via LangChain adapters in <code>src/llm/client.py:10</code>.</li>
+    </ul>
+    <p class="small">How achieved: framework usage is foundational (not cosmetic), controlling routing, retries, and safety paths.</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Note alignment:</strong> The prototype remains simple and working, while key production upgrades (RBAC integration, semantic retrieval at <code>&gt;10K</code> scale, CI quality governance) are clearly marked as next steps.</p>
+  </div>
+</body>
+</html>

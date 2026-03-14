@@ -1,0 +1,51 @@
+[
+  {
+    "id": "cand-1773324887763",
+    "signature": "9503da9adb1469b6",
+    "question": "What are the top 10 products by revenue?",
+    "sql": "SELECT\n    t2.name AS product_name,\n    ROUND(SUM(t1.sale_price), 2) AS total_revenue\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.products` AS t2 ON t1.product_id = t2.id\n  GROUP BY\n    product_name\n  ORDER BY\n    total_revenue DESC\n  LIMIT 10",
+    "report": "**Top 10 Products by Revenue**\n\nThe following products generated the highest revenue, indicating strong market demand and sales performance.\n\n1.  The North Face Apex Bionic Soft Shell Jacket - Men's: $18,060.00\n2.  The North Face Denali Down Womens Jacket 2013: $12,642.00\n3.  NIKE WOMEN'S PRO COMPRESSION SPORTS BRA *Outstanding Support and Comfort*: $11,739.00\n4.  Canada Goose Men's The Chateau Jacket: $11,410.00\n5.  Nobis Yatesy Parka: $11,400.00\n6.  The North Face Denali Down Mens Jacket 2013: $9,030.00\n7.  The North Face Freedom Mens Ski Pants 2013: $9,030.00\n8.  ASCIS Cushion Low Socks (Pack of 3): $8,127.00\n9.  Nike Jordan Retro 11 Bred Bootie Socks: $8,127.00\n10. Darla: $7,992.00\n\n**Key Observations:**\n\n*   **Dominant Brands:** The North Face accounts for four of the top ten products, totaling over $48,000 in revenue, highlighting its strong brand presence and product appeal.\n*   **High-Value Apparel:** Jackets and parkas from premium brands like The North Face, Canada Goose, and Nobis secure the top revenue positions, indicating strong sales of higher-priced items.\n*   **Performance Wear:** Nike's compression sports bra and various socks also feature prominently, suggesting consistent demand for athletic and everyday performance wear.\n\n**Risk Note:**\nOver-reliance on a few top-performing products or brands can create vulnerability if market trends shift or competitor offerings intensify.\n\n**Next Actions:**\n\n*   **Inventory Management:** Ensure optimal stock levels for these top-performing products to prevent stockouts and capitalize on sustained demand.\n*   **Marketing Focus:** Prioritize marketing efforts and promotional campaigns around these high-revenue items and their associated brands to maximize sales.\n*   **Supplier Relations:** Review supplier agreements for top brands like The North Face to secure favorable terms and consistent product availability.\n\nTop results (preview):\n| product_name | total_revenue |\n| --- | --- |\n| The North Face Apex Bionic S",
+    "tags": [
+      "what",
+      "products",
+      "revenue"
+    ],
+    "created_at": 1773324887,
+    "status": "approved",
+    "approved_at": 1773324903
+  },
+  {
+    "id": "cand-1773360744319",
+    "signature": "4b231e708e5b04e5",
+    "question": "Show monthly revenue trend for the last 12 months.",
+    "sql": "SELECT\n    FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n    ROUND(SUM(oi.sale_price), 2) AS revenue\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi\n  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o\n    ON oi.order_id = o.order_id\n  WHERE\n    DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)\n  GROUP BY\n    month\n  ORDER BY\n    month LIMIT 200",
+    "report": "**Monthly Revenue Trend: Last 12 Months**\n\nRevenue has shown a strong, consistent upward trend over the last 12 months, more than tripling from March 2025 to March 2026. This indicates robust business growth.\n\n| Month    | Revenue       |\n| :------- | :------------ |\n| 2025-03  | $148,938.48   |\n| 2025-04  | $246,751.45   |\n| 2025-05  | $272,951.71   |\n| 2025-06  | $265,168.66   |\n| 2025-07  | $304,924.04   |\n| 2025-08  | $316,842.93   |\n| 2025-09  | $328,007.43   |\n| 2025-10  | $376,849.91   |\n| 2025-11  | $371,297.86   |\n| 2025-12  | $424,217.91   |\n| 2026-01  | $488,172.95   |\n| 2026-02  | $526,197.38   |\n| 2026-03  | $559,185.63   |\n\n**Risk Note:**\nSustained rapid growth can strain operational capacity, including inventory management, logistics, and staffing. Market conditions or competitive landscape shifts could impact future growth rates.\n\n**Next Actions:**\n*   **Capacity Planning:** Assess current operational capacity to ensure it can support continued revenue growth.\n*   **Growth Drivers Analysis:** Identify key factors contributing to this growth to replicate successful strategies.\n*   **Market Monitoring:** Continuously monitor market trends and competitor activities to anticipate potential shifts.\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2025-03 | 148938.48 |\n| 2025-04 | 246751.45 |\n| 2025-05 | 272951.71 |\n| 2025-06 | 265168.66 |\n| 2025-07 | 304924.04 |\n| 2025-08 | 316842.93 |\n| 2025-09 | 328007.43 |\n| 2025-10 | 376849.91 |\n| 2025-11 | 371297.86 |\n| 2025-12 | 424217.91 |",
+    "tags": [
+      "show",
+      "monthly",
+      "revenue",
+      "trend",
+      "last",
+      "months"
+    ],
+    "created_at": 1773360744,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773489178664",
+    "signature": "4bba93bcc199aeca",
+    "question": "Show monthly revenue trend for the last 12 months.",
+    "sql": "SELECT\n    FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n    ROUND(SUM(oi.sale_price), 2) AS revenue\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o ON oi.order_id = o.order_id\n  WHERE\n    DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)\n  GROUP BY\n    month\n  ORDER BY\n    month LIMIT 200",
+    "report": "**Monthly Revenue Trend (Last 12 Months)**\n\nRevenue has shown a consistent upward trend over the past 12 months, indicating strong business performance.\n\n| Month     | Revenue       |\n| :-------- | :------------ |\n| 2025-03   | $140,367.42   |\n| 2025-04   | $248,511.78   |\n| 2025-05   | $269,091.92   |\n| 2025-06   | $271,566.46   |\n| 2025-07   | $300,499.44   |\n| 2025-08   | $323,005.43   |\n| 2025-09   | $319,698.27   |\n| 2025-10   | $355,961.99   |\n| 2025-11   | $364,804.88   |\n| 2025-12   | $428,279.04   |\n| 2026-01   | $472,192.75   |\n| 2026-02   | $519,498.64   |\n| 2026-03   | $609,689.88   |\n\n**Key Observations:**\n\n*   Revenue has consistently increased month-over-month for the last 12 reported periods.\n*   Monthly revenue grew from $140,367.42 in March 2025 to $609,689.88 in March 2026.\n*   The most significant month-over-month increase occurred between February and March 2026, with revenue rising by approximately 17.3%.\n*   This sustained growth indicates strong market demand and effective sales strategies.\n\n**Risk Note:**\nSustaining high growth rates can become challenging as base revenue increases. Market shifts or increased competition could impact future performance.\n\n**Next Actions:**\n\n*   Analyze specific drivers behind the accelerated growth in the most recent quarter to identify replicable strategies.\n*   Update revenue forecasts based on the observed upward trend to inform budget and resource allocation.\n*   Monitor market conditions and competitive landscape to proactively address potential challenges to continued growth.\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2025-03 | 140367.42 |\n| 2025-04 | 248511.78 |\n| 2025-05 | 269091.92 |\n| 2025-06 | 271566.46 |\n| 2025-07 | 300499.44 |\n| 2025-08 | 323005.43 |\n| 2025-09 | 319698.27 |\n| 2025-10 | 355961.99 |\n| 2025-11 | 364804.88 |\n| 2025-12 | 428279.04 |",
+    "tags": [
+      "show",
+      "monthly",
+      "revenue",
+      "trend",
+      "last",
+      "months"
+    ],
+    "created_at": 1773489178,
+    "status": "pending"
+  }
+]

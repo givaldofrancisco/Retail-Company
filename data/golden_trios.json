@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What are the top products by revenue this quarter?",
+    "sql": "SELECT p.id, p.name, ROUND(SUM(oi.sale_price), 2) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id JOIN `bigquery-public-data.thelook_ecommerce.products` p ON oi.product_id = p.id WHERE EXTRACT(YEAR FROM o.created_at) = EXTRACT(YEAR FROM CURRENT_DATE()) AND EXTRACT(QUARTER FROM o.created_at) = EXTRACT(QUARTER FROM CURRENT_DATE()) GROUP BY p.id, p.name ORDER BY revenue DESC LIMIT 10",
+    "report": "Top product families are driving a disproportionate share of revenue this quarter. Prioritize stock availability and pricing for the top 10 SKUs.",
+    "tags": [
+      "products",
+      "revenue",
+      "quarter"
+    ]
+  },
+  {
+    "question": "Show monthly revenue trends for the last 12 months",
+    "sql": "SELECT FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month, ROUND(SUM(oi.sale_price), 2) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH) GROUP BY month ORDER BY month",
+    "report": "Revenue shows seasonality with identifiable peaks. Use monthly trend slope and month-over-month change to inform campaign timing.",
+    "tags": [
+      "trend",
+      "monthly",
+      "revenue"
+    ]
+  },
+  {
+    "question": "Who are the top customers by spend?",
+    "sql": "SELECT u.id AS customer_id, ROUND(SUM(oi.sale_price), 2) AS total_spend, COUNT(DISTINCT o.order_id) AS order_count FROM `bigquery-public-data.thelook_ecommerce.users` u JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON u.id = o.user_id JOIN `bigquery-public-data.thelook_ecommerce.order_items` oi ON o.order_id = oi.order_id GROUP BY customer_id ORDER BY total_spend DESC LIMIT 10",
+    "report": "A small cohort of customers contributes outsized revenue. Consider loyalty segmentation and retention campaigns.",
+    "tags": [
+      "customers",
+      "spend",
+      "ranking"
+    ]
+  },
+  {
+    "question": "What columns exist in the users table?",
+    "sql": "SELECT column_name, data_type FROM `bigquery-public-data.thelook_ecommerce.INFORMATION_SCHEMA.COLUMNS` WHERE table_name = 'users' ORDER BY ordinal_position",
+    "report": "Schema discovery request answered with ordered column metadata.",
+    "tags": [
+      "schema",
+      "users",
+      "columns"
+    ]
+  },
+  {
+    "question": "Compare this month revenue vs previous month",
+    "sql": "WITH monthly AS (SELECT FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month, SUM(oi.sale_price) AS revenue FROM `bigquery-public-data.thelook_ecommerce.order_items` oi JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON oi.order_id = o.order_id WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH) GROUP BY month) SELECT month, ROUND(revenue, 2) AS revenue FROM monthly ORDER BY month",
+    "report": "Month-over-month revenue comparison provides directional signal and early trend inflection detection.",
+    "tags": [
+      "revenue",
+      "comparison",
+      "month_over_month"
+    ]
+  },
+  {
+    "question": "What are the top 10 products by revenue?",
+    "sql": "SELECT\n    t2.name AS product_name,\n    ROUND(SUM(t1.sale_price), 2) AS total_revenue\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.products` AS t2 ON t1.product_id = t2.id\n  GROUP BY\n    product_name\n  ORDER BY\n    total_revenue DESC\n  LIMIT 10",
+    "report": "**Top 10 Products by Revenue**\n\nThe following products generated the highest revenue, indicating strong market demand and sales performance.\n\n1.  The North Face Apex Bionic Soft Shell Jacket - Men's: $18,060.00\n2.  The North Face Denali Down Womens Jacket 2013: $12,642.00\n3.  NIKE WOMEN'S PRO COMPRESSION SPORTS BRA *Outstanding Support and Comfort*: $11,739.00\n4.  Canada Goose Men's The Chateau Jacket: $11,410.00\n5.  Nobis Yatesy Parka: $11,400.00\n6.  The North Face Denali Down Mens Jacket 2013: $9,030.00\n7.  The North Face Freedom Mens Ski Pants 2013: $9,030.00\n8.  ASCIS Cushion Low Socks (Pack of 3): $8,127.00\n9.  Nike Jordan Retro 11 Bred Bootie Socks: $8,127.00\n10. Darla: $7,992.00\n\n**Key Observations:**\n\n*   **Dominant Brands:** The North Face accounts for four of the top ten products, totaling over $48,000 in revenue, highlighting its strong brand presence and product appeal.\n*   **High-Value Apparel:** Jackets and parkas from premium brands like The North Face, Canada Goose, and Nobis secure the top revenue positions, indicating strong sales of higher-priced items.\n*   **Performance Wear:** Nike's compression sports bra and various socks also feature prominently, suggesting consistent demand for athletic and everyday performance wear.\n\n**Risk Note:**\nOver-reliance on a few top-performing products or brands can create vulnerability if market trends shift or competitor offerings intensify.\n\n**Next Actions:**\n\n*   **Inventory Management:** Ensure optimal stock levels for these top-performing products to prevent stockouts and capitalize on sustained demand.\n*   **Marketing Focus:** Prioritize marketing efforts and promotional campaigns around these high-revenue items and their associated brands to maximize sales.\n*   **Supplier Relations:** Review supplier agreements for top brands like The North Face to secure favorable terms and consistent product availability.\n\nTop results (preview):\n| product_name | total_revenue |\n| --- | --- |\n| The North Face Apex Bionic S",
+    "tags": [
+      "what",
+      "products",
+      "revenue"
+    ]
+  }
+]

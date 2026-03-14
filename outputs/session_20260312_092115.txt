@@ -1,0 +1,6 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+
+You> exit
+Session ended.

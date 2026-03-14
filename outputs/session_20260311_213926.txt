@@ -1,0 +1,4 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+ERROR: input file not found: questions.txt
