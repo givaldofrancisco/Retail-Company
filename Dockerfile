@@ -35,20 +35,20 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PATH="/app/.venv/bin:$PATH"
 
+# Create a non-root user for security before WORKDIR
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
 WORKDIR /app
 
-# Create a non-root user for security
-RUN groupadd -r appuser && useradd -r -g appuser appuser \
-    && mkdir -p /app/outputs /app/data \
-    && chown -R appuser:appuser /app
+# Create necessary directories directly configured to appuser
+RUN mkdir -p /app/outputs /app/data && chown -R appuser:appuser /app
 
-COPY --from=builder /app/.venv /app/.venv
-COPY . /app
-
-# Ensure correct permissions for the non-root user
-RUN chown -R appuser:appuser /app
+COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
+COPY --chown=appuser:appuser . /app
 
 USER appuser
+
+EXPOSE 8501
 
 # Default command
 CMD ["python", "app.py"]

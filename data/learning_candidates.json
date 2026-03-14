@@ -47,5 +47,138 @@
     ],
     "created_at": 1773489178,
     "status": "pending"
+  },
+  {
+    "id": "cand-1773497529518",
+    "signature": "795db08278df3d99",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    t1.first_name,\n    t1.last_name,\n    ROUND(SUM(t3.sale_price), 2) AS total_spend\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS t2 ON t1.id = t2.user_id\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t3 ON t2.order_id = t3.order_id\n  GROUP BY\n    customer_id,\n    t1.first_name,\n    t1.last_name\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nAnalysis of customer spend highlights a concentration of revenue among a key segment. The highest-spending individual customer contributed over $1,600, with the top 10 customers collectively driving significant sales.\n\n| Customer Rank | Total Spend |\n| :------------ | :---------- |\n| 1             | $1,627.91   |\n| 2             | $1,600.07   |\n| 3             | $1,532.97   |\n| 4             | $1,493.70   |\n| 5             | $1,465.41   |\n| 6             | $1,463.04   |\n| 7             | $1,459.93   |\n| 8             | $1,456.11   |\n| 9             | $1,444.57   |\n| 10            | $1,421.02   |\n\n**Risk Note:**\nOver-reliance on a small cohort of high-spending customers can create vulnerability if their purchasing behavior shifts or they churn.\n\n**Next Actions:**\n*   Develop targeted loyalty and retention programs for high-value customer segments.\n*   Analyze purchasing patterns of top customers to identify cross-selling and up-selling opportunities.\n*   Implement strategies to identify and cultivate potential high-value customers earlier in their lifecycle.\n\nTop results (preview):\n| customer_id | first_name | last_name | total_spend |\n| --- | --- | --- | --- |\n| 6305 | Joseph | Kennedy | 1627.91 |\n| 48690 | Kristina | Chambers | 1600.07 |\n| 97674 | Matthew | Thomas | 1532.97 |\n| 83099 | Terry | Wang | 1493.7 |\n| 44992 | Ryan | Jensen | 1465.41 |\n| 3247 | Dean | Thompson | 1463.04 |\n| 43157 | Micheal | Duncan | 1459.93 |\n| 54669 | Patrick | Rhodes | 1456.11 |\n| 25627 | Maria | Sandoval | 1444.57 |\n| 65439 | Tara | Smith | 1421.02 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773497529,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773497562571",
+    "signature": "1e75552babe5b427",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    ROUND(SUM(t3.sale_price), 2) AS total_spend\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS t2 ON t1.id = t2.user_id\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t3 ON t2.order_id = t3.order_id\n  GROUP BY\n    customer_id\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "Here is an executive report on top customers by total spend:\n\n**Top Customers by Total Spend**\n\nA small segment of customers accounts for a significant portion of overall revenue, with the top 10 customers contributing between $1,421.02 and $1,627.91 each. Understanding and nurturing these high-value relationships is crucial for sustained business performance.\n\n| Customer ID | Total Spend |\n| :---------- | :---------- |\n| 6305        | $1,627.91   |\n| 48690       | $1,600.07   |\n| 97674       | $1,532.97   |\n| 83099       | $1,493.70   |\n| 44992       | $1,465.41   |\n| 3247        | $1,463.04   |\n| 43157       | $1,459.93   |\n| 54669       | $1,456.11   |\n| 25627       | $1,444.57   |\n| 65439       | $1,421.02   |\n\n**Risk Note:**\nOver-reliance on a limited number of high-spending customers can create revenue volatility if their purchasing behavior changes or they churn.\n\n**Next Actions:**\n*   **Customer Segmentation:** Further analyze these top customers to identify common characteristics and behaviors.\n*   **Loyalty Programs:** Develop or enhance loyalty programs specifically targeting high-value customers to encourage continued engagement and spend.\n*   **Personalized Outreach:** Implement personalized communication strategies to foster stronger relationships and offer tailored product recommendations.\n\nTop results (preview):\n| customer_id | total_spend |\n| --- | --- |\n| 6305 | 1627.91 |\n| 48690 | 1600.07 |\n| 97674 | 1532.97 |\n| 83099 | 1493.7 |\n| 44992 | 1465.41 |\n| 3247 | 1463.04 |\n| 43157 | 1459.93 |\n| 54669 | 1456.11 |\n| 25627 | 1444.57 |\n| 65439 | 1421.02 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773497562,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773497645609",
+    "signature": "a4c8812d73872dda",
+    "question": "Show phone numbers for top customers.",
+    "sql": "SELECT u.id AS customer_id, ROUND(SUM(oi.sale_price), 2) AS total_spend FROM `bigquery-public-data.thelook_ecommerce.users` u JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON u.id = o.user_id JOIN `bigquery-public-data.thelook_ecommerce.order_items` oi ON o.order_id = oi.order_id GROUP BY customer_id ORDER BY total_spend DESC LIMIT 10",
+    "report": "Direct customer phone numbers cannot be provided due to data privacy policies and the absence of this information in the current dataset. However, the top customers by total spend have been identified, indicating a concentrated value among a specific cohort.\n\n| Customer ID | Total Spend |\n|-------------|-------------|\n| 6305        | 1627.91     |\n| 48690       | 1600.07     |\n| 97674       | 1532.97     |\n| 83099       | 1493.70     |\n| 44992       | 1465.41     |\n| 3247        | 1463.04     |\n| 43157       | 1459.93     |\n| 54669       | 1456.11     |\n| 25627       | 1444.57     |\n| 65439       | 1421.02     |\n\n**Risk Note:**\nDirectly accessing or sharing individual customer contact details (e.g., phone numbers) poses significant data privacy risks and is restricted. Any outreach to top customers must adhere to established privacy policies and legal compliance.\n\n**Next Actions:**\n*   Develop a segmented loyalty program for high-value customers, focusing on personalized offers and exclusive benefits.\n*   Analyze purchasing patterns of these top customers to identify common product interests and inform inventory management.\n*   Explore aggregated demographic insights for this customer segment to refine marketing strategies without revealing individual PII.\n\nTop results (preview):\n| customer_id | total_spend |\n| --- | --- |\n| 6305 | 1627.91 |\n| 48690 | 1600.07 |\n| 97674 | 1532.97 |\n| 83099 | 1493.7 |\n| 44992 | 1465.41 |\n| 3247 | 1463.04 |\n| 43157 | 1459.93 |\n| 54669 | 1456.11 |\n| 25627 | 1444.57 |\n| 65439 | 1421.02 |\n\nSafety Note: Direct personal identifiers (email/phone) were requested and are not displayed. Provided aggregated results instead.",
+    "tags": [
+      "show",
+      "phone",
+      "numbers",
+      "customers"
+    ],
+    "created_at": 1773497645,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773498102951",
+    "signature": "60fdd34cc88c9367",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    t1.first_name,\n    t1.last_name,\n    ROUND(SUM(t3.sale_price), 2) AS total_spend,\n    COUNT(DISTINCT t2.order_id) AS order_count\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS t2 ON t1.id = t2.user_id\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t3 ON t2.order_id = t3.order_id\n  GROUP BY\n    t1.id,\n    t1.first_name,\n    t1.last_name\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nA small group of customers accounts for a significant portion of total spend, indicating a concentrated value among high-engagement individuals.\n\n| Customer ID | Total Spend | Order Count |\n|-------------|-------------|-------------|\n| 6305        | $1,627.91   | 3           |\n| 48690       | $1,600.07   | 4           |\n| 97674       | $1,532.97   | 2           |\n| 83099       | $1,493.70   | 4           |\n| 44992       | $1,465.41   | 4           |\n| 3247        | $1,463.04   | 4           |\n| 43157       | $1,459.93   | 4           |\n| 54669       | $1,456.11   | 3           |\n| 25627       | $1,444.57   | 4           |\n| 65439       | $1,421.02   | 2           |\n\n**Key Observations:**\n*   The top 10 customers spent between $1,421.02 and $1,627.91.\n*   These customers placed an average of 3.4 orders each, with individual order counts ranging from 2 to 4.\n*   The highest spenders do not necessarily have the highest order counts, suggesting varying average transaction values.\n\n**Risk Note:**\nOver-reliance on a small segment of high-value customers can pose a risk if their purchasing behavior changes or they shift to competitors.\n\n**Next Actions:**\n*   **Customer Segmentation:** Analyze these top customers further to identify common characteristics and preferences.\n*   **Loyalty Programs:** Develop targeted loyalty programs or exclusive offers to retain these high-value customers.\n*   **Personalized Engagement:** Implement personalized communication strategies to enhance their shopping experience and foster continued engagement.\n\nTop results (preview):\n| customer_id | first_name | last_name | total_spend | order_count |\n| --- | --- | --- | --- | --- |\n| 6305 | Joseph | Kennedy | 1627.91 | 3 |\n| 48690 | Kristina | Chambers | 1600.07 | 4 |\n| 97674 | Matthew | Thomas | 1532.97 | 2 |\n| 83099 | Terry | Wang | 1493.7 | 4 |\n| 44992 | Ryan | Jensen | 1465.41 | 4 |\n| 3247 | Dean | Thompson | 1463.04 | 4 |\n| 43157 | Micheal | Duncan | 1459.93 ",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773498102,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773498554949",
+    "signature": "ea7515d8bfc6ad5a",
+    "question": "List customer emails with highest spend.",
+    "sql": "SELECT u.id AS customer_id, ROUND(SUM(oi.sale_price), 2) AS total_spend FROM `bigquery-public-data.thelook_ecommerce.users` u JOIN `bigquery-public-data.thelook_ecommerce.orders` o ON u.id = o.user_id JOIN `bigquery-public-data.thelook_ecommerce.order_items` oi ON o.order_id = oi.order_id GROUP BY customer_id ORDER BY total_spend DESC LIMIT 10",
+    "report": "Direct customer email addresses cannot be provided due to data privacy protocols. Below is a summary of the top customers by total spend, identified by their customer ID.\n\nThis data indicates a significant concentration of revenue from a small segment of the customer base.\n\n| Customer ID | Total Spend |\n|-------------|-------------|\n| 6305        | $1,627.91   |\n| 48690       | $1,600.07   |\n| 97674       | $1,532.97   |\n| 83099       | $1,493.70   |\n| 44992       | $1,465.41   |\n| 3247        | $1,463.04   |\n| 43157       | $1,459.93   |\n| 54669       | $1,456.11   |\n| 25627       | $1,444.57   |\n| 65439       | $1,421.02   |\n\n**Risk Note:** Over-reliance on a small segment of high-value customers can pose a risk if their purchasing behavior changes or they churn. Diversification of customer engagement strategies is crucial.\n\n**Next Actions:**\n*   Develop targeted loyalty programs for these high-value customer segments.\n*   Analyze purchasing patterns of top spenders to identify cross-selling or up-selling opportunities.\n*   Implement strategies to identify and nurture emerging high-potential customers.\n\nTop results (preview):\n| customer_id | total_spend |\n| --- | --- |\n| 6305 | 1627.91 |\n| 48690 | 1600.07 |\n| 97674 | 1532.97 |\n| 83099 | 1493.7 |\n| 44992 | 1465.41 |\n| 3247 | 1463.04 |\n| 43157 | 1459.93 |\n| 54669 | 1456.11 |\n| 25627 | 1444.57 |\n| 65439 | 1421.02 |\n\nSafety Note: Direct personal identifiers (email/phone) were requested and are not displayed. Provided aggregated results instead.",
+    "tags": [
+      "list",
+      "customer",
+      "emails",
+      "with",
+      "highest",
+      "spend"
+    ],
+    "created_at": 1773498554,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773500294437",
+    "signature": "b6c20c556597ac82",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t2.id AS customer_id,\n    t2.first_name,\n    t2.last_name,\n    ROUND(SUM(t1.sale_price), 2) AS total_spend\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.users` AS t2 ON t1.user_id = t2.id\n  GROUP BY\n    t2.id,\n    t2.first_name,\n    t2.last_name\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nA small cohort of customers drives a significant portion of overall revenue. Identifying and understanding these high-value customers is crucial for targeted retention and loyalty strategies.\n\n| Customer ID | Total Spend |\n| :---------- | :---------- |\n| 6305        | $1,627.91   |\n| 48690       | $1,600.07   |\n| 97674       | $1,532.97   |\n| 83099       | $1,493.70   |\n| 44992       | $1,465.41   |\n| 3247        | $1,463.04   |\n| 43157       | $1,459.93   |\n| 54669       | $1,456.11   |\n| 25627       | $1,444.57   |\n| 65439       | $1,421.02   |\n\n**Key Observations:**\n\n*   The top 10 customers collectively spent $14,964.73.\n*   The highest individual customer spend was $1,627.91.\n*   The average spend among these top 10 customers is approximately $1,496.47.\n\n**Risk Note:**\nOver-reliance on a small segment of high-spending customers can create vulnerability. A decline in spending from this group could significantly impact overall revenue.\n\n**Next Actions:**\n\n*   **Customer Segmentation:** Analyze these top customers further to identify common characteristics, purchasing patterns, and preferences.\n*   **Loyalty Programs:** Develop or enhance loyalty programs specifically designed to reward and retain these high-value customers.\n*   **Personalized Engagement:** Implement personalized marketing and communication strategies to foster stronger relationships and encourage continued engagement.\n\nTop results (preview):\n| customer_id | first_name | last_name | total_spend |\n| --- | --- | --- | --- |\n| 6305 | Joseph | Kennedy | 1627.91 |\n| 48690 | Kristina | Chambers | 1600.07 |\n| 97674 | Matthew | Thomas | 1532.97 |\n| 83099 | Terry | Wang | 1493.7 |\n| 44992 | Ryan | Jensen | 1465.41 |\n| 3247 | Dean | Thompson | 1463.04 |\n| 43157 | Micheal | Duncan | 1459.93 |\n| 54669 | Patrick | Rhodes | 1456.11 |\n| 25627 | Maria | Sandoval | 1444.57 |\n| 65439 | Tara | Smith | 1421.02 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773500294,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773500517656",
+    "signature": "05435d02ad8c8199",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o\n        ON oi.order_id = o.order_id\n    WHERE\n        DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)\n    GROUP BY\n        month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY\n    month LIMIT 200",
+    "report": "Revenue saw a significant increase this month, continuing the positive trend from the previous period.\n\n| Metric | 2026-02      | 2026-03      | MoM Change   | MoM % Change |\n| :----- | :----------- | :----------- | :----------- | :----------- |\n| Revenue| $519,498.64  | $609,689.88  | +$90,191.24  | +17.36%      |\n\n**Risk Note:**\nReliance on short-term trends without understanding underlying drivers can lead to misinformed strategic decisions.\n\n**Next Actions:**\n*   Investigate the primary drivers behind the revenue growth to identify scalable successes.\n*   Monitor customer acquisition and retention metrics to ensure sustainable growth.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2026-01 | 283138.77 |\n| 2026-02 | 519498.64 |\n| 2026-03 | 609689.88 |",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773500517,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773500949541",
+    "signature": "0a824558cbd6dd4a",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    t1.first_name,\n    t1.last_name,\n    ROUND(SUM(t3.sale_price), 2) AS total_spend\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS t2 ON t1.id = t2.user_id\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t3 ON t2.order_id = t3.order_id\n  GROUP BY\n    t1.id,\n    t1.first_name,\n    t1.last_name\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nThis report identifies the top-spending customers, highlighting their contribution to overall revenue. Understanding this segment is crucial for targeted retention and growth strategies.\n\n**Key Observations:**\n\n*   The highest-spending customer contributed $1,627.91.\n*   The top 10 customers collectively generated $14,564.73 in total spend.\n*   Individual spend within this top cohort ranges from $1,421.02 to $1,627.91.\n*   This group of high-value customers demonstrates consistent spending patterns, with a narrow range between the top and tenth positions.\n\n**Risk Note:**\nOver-reliance on a small segment of high-spending customers can create vulnerability if their purchasing behavior shifts or they churn.\n\n**Next Actions:**\n\n*   Develop targeted loyalty programs or personalized offers for these high-value customers to enhance retention.\n*   Analyze purchasing history of this cohort to identify common product categories or trends for strategic inventory and marketing.\n*   Explore opportunities to increase average transaction value or purchase frequency within this segment.\n\nTop results (preview):\n| customer_id | first_name | last_name | total_spend |\n| --- | --- | --- | --- |\n| 6305 | Joseph | Kennedy | 1627.91 |\n| 48690 | Kristina | Chambers | 1600.07 |\n| 97674 | Matthew | Thomas | 1532.97 |\n| 83099 | Terry | Wang | 1493.7 |\n| 44992 | Ryan | Jensen | 1465.41 |\n| 3247 | Dean | Thompson | 1463.04 |\n| 43157 | Micheal | Duncan | 1459.93 |\n| 54669 | Patrick | Rhodes | 1456.11 |\n| 25627 | Maria | Sandoval | 1444.57 |\n| 65439 | Tara | Smith | 1421.02 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773500949,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773500998008",
+    "signature": "094a8d5603fb436e",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    ROUND(SUM(t3.sale_price), 2) AS total_spend,\n    COUNT(DISTINCT t2.order_id) AS order_count\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.orders` AS t2 ON t1.id = t2.user_id\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t3 ON t2.order_id = t3.order_id\n  GROUP BY\n    customer_id\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nA small segment of customers drives a significant portion of overall revenue. Understanding and engaging these high-value customers is crucial for sustained business growth.\n\n*   The top customer recorded a total spend of $1,627.91 across 3 orders.\n*   The top 10 customers by spend collectively contributed approximately $14,900.\n*   Individual spend among these top customers ranged from $1,421.02 to $1,627.91.\n*   These high-value customers typically placed between 2 and 4 orders each.\n\n**Risk Note:**\nOver-reliance on a concentrated group of high-spending customers can create vulnerability if their purchasing behavior shifts or they churn.\n\n**Next Actions:**\n*   Develop targeted loyalty programs to enhance retention and increase lifetime value for these high-spending customers.\n*   Analyze the purchasing patterns of these top customers to identify common product interests or service needs for personalized marketing.\n*   Implement strategies to identify and nurture customers with high potential to become top spenders.\n\nTop results (preview):\n| customer_id | total_spend | order_count |\n| --- | --- | --- |\n| 6305 | 1627.91 | 3 |\n| 48690 | 1600.07 | 4 |\n| 97674 | 1532.97 | 2 |\n| 83099 | 1493.7 | 4 |\n| 44992 | 1465.41 | 4 |\n| 3247 | 1463.04 | 4 |\n| 43157 | 1459.93 | 4 |\n| 54669 | 1456.11 | 3 |\n| 25627 | 1444.57 | 4 |\n| 65439 | 1421.02 | 2 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773500998,
+    "status": "pending"
   }
 ]

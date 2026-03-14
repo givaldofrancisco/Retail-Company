@@ -1,0 +1,32 @@
+services:
+  cli:
+    build:
+      context: .
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+    environment:
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-}
+    # Run interactive by overriding command, e.g.: docker-compose run --rm cli
+
+  web:
+    build:
+      context: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+    environment:
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-}
+    command: ["python", "-m", "streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
