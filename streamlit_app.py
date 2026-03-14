@@ -205,32 +205,28 @@ with st.container():
     tabs = st.tabs(["Chat", "Tests & Demo"])
 
 with tabs[0]:
-    chat_col, summary_col = st.columns([2, 1])
+    # Chat history with fixed height and scroll
+    chat_container = st.container(height=380, border=False)
     
-    with chat_col:
-        # Chat history with fixed height and scroll
-        chat_container = st.container(height=380, border=False)
-        
-        with chat_container:
-            for msg in st.session_state.messages:
-                st.markdown(
-                    f"<div class='chat-bubble {'chat-user' if msg['role'] == 'user' else 'chat-assistant'}'>"
-                    f"{msg['text']}</div>",
-                    unsafe_allow_html=True,
-                )
-        
-        # Fixed input form below the scrollable area
-        with st.form(key="question_form", clear_on_submit=True):
-            cols = st.columns([3, 1])
-            with cols[0]:
-                st.selectbox("Quick prompts", options=[""] + PROMPT_LIBRARY, key="preset_selector")
-                st.text_input("Type your question", placeholder="e.g., What are the top 10 revenue drivers this month?", key="question_input")
-            with cols[1]:
-                st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
-                st.form_submit_button("Send", on_click=on_submit_callback, use_container_width=True)
+    with chat_container:
+        for msg in st.session_state.messages:
+            st.markdown(
+                f"<div class='chat-bubble {'chat-user' if msg['role'] == 'user' else 'chat-assistant'}'>"
+                f"{msg['text']}</div>",
+                unsafe_allow_html=True,
+            )
+    
+    # Fixed input form below the scrollable area
+    with st.form(key="question_form", clear_on_submit=True):
+        cols = st.columns([3, 1])
+        with cols[0]:
+            st.selectbox("Quick prompts", options=[""] + PROMPT_LIBRARY, key="preset_selector")
+            st.text_input("Type your question", placeholder="e.g., What are the top 10 revenue drivers this month?", key="question_input")
+        with cols[1]:
+            st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
+            st.form_submit_button("Send", on_click=on_submit_callback, use_container_width=True)
 
-    with summary_col:
-        display_debug()
+    display_debug()
     st.markdown("---")
 
 
