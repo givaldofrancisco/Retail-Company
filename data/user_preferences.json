@@ -1,6 +1,6 @@
 {
   "manager_a": {
-    "format": "table"
+    "format": "bullets"
   },
   "manager_b": {
     "format": "bullets"

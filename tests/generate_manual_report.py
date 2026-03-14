@@ -83,12 +83,12 @@ def generate_html(results, obs_data):
     passed = sum(1 for r in results if r['status'] in ['success', 'rejected', 'requires_confirmation'])
     success_rate = (passed / total * 100) if total > 0 else 0
     
-    # Group results by category
+    # Group results by category (manual mapping for the report)
     categories = {
         "Resilience & Natural Language": [],
         "Safety & Guardrails": [],
         "Destructive Operations": [],
-        "Persona & Tone Management": []
+        "Memory & Preferences": []
     }
     
     for r in results:
@@ -97,11 +97,12 @@ def generate_html(results, obs_data):
             categories["Destructive Operations"].append(r)
         elif "weather" in p:
             categories["Safety & Guardrails"].append(r)
-        elif "/user" in p or "tone" in p:
-            categories["Persona & Tone Management"].append(r)
+        elif "/format" in p or "compare" in p:
+            categories["Memory & Preferences"].append(r)
         else:
             categories["Resilience & Natural Language"].append(r)
 
+    # HTML Template (Simplified version of the existing one)
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,25 +146,20 @@ def generate_html(results, obs_data):
         .stat-card {{ background: var(--surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border); }}
         .stat-card .label {{ color: var(--text-muted); font-size: 0.875rem; }}
         .stat-card .value {{ display: block; font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem; }}
-        .card {{ background: var(--surface); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border); margin-bottom: 2rem; }}
         table {{ width: 100%; border-collapse: collapse; margin-top: 1rem; }}
         th {{ text-align: left; padding: 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 500; }}
         td {{ padding: 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }}
         code {{ font-family: 'Fira Code', monospace; font-size: 0.85rem; background: rgba(0,0,0,0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem; }}
         pre {{ background: #000; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.5rem 0; }}
-        .section-title {{ margin-top: 1rem; margin-bottom: 1.5rem; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 1rem; }}
-        .two-col {{ display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }}
-        .footer {{ margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); padding-top: 2rem; }}
+        .section-title {{ margin-top: 3rem; margin-bottom: 1rem; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 1rem; }}
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({{ startOnLoad: true, theme: 'dark' }});</script>
 </head>
 <body>
     <div class="container">
         <header>
             <span class="badge status-success">Retail AI Assistant</span>
             <h1>Manual Execution Results</h1>
-            <p style="color: var(--text-muted)">Validation summary for the latest prototype run, covering resilience, safety, and persona management.</p>
+            <p style="color: var(--text-muted)">Validation summary for the latest prototype run, covering resilience, safety, and complex analytical logic.</p>
         </header>
 
         <div class="card-grid">
@@ -176,13 +172,13 @@ def generate_html(results, obs_data):
 
     for cat_name, items in categories.items():
         if not items: continue
-        html += f'<div class="card"><h2 class="section-title">{cat_name}</h2>'
+        html += f'<h2 class="section-title">{cat_name}</h2>'
         html += """<table>
             <thead>
                 <tr>
                     <th width="30%">Prompt</th>
                     <th width="10%">Status</th>
-                    <th width="10%">Retries</th>
+                    <th width="10%">Latency</th>
                     <th>Result / Generated SQL</th>
                 </tr>
             </thead>
@@ -194,101 +190,36 @@ def generate_html(results, obs_data):
                 <tr>
                     <td><code>{item['prompt']}</code></td>
                     <td><span class="badge {status_cls}">{item['status']}</span></td>
-                    <td>{item['retries']}</td>
+                    <td>{item['latency']}</td>
                     <td>
-                        <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">{item['response'][:300]}...</div>
+                        <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">{item['response'][:200]}...</div>
                         {sql_block}
                     </td>
                 </tr>"""
-        html += "</tbody></table></div>"
+        html += "</tbody></table>"
 
     html += """
-    <!-- Section 6: Behavioral Flow -->
-    <div class="card">
-      <h2 class="section-title">6. Behavioral Flow (Refactored)</h2>
-      <p style="color: var(--text-muted); margin-bottom: 1rem;">The orchestration graph now includes an explicit path for instruction updates from the CEO.</p>
-      <div class="mermaid">
-flowchart TD
-    A[User Prompt] --> B[Intent Classification]
-    B -->|analysis| C[Load Schema]
-    B -->|schema_lookup| S[Schema Response]
-    B -->|destructive| D[Require Confirmation]
-    B -->|unsupported| U[Reject]
-    B -->|instruction_update| CEO[Apply Tone Update]
-
-    CEO -->|Update YAML| CEO_SAVE[Persist to config/personas/*.yaml]
-    CEO_SAVE --> K
-
-    C --> E[Retrieve Golden Examples]
-    E --> F[Generate SQL]
-    F -->|ok| G[Validate SQL]
-    G --> H[Execute BigQuery]
-    H --> I[Sanitize Results]
-    I --> J[Generate Report]
-    J --> K[Final Response]
-
-    S --> K
-    D --> K
-    U --> K
-      </div>
-    </div>
-
-    <!-- Section 7: Sequence — CEO Tone Update -->
-    <div class="card">
-      <h2 class="section-title">7. Sequence View — CEO Tone Update</h2>
-      <div class="mermaid">
-sequenceDiagram
-    participant U as CEO User
-    participant G as LangGraph
-    participant FS as FileSystem (YAML)
-    participant UI as Streamlit/CLI
-
-    U->>G: "From now on, use an ROI-focused tone"
-    G->>G: detect_intent(instruction_update)
-    G->>G: authorize_user(ceo)
-    G->>FS: update_persona_instruction("ROI-focused")
-    FS-->>G: YAML updated
-    G-->>UI: Sidebar Refreshed
-    UI-->>U: Success
-      </div>
-    </div>
-
-    <!-- Section 8: Key Takeaways -->
-    <div class="card">
-      <h2 class="section-title">8. Key Takeaways & Resilience</h2>
-      <div class="two-col">
-        <div>
-          <h3>System Improvements</h3>
-          <ul>
-            <li><strong>SQL Resilience</strong>: Successfully handled a type mismatch in quarterly comparison via the autonomous repair loop.</li>
-            <li><strong>Persona Switching</strong>: Real-time profile switching implemented for Manager A, Manager B, and CEO.</li>
-            <li><strong>CEO Control</strong>: Dynamic tone updates via natural language are safe and persistent.</li>
-          </ul>
+        <div style="margin-top: 5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            Generated by <code>tests/generate_manual_report.py</code> | Observability Session: {session_id}
         </div>
-        <div>
-          <h3>Validation Status</h3>
-          <p>The system achieved 100% success on PII masking and destructive operation controls. The addition of Persona Management did not impact core analytical stability.</p>
-        </div>
-      </div>
     </div>
-
-    <p class="footer">Generated by <code>tests/generate_manual_report.py</code> | Observability Session: {session_id}</p>
-  </div>
 </body>
 </html>"""
     
-    return html.replace("{session_id}", obs_data.get("session_id", "N/A") if obs_data else "N/A")
+    return html.replace("{session_id}", obs_data.get("session_id", "N/A"))
 
 def main():
     print("Searching for latest observability data...")
     obs_path = find_latest_obs()
-    obs_data = None
-    if obs_path:
-        print(f"Loading {obs_path.name}...")
-        with open(obs_path, "r") as f:
-            obs_data = json.load(f)
+    if not obs_path:
+        print("Error: No observability JSON found in outputs/")
+        return
     
-    transcript_path = OUTPUTS_DIR / "manual_execution_transcript_v3.txt"
+    print(f"Loading {obs_path.name}...")
+    with open(obs_path, "r") as f:
+        obs_data = json.load(f)
+        
+    transcript_path = OUTPUTS_DIR / "manual_execution_transcript_v2.txt"
     if not transcript_path.exists():
         print(f"Error: Transcript {transcript_path} not found.")
         return

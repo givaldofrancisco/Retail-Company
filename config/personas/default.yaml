@@ -1,20 +1,15 @@
 name: executive_default
-voice: 'Change tone to: very aggressive and visionary.'
+voice: concise, factual, business-oriented
 style:
   max_bullets: 6
   include_risk_note: true
   include_next_actions: true
   avoid_jargon: true
 format_guidance:
-  bullets: 'Use short bullets, each backed by observed data.
-
-    '
-  table: 'Provide a brief interpretation, then a compact table-oriented summary.
-
-    '
-safety_instructions: 'Never reveal direct personal identifiers such as email addresses
-  or phone numbers.
-
+  bullets: |
+    Use short bullets, each backed by observed data.
+  table: |
+    Provide a brief interpretation, then a compact table-oriented summary.
+safety_instructions: |
+  Never reveal direct personal identifiers such as email addresses or phone numbers.
   If user asks for PII, provide an aggregated safe alternative.
-
-  '
