@@ -138,12 +138,7 @@ def handle_question(question: str) -> Mapping[str, object] | None:
 
 
 
-def display_table() -> None:
-    rows = st.session_state.get("last_result", {}).get("rows") or []
-    if rows:
-        st.dataframe(DataFrame(rows))
-    else:
-        st.info("Os resultados tabulares aparecerão aqui assim que houver dados retornados pelas consultas.")
+
 
 
 def display_debug() -> None:
@@ -218,8 +213,6 @@ with tabs[0]:
     with summary_col:
         display_debug()
     st.markdown("---")
-    st.subheader("Resultados tabulares")
-    display_table()
 
 with tabs[1]:
     st.markdown("### Testes guiados")
