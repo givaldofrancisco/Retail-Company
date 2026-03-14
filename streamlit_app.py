@@ -135,22 +135,7 @@ def handle_question(question: str) -> Mapping[str, object] | None:
     return result
 
 
-def display_summary() -> None:
-    result = st.session_state.get("last_result", {})
-    rows = result.get("row_count", 0)
-    status = result.get("final_status", "sem status")
-    elapsed = result.get("elapsed_ms", 0)
-    summary_text = st.session_state.summary or "Ainda não há resultados."
-    
-    plural = "" if rows == 1 else "s"
-    summary_html = f"""
-    <div class='summary-card'>
-    <h3>Resumo executivo</h3>
-    <p>{summary_text}</p>
-    <p class='muted-text'>Status: {status} - {rows} registro{plural} - {elapsed:.0f} ms</p>
-    </div>
-    """
-    st.markdown(summary_html, unsafe_allow_html=True)
+
 
 
 def display_table() -> None:
@@ -231,7 +216,6 @@ with tabs[0]:
             st.selectbox("Ou escolha um prompt pré-definido", options=[""] + PROMPT_LIBRARY, key="preset_selector")
             st.form_submit_button("Enviar", on_click=on_submit_callback)
     with summary_col:
-        display_summary()
         display_debug()
     st.markdown("---")
     st.subheader("Resultados tabulares")
