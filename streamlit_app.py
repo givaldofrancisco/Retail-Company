@@ -56,41 +56,6 @@ st.markdown(
                     #f0f4ff;
     }
 
-    .chat-bubble {
-        border-radius: 18px;
-        padding: 12px 16px;
-        border: 1px solid var(--border);
-        max-width: 90%;
-        word-break: break-word;
-    }
-
-    .chat-user {
-        background: linear-gradient(135deg, rgba(15, 96, 255, 0.9), rgba(78, 144, 255, 0.9));
-        color: #fff;
-        margin-left: auto;
-    }
-
-    .chat-assistant {
-        background: var(--surface);
-        color: var(--text);
-    }
-
-    .summary-card {
-        border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 18px;
-        background: var(--surface);
-    }
-
-    .summary-card h3 {
-        margin-bottom: 6px;
-    }
-
-    .muted-text {
-        color: var(--muted);
-        font-size: 0.9rem;
-    }
-
     .debug-details {
         font-size: 0.85rem;
         color: #0c1235;
@@ -136,11 +101,6 @@ def handle_question(question: str) -> Mapping[str, object] | None:
 
 
 
-
-
-
-
-
 def display_debug() -> None:
     if not st.session_state.debug:
         return
@@ -169,20 +129,15 @@ def send_prompt(prompt: str) -> None:
     handle_question(prompt)
 
 
-def on_submit_callback() -> None:
-    """Callback for the form submission."""
-    chosen = st.session_state.get("preset_selector") or st.session_state.get("question_input")
+def on_submit_callback(chosen: str) -> None:
+    """Callback for the chat submission."""
     if chosen:
         send_prompt(chosen)
-        st.session_state.question_input = ""
-        st.session_state.preset_selector = ""
 
 
 def on_test_button_click(prompt: str) -> None:
     """Callback for guided test buttons."""
     send_prompt(prompt)
-    st.session_state.question_input = ""
-    st.session_state.preset_selector = ""
 
 
 initialize_state()
@@ -199,17 +154,20 @@ with st.container():
 
 with tabs[0]:
     chat_col, summary_col = st.columns([2, 1])
+    
     with chat_col:
-        for msg in st.session_state.messages:
-            st.markdown(
-                f"<div class='chat-bubble {'chat-user' if msg['role'] == 'user' else 'chat-assistant'}'>"
-                f"{msg['text']}" + "</div>",
-                unsafe_allow_html=True,
-            )
-        with st.form(key="question_form", clear_on_submit=True):
-            st.text_input("Digite sua pergunta", key="question_input")
-            st.selectbox("Ou escolha um prompt pré-definido", options=[""] + PROMPT_LIBRARY, key="preset_selector")
-            st.form_submit_button("Enviar", on_click=on_submit_callback)
+        chat_container = st.container()
+        
+        with chat_container:
+            for msg in st.session_state.messages:
+                with st.chat_message(msg["role"]):
+                    st.write(msg["text"])
+        
+        # Fixed input at the bottom
+        if prompt := st.chat_input("Digite sua pergunta..."):
+            on_submit_callback(prompt)
+            st.rerun()
+
     with summary_col:
         display_debug()
     st.markdown("---")
