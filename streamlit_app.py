@@ -188,6 +188,7 @@ def send_prompt(prompt: str) -> None:
     handle_question(prompt)
     st.session_state.question_input = ""
     st.session_state.preset_selector = ""
+    st.rerun()
 
 
 initialize_state()
