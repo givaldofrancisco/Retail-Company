@@ -33,55 +33,84 @@ TEST_PROMPTS = [
 
 DEFAULT_USER = "manager_a"
 
-st.set_page_config(page_title="Retail Analytics Assistant", layout="wide", page_icon="🧠")
+st.set_page_config(page_title="Retail Analytics Assistant", layout="centered", page_icon="")
 
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-    :root {
-        --surface: #ffffff;
-        --surface-alt: #f8f8ff;
-        --text: #1c1f33;
-        --muted: #53607a;
-        --border: rgba(28, 31, 51, 0.1);
-        --accent: #0f60ff;
-    }
+:root {
+    --surface: #ffffff;
+    --surface-alt: #f8f8ff;
+    --text: #1c1f33;
+    --muted: #53607a;
+    --border: rgba(28, 31, 51, 0.12);
+    --accent: #0f60ff;
+}
 
-    body {
-        font-family: 'Space Grotesk', 'Inter', sans-serif;
-        background: radial-gradient(circle at 10% 10%, rgba(15, 96, 255, 0.2), transparent 45%),
-                    radial-gradient(circle at 90% 0%, rgba(255, 187, 51, 0.25), transparent 40%),
-    .chat-bubble {
-        border-radius: 18px;
-        padding: 12px 16px;
-        border: 1px solid var(--border);
-        max-width: 90%;
-        margin-bottom: 12px;
-        word-break: break-word;
-    }
+body {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    background: radial-gradient(circle at 10% 10%, rgba(15, 96, 255, 0.18), transparent 45%),
+                radial-gradient(circle at 90% 0%, rgba(255, 187, 51, 0.22), transparent 40%),
+                #f0f4ff;
+}
 
-    .chat-user {
-        background: linear-gradient(135deg, rgba(15, 96, 255, 0.9), rgba(78, 144, 255, 0.9));
-        color: #fff;
-        margin-left: auto;
-    }
+.block-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-    .chat-assistant {
-        background: var(--surface);
-        color: var(--text);
-    }
+.main-header {
+    text-align: center;
+}
 
-    .debug-details {
-        font-size: 0.85rem;
-        color: #0c1235;
-        background: #eef3ff;
-        border-radius: 12px;
-        padding: 10px;
-        border: 1px solid rgba(12, 18, 53, 0.12);
-    }
-    </style>
+.chat-bubble {
+    border-radius: 18px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    max-width: 90%;
+    margin-bottom: 12px;
+    word-break: break-word;
+}
+
+.chat-user {
+    background: linear-gradient(135deg, rgba(15, 96, 255, 0.9), rgba(78, 144, 255, 0.9));
+    color: #fff;
+    margin-left: auto;
+}
+
+.chat-assistant {
+    background: var(--surface);
+    color: var(--text);
+}
+
+.summary-card {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    background: var(--surface);
+    text-align: left;
+}
+
+.muted-text {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.debug-details {
+    font-size: 0.85rem;
+    color: #0c1235;
+    background: #eef3ff;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid rgba(12, 18, 53, 0.12);
+}
+
+.tab-labels [data-baseweb="tab"] {
+    justify-content: center;
+}
+</style>
     """,
     unsafe_allow_html=True,
 )
@@ -94,7 +123,7 @@ def get_runtime() -> AppRuntime:
 
 
 def initialize_state() -> None:
-    st.session_state.setdefault("messages", [{"role": "assistant", "text": "Pronto. Pergunte sobre vendas, clientes ou estoque."}])
+    st.session_state.setdefault("messages", [{"role": "assistant", "text": "Ready. Ask about sales, customers, or inventory."}])
     st.session_state.setdefault("debug", False)
     st.session_state.setdefault("last_result", {})
     st.session_state.setdefault("summary", "")
@@ -109,29 +138,42 @@ def handle_question(question: str) -> Mapping[str, object] | None:
     try:
         result = runtime.handle_question(question=question, user_id=DEFAULT_USER)
     except Exception as exc:
-        append_message("assistant", f"Erro ao processar: {exc}")
+        append_message("assistant", f"Error while processing: {exc}")
         return None
-    append_message("assistant", result.get("final_report", "Sem resposta."))
+    append_message("assistant", result.get("final_report", "No response."))
     st.session_state.last_result = result
     st.session_state.summary = result.get("final_report", "")
     return result
 
 
 
+
+
+
+def display_table() -> None:
+    rows = st.session_state.get("last_result", {}).get("rows") or []
+    if rows:
+        st.subheader("Tabular results")
+        st.dataframe(DataFrame(rows))
+    else:
+        st.subheader("Tabular results")
+        st.info("Tabular results will appear here when the query returns data.")
+
+
 def display_debug() -> None:
     if not st.session_state.debug:
         return
     result = st.session_state.get("last_result", {})
-    with st.expander("Detalhes técnicos", expanded=True):
+    with st.expander("Technical details", expanded=True):
         detail = result.get("final_status", "n/a")
         elapsed = result.get("elapsed_ms", 0)
         rows = result.get("row_count", 0)
-        sql = result.get("sql", "(não disponível)")
+        sql = result.get("sql", "(not available)")
         html = (
             "<div class='debug-details'>"
             f"<p><strong>Status:</strong> {detail}</p>"
             f"<p><strong>Elapsed:</strong> {elapsed} ms</p>"
-            f"<p><strong>Linhas:</strong> {rows}</p>"
+            f"<p><strong>Rows:</strong> {rows}</p>"
             f"<p><strong>SQL:</strong> {sql}</p>"
             "</div>"
         )
@@ -151,7 +193,8 @@ def on_submit_callback() -> None:
     chosen = st.session_state.get("preset_selector") or st.session_state.get("question_input")
     if chosen:
         send_prompt(chosen)
-        # Clear selected presets and text input from session state if necessary.
+        st.session_state.question_input = ""
+        st.session_state.preset_selector = ""
 
 
 def on_test_button_click(prompt: str) -> None:
@@ -163,20 +206,20 @@ initialize_state()
 
 header_col1, header_col2 = st.columns([3, 1])
 with header_col1:
-    st.title("Retail Analytics Assistant")
-    st.caption("Orientado a negócio, sem SQL exposto por padrão")
+    st.markdown('<div class="main-header"><h1>Retail Analytics Assistant</h1></div>', unsafe_allow_html=True)
+    st.markdown('<div class=\"main-header\">Business-first, SQL hidden by default</div>', unsafe_allow_html=True)
 with header_col2:
-    st.checkbox("Mostrar debug técnico", key="debug")
+    st.checkbox("Show technical debug", key="debug")
 
 with st.container():
-    tabs = st.tabs(["Chat", "Testes & Demo"])
+    tabs = st.tabs(["Chat", "Tests & Demo"])
 
 with tabs[0]:
     chat_col, summary_col = st.columns([2, 1])
     
     with chat_col:
         # Chat history with fixed height and scroll
-        chat_container = st.container(height=450, border=False)
+        chat_container = st.container(height=380, border=False)
         
         with chat_container:
             for msg in st.session_state.messages:
@@ -188,22 +231,27 @@ with tabs[0]:
         
         # Fixed input form below the scrollable area
         with st.form(key="question_form", clear_on_submit=True):
-            st.selectbox("Perguntas rápidas", options=[""] + PROMPT_LIBRARY, key="preset_selector")
-            st.text_area("Digite sua pergunta", placeholder="Ex: Como estão as 10 maiores fontes de receita hoje?", key="question_input", height=100)
-            st.form_submit_button("Enviar", on_click=on_submit_callback)
+            cols = st.columns([3, 1])
+            with cols[0]:
+                st.selectbox("Quick prompts", options=[""] + PROMPT_LIBRARY, key="preset_selector")
+                st.text_input("Type your question", placeholder="e.g., What are the top 10 revenue drivers this month?", key="question_input")
+            with cols[1]:
+                st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
+                st.form_submit_button("Send", on_click=on_submit_callback, use_container_width=True)
 
     with summary_col:
         display_debug()
     st.markdown("---")
+    display_table()
 
 with tabs[1]:
-    st.markdown("### Testes guiados")
+    st.markdown("### Guided tests")
     for prompt in TEST_PROMPTS:
         key = f"test_{prompt.replace(' ', '_')}"
         st.button(prompt, key=key, on_click=on_test_button_click, args=(prompt,))
     st.markdown(
-        "Use os comandos abaixo para rodar os testes em lote:<br/>"
-        "<code>.venv/bin/python run_tests.py</code> ou "
+        "Use the commands below to run batch tests:<br/>"
+        "<code>.venv/bin/python run_tests.py</code> or "
         "<code>.venv/bin/python app.py --user-id manager_a --debug --input-file ui_prompts.txt</code>",
         unsafe_allow_html=True,
     )
