@@ -16,7 +16,7 @@ Optional (for Gemini + BigQuery live behavior):
 ## 2) Run the Assistant
 
 ```bash
-python3 app.py --user-id manager_a --debug
+./.venv/bin/python app.py --user-id manager_a --debug
 ```
 
 ## 3) Assessment Test Scenarios
@@ -78,17 +78,17 @@ Use these prompts in order and compare with expected behavior.
 You can run a scripted session using the input file below:
 
 ```bash
-python3 app.py --user-id manager_a --debug < tests/manual_cli_inputs_en.txt
+./.venv/bin/python app.py --user-id manager_a --debug < tests/manual_cli_inputs_en.txt
 ```
 
 Recommended replay command (explicit batch mode + transcript):
 ```bash
-python3 app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_en.txt --transcript-file outputs/manual_cli_replay.txt
+./.venv/bin/python app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_en.txt --transcript-file outputs/manual_cli_replay.txt
 ```
 
 If you want to run in smaller chunks (to reduce quota/rate pressure):
 ```bash
-python3 app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_en.txt --max-steps 4 --step-delay 2
+./.venv/bin/python app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_en.txt --max-steps 4 --step-delay 2
 ```
 
 ## 5) Pass/Fail Checklist
@@ -103,7 +103,7 @@ python3 app.py --user-id manager_a --debug --input-file tests/manual_cli_inputs_
 
 ## 5.1) Execution Status (Latest Run)
 - Date: `2026-03-10`
-- Command: `python3 app.py --user-id manager_a --debug < tests/manual_cli_inputs_en.txt`
+- Command: `./.venv/bin/python app.py --user-id manager_a --debug < tests/manual_cli_inputs_en.txt`
 - Result: `PASS` (all scripted scenarios completed successfully)
 
 ## 6) Evidence to Capture (for submission)

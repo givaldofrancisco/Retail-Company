@@ -115,7 +115,7 @@ def build_app(debug: bool = False):
         sql_validator=ObservableSQLValidator(allowed_dataset=dataset, allowed_tables=allowed_tables),
         bq_runner=bq_runner,
         pii_masker=PIIMasker(),
-        report_generator=ReportGenerator(llm=llm_client, persona_file=base / "config" / "personas" / "default.yaml"),
+        report_generator=ReportGenerator(llm=llm_client, personas_dir=base / "config" / "personas"),
         preference_store=UserPreferenceStore(base / "data" / "user_preferences.json"),
         report_store=report_store,
     )
@@ -135,6 +135,7 @@ def build_app(debug: bool = False):
         security,
         report_store,
         learning_store,
+        nodes.report_generator,
     )
 
 
@@ -212,7 +213,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    app, pref_store, llm_client, version_snapshot, security, report_store, learning_store = build_app(debug=args.debug)
+    app, pref_store, llm_client, version_snapshot, security, report_store, learning_store, report_generator = build_app(debug=args.debug)
 
     if args.export_diagram:
         try:
@@ -248,10 +249,17 @@ def main() -> None:
         transcript.write_line(text)
 
     emit("Retail Analytics Assistant")
+    emit(f"Logged in as: {args.user_id.upper()}")
     emit("Type 'exit' to quit")
+    emit("Use '/user <ID>' to switch user profile (e.g., manager_a, manager_b, ceo)")
     emit("Use '/format bullets' or '/format table' to set your report preference")
     emit("Use '/confirm <TOKEN>' to confirm destructive Saved Reports actions")
     emit("Use '/candidates' and '/approve_candidate <ID>' for learning-loop promotion")
+
+    if args.user_id == "manager_a":
+        emit("\nAssistant> Would you like to switch to Manager B? (Type '/user manager_b' to switch)")
+    elif args.user_id == "manager_b":
+        emit("\nAssistant> Would you like to switch to Manager A? (Type '/user manager_a' to switch)")
 
     batch_prompts: list[str] = []
     if input_file is not None:
@@ -267,11 +275,33 @@ def main() -> None:
                 batch_prompts.append(line)
 
     try:
+        user_options = {
+        "Manager A (Table pref)": "manager_a",
+        "Manager B (Bullet pref)": "manager_b",
+        "CEO (Strategic)": "ceo"
+    }
+    # The `st.selectbox` call is a Streamlit UI component and cannot be directly inserted into a CLI application's main function without Streamlit being imported and the application being run as a Streamlit app.
+    # To maintain syntactic correctness and avoid introducing a dependency/runtime error, this line is commented out.
+    # selected_label = st.selectbox("Switch User / Persona:", user_options.keys())
+
         processed = 0
         idx = 0
         while True:
             question = ""
             from_batch = False
+
+            # Identification logic for CLI
+            if not from_batch and idx == 0:
+                emit(f"\nAssistant> Logged in as: {args.user_id.upper()}")
+                if args.user_id == "manager_a":
+                    emit("Assistant> Current profile: Manager A (Prefers Tables).")
+                    emit("Assistant> Would you like to switch to Manager B (Bullet Points)? Type: /user manager_b")
+                elif args.user_id == "manager_b":
+                    emit("Assistant> Current profile: Manager B (Prefers Bullet Points).")
+                elif args.user_id == "ceo":
+                    emit("Assistant> Current profile: CEO (Strategic Tone).")
+                    emit("Assistant> You can update system instructions by typing: 'From now on, use a [tone] tone...'")
+                emit("Assistant> Type your question or /help for commands.")
 
             if idx < len(batch_prompts):
                 question = batch_prompts[idx]
@@ -305,6 +335,18 @@ def main() -> None:
                 else:
                     pref_store.set_format(args.user_id, desired)
                     emit(f"Assistant> Saved format preference for {args.user_id}: {desired}")
+                processed += 1
+                if args.max_steps > 0 and processed >= args.max_steps:
+                    emit("Session ended (max steps reached).")
+                    break
+                if from_batch and args.step_delay > 0:
+                    time.sleep(args.step_delay)
+                continue
+
+            if question.lower().startswith("/user "):
+                new_user = question.split(" ", 1)[1].strip().lower()
+                args.user_id = new_user
+                emit(f"Assistant> Switched to user: {new_user.upper()}")
                 processed += 1
                 if args.max_steps > 0 and processed >= args.max_steps:
                     emit("Session ended (max steps reached).")

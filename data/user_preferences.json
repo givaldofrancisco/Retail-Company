@@ -1,5 +1,8 @@
 {
   "manager_a": {
     "format": "bullets"
+  },
+  "manager_b": {
+    "format": "bullets"
   }
 }

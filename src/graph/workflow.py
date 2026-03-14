@@ -10,7 +10,9 @@ from src.graph.state import AgentState
 
 def route_after_intent(state: AgentState) -> str:
     if state.get("intent") in {"unsupported", "destructive_report_op"}:
-        return "finalize_response"
+        return END
+    if state.get("intent") == "instruction_update":
+        return "apply_instruction_update"
     return "load_schema"
 
 
@@ -22,7 +24,7 @@ def route_after_schema(state: AgentState) -> str:
 
 def route_after_validate(state: AgentState) -> str:
     if state.get("final_status") == "failed_validation":
-        return "finalize_response"
+        return END
     return "execute_sql"
 
 
@@ -39,6 +41,7 @@ def build_workflow(nodes: WorkflowNodes, checkpointer=None, store=None):
 
     graph.add_node("classify_intent", nodes.classify_intent)
     graph.add_node("reject_or_route", nodes.reject_or_route)
+    graph.add_node("apply_instruction_update", nodes.apply_instruction_update)
     graph.add_node("load_schema", nodes.load_schema)
     graph.add_node("generate_schema_response", nodes.generate_schema_response)
     graph.add_node("retrieve_golden_examples", nodes.retrieve_golden_examples)
@@ -57,9 +60,11 @@ def build_workflow(nodes: WorkflowNodes, checkpointer=None, store=None):
         route_after_intent,
         {
             "load_schema": "load_schema",
-            "finalize_response": "finalize_response",
+            "apply_instruction_update": "apply_instruction_update",
+            END: END,
         },
     )
+    graph.add_edge("apply_instruction_update", END)
 
     graph.add_conditional_edges(
         "load_schema",
@@ -69,7 +74,7 @@ def build_workflow(nodes: WorkflowNodes, checkpointer=None, store=None):
             "retrieve_golden_examples": "retrieve_golden_examples",
         },
     )
-    graph.add_edge("generate_schema_response", "finalize_response")
+    graph.add_edge("generate_schema_response", END)
 
     graph.add_edge("retrieve_golden_examples", "generate_sql")
     graph.add_edge("generate_sql", "validate_sql")
@@ -79,7 +84,7 @@ def build_workflow(nodes: WorkflowNodes, checkpointer=None, store=None):
         route_after_validate,
         {
             "execute_sql": "execute_sql",
-            "finalize_response": "finalize_response",
+            END: END,
         },
     )
 
@@ -95,7 +100,7 @@ def build_workflow(nodes: WorkflowNodes, checkpointer=None, store=None):
 
     graph.add_edge("repair_sql", "validate_sql")
     graph.add_edge("sanitize_results", "generate_report")
-    graph.add_edge("generate_report", "finalize_response")
+    graph.add_edge("generate_report", END)
     graph.add_edge("finalize_response", END)
 
     if checkpointer is None:

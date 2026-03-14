@@ -17,8 +17,12 @@ PROMPT_LIBRARY = [
     "Show phone numbers for top customers.",
     "Delete all reports mentioning Client X",
     "What is the weather in Lisbon today?",
-    "/format table",
     "Compare this month's revenue vs previous month.",
+    "From now on, use a strategic and ROI-focused tone.",
+    "Give me a summary of last quarter's performance vs this quarter.",
+    "Show me high-level metrics for the female user demographic.",
+    "What are the most frequent product categories purchased?",
+    "/format table",
     "/format bullets",
 ]
 
@@ -128,8 +132,9 @@ def append_message(role: str, text: str) -> None:
 
 def handle_question(question: str) -> Mapping[str, object] | None:
     runtime = get_runtime()
+    user_id = st.session_state.get("user_id", DEFAULT_USER)
     try:
-        result = runtime.handle_question(question=question, user_id=DEFAULT_USER)
+        result = runtime.handle_question(question=question, user_id=user_id)
     except Exception as exc:
         append_message("assistant", f"Error while processing: {exc}")
         return None
@@ -137,6 +142,33 @@ def handle_question(question: str) -> Mapping[str, object] | None:
     st.session_state.last_result = result
     st.session_state.summary = result.get("final_report", "")
     return result
+
+
+with st.sidebar:
+    st.title("User Profile")
+    user_options = {
+        "Manager A (Table pref)": "manager_a",
+        "Manager B (Bullet pref)": "manager_b",
+        "CEO (Strategic)": "ceo"
+    }
+    selected_label = st.selectbox(
+        "Switch User / Persona:",
+        options=list(user_options.keys()),
+        index=0 if st.session_state.get("user_id", DEFAULT_USER) == "manager_a" else 1 if st.session_state.get("user_id") == "manager_b" else 2,
+        key="user_selector"
+    )
+    st.session_state.user_id = user_options[selected_label]
+    
+    st.markdown("---")
+    st.markdown(f"**Current User:** {st.session_state.user_id.upper()}")
+    runtime = get_runtime()
+    pref = runtime.pref_store.get(st.session_state.user_id)
+    st.markdown(f"**Format Preference:** {pref.get('format', 'bullets')}")
+    
+    # NEW: Display current tone
+    tone = runtime.report_generator.get_persona_voice(st.session_state.user_id)
+    st.markdown(f"**Current Tone:** {tone}")
+
 
 
 

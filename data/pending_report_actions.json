@@ -178,5 +178,86 @@
     "created_at": 1773500447,
     "expires_at": 1773501047,
     "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-0DA475",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773503006,
+    "expires_at": 1773503606,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-8A446C",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773518476,
+    "expires_at": 1773519076,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-C7A751",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773518653,
+    "expires_at": 1773519253,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-8680B3",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773518869,
+    "expires_at": 1773519469,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-197C7F",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773519493,
+    "expires_at": 1773520093,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-85105F",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773519831,
+    "expires_at": 1773520431,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-334EB7",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773519951,
+    "expires_at": 1773520551,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-28E9CB",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773519966,
+    "expires_at": 1773520566,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-3F6FD3",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773525404,
+    "expires_at": 1773526004,
+    "raw_question": "Delete all reports mentioning Client X"
   }
 ]

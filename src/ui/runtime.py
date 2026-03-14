@@ -28,6 +28,7 @@ class AppRuntime:
             _security,
             self.report_store,
             self.learning_store,
+            self.report_generator,
         ) = build_app(debug=True)
 
     def handle_question(self, question: str, user_id: str) -> dict[str, Any]:

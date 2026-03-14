@@ -4,26 +4,40 @@ import json
 from typing import Any, Dict, List
 
 
+def _format_golden_examples(examples: List[Dict[str, Any]]) -> str:
+    if not examples:
+        return "None available."
+    lines = []
+    for i, ex in enumerate(examples, 1):
+        if not isinstance(ex, dict):
+            continue
+        lines.append(f"Example {i}:")
+        lines.append(f"Input: {ex.get('question', '')}")
+        lines.append(f"Output:\n{ex.get('sql', '')}\n")
+    return "\n".join(lines)
+
+
 def build_sql_prompt(question: str, schemas: Dict[str, Any], golden_examples: List[Dict[str, Any]]) -> str:
+    formatted_examples = _format_golden_examples(golden_examples)
     return f"""
-You are an analytics SQL assistant for BigQuery.
-Task: Generate one BigQuery SELECT query for the user question.
+System: You are an expert data analytics SQL assistant for BigQuery.
 
 Rules:
-- Only use dataset bigquery-public-data.thelook_ecommerce
-- Allowed tables: orders, order_items, products, users
+- Only query the dataset `bigquery-public-data.thelook_ecommerce`.
+- Allowed tables: `orders`, `order_items`, `products`, `users`.
 - Never generate DML/DDL.
-- Prefer safe aggregate outputs when user requests PII.
-- Return SQL only.
+- Protect PII: If requested, prefer safe aggregate metrics.
+- Output ONLY valid SQL. 
+- You MUST write your reasoning steps inside a multiline SQL comment block (/* ... */) before the SELECT statement.
 
-Question:
-{question}
+Historical Examples:
+{formatted_examples}
 
-Schemas:
+Input Question:
+"{question}"
+
+Database Schema:
 {json.dumps(schemas, indent=2)}
-
-Golden examples:
-{json.dumps(golden_examples, indent=2)}
 """.strip()
 
 
@@ -34,24 +48,28 @@ def build_repair_prompt(
     schemas: Dict[str, Any],
     golden_examples: List[Dict[str, Any]],
 ) -> str:
+    formatted_examples = _format_golden_examples(golden_examples)
     return f"""
-The following SQL failed in BigQuery. Repair it.
-Return SQL only.
+System: You are an expert BigQuery SQL debugger. The previous query failed.
 
-Question:
-{question}
+Rules:
+- Output ONLY valid SQL.
+- You MUST write your diagnosis and reasoning inside a SQL comment block (/* ... */) before the repaired SELECT statement.
+
+Input Question:
+"{question}"
 
 Failed SQL:
 {failed_sql}
 
-Error:
+Error Received:
 {error_message}
 
-Schemas:
+Database Schema:
 {json.dumps(schemas, indent=2)}
 
-Golden examples:
-{json.dumps(golden_examples, indent=2)}
+Historical Examples:
+{formatted_examples}
 """.strip()
 
 
@@ -64,25 +82,24 @@ def build_report_prompt(
     golden_examples: List[Dict[str, Any]],
 ) -> str:
     return f"""
-You are preparing an executive report for retail managers.
+System: You are a senior business analyst preparing an executive report.
 
-Persona:
+Role & Style:
 {persona_text}
 
-User format preference: {preference_format}
+Rules:
+- Format preference: {preference_format}
+- Be concise and grounded exclusively on the provided data.
+- Do not expose raw PII.
+- If data returned is 0 rows or insufficient, explicitly state the limitation.
 
-Question:
-{question}
-
+Context:
+User Question: "{question}"
 Rows returned: {row_count}
-Sample rows:
+
+Sample Results:
 {json.dumps(data_preview[:20], indent=2)}
 
-Relevant historical analyst examples:
+Historical Analyst Context (for tone reference):
 {json.dumps(golden_examples, indent=2)}
-
-Output rules:
-- Be concise and data-grounded.
-- Do not expose raw PII.
-- If data is limited, state uncertainty.
 """.strip()

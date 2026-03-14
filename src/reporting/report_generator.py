@@ -20,10 +20,31 @@ from src.llm.client import LLMClient
 @dataclass
 class ReportGenerator:
     llm: LLMClient
-    persona_file: Path
+    personas_dir: Path
 
-    def _load_persona(self) -> Dict[str, Any]:
-        return yaml.safe_load(self.persona_file.read_text(encoding="utf-8"))
+    def _load_persona(self, persona_id: str = "default") -> Dict[str, Any]:
+        persona_path = self.personas_dir / f"{persona_id}.yaml"
+        if not persona_path.exists():
+            persona_path = self.personas_dir / "default.yaml"
+        return yaml.safe_load(persona_path.read_text(encoding="utf-8"))
+
+    def get_persona_voice(self, persona_id: str = "default") -> str:
+        """Retrieve the 'voice' field from the persona YAML."""
+        persona = self._load_persona(persona_id)
+        return persona.get("voice", "concise, factual, business-oriented")
+
+    def batch_update_personas(self, updated_voice: str):
+        """Update the 'voice' field in all persona YAML files."""
+        personas = list(self.personas_dir.glob("*.yaml"))
+        for p_file in personas:
+            try:
+                content = yaml.safe_load(p_file.read_text(encoding="utf-8"))
+                if content:
+                    content["voice"] = updated_voice
+                    p_file.write_text(yaml.dump(content, sort_keys=False), encoding="utf-8")
+            except Exception as e:
+                import logging
+                logging.error(f"Failed to update persona {p_file.name}: {e}")
 
     def generate(
         self,
@@ -32,8 +53,9 @@ class ReportGenerator:
         preference_format: str,
         golden_examples: List[Dict[str, Any]],
         removed_pii_columns: List[str],
+        persona_id: str = "default",
     ) -> str:
-        persona = self._load_persona()
+        persona = self._load_persona(persona_id)
         persona_text = json.dumps(persona, indent=2)
 
         report = self.llm.generate_report(

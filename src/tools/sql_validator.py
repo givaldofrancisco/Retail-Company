@@ -24,7 +24,7 @@ BLOCKED_KEYWORDS = {
     "revoke",
 }
 
-TABLE_REF_REGEX = re.compile(r"(?i)\b(from|join)\s+`?([a-zA-Z0-9_.-]+)`?")
+TABLE_REF_REGEX = re.compile(r"(?i)\b(FROM|JOIN)\s+((?:`?[a-zA-Z0-9_.-]+`?\.)*`?[a-zA-Z0-9_.-]+`?)")
 CTE_NAME_REGEX = re.compile(r"(?i)\bwith\s+(.*?)\s+select", re.DOTALL)
 CTE_EXTRACT_REGEX = re.compile(r"(?i)\b([a-zA-Z_][a-zA-Z0-9_]*)\s+as\s*\(")
 
@@ -34,6 +34,9 @@ class SQLValidator:
     allowed_dataset: str
     allowed_tables: Set[str]
     default_limit: int = 200
+
+    _allowed_project: str | None = None
+    _allowed_dataset_id: str = ""
 
     def __post_init__(self) -> None:
         parts = self.allowed_dataset.split(".")
@@ -63,7 +66,8 @@ class SQLValidator:
         select_pos = re.search(r"(?i)\b(select|with)\b", text)
         if not select_pos:
             raise SQLValidationError("No SELECT/WITH statement detected.")
-        text = text[select_pos.start() :].strip()
+        start: int = select_pos.start()
+        text = text[start:].strip()
         return text
 
     def _ensure_single_statement(self, sql: str) -> None:
@@ -85,6 +89,10 @@ class SQLValidator:
         def replace_table(match: re.Match[str]) -> str:
             clause = match.group(1)
             raw_ref = match.group(2)
+            
+            if self._is_extract_clause(sql, match.start()):
+                return f"{clause} {raw_ref}"
+
             if raw_ref.lower() in cte_names:
                 return f"{clause} {raw_ref}"
             normalized, table = self._normalize_ref(raw_ref)
@@ -97,9 +105,28 @@ class SQLValidator:
         rewritten = TABLE_REF_REGEX.sub(replace_table, sql)
 
         if not TABLE_REF_REGEX.search(rewritten):
-            raise SQLValidationError("No FROM/JOIN table reference found.")
+            # Check if there are any non-EXTRACT table references
+            has_table = False
+            for match in TABLE_REF_REGEX.finditer(sql):
+                if not self._is_extract_clause(sql, match.start()):
+                    has_table = True
+                    break
+            if not has_table:
+                raise SQLValidationError("No FROM/JOIN table reference found.")
 
         return rewritten
+
+    def _is_extract_clause(self, sql: str, start_pos: int) -> bool:
+        """Check if the FROM/JOIN keyword at start_pos is part of an EXTRACT() call."""
+        prefix = sql[:start_pos].upper()
+        extract_pos = prefix.rfind("EXTRACT(")
+        if extract_pos == -1:
+            return False
+        # If there's a ")" between the last "EXTRACT(" and the current position, 
+        # then the current position is outside that EXTRACT call.
+        if ")" in prefix[extract_pos:]:
+            return False
+        return True
 
     @staticmethod
     def _extract_cte_names(sql: str) -> Set[str]:
@@ -110,14 +137,17 @@ class SQLValidator:
         return {name.lower() for name in CTE_EXTRACT_REGEX.findall(cte_segment)}
 
     def _normalize_ref(self, raw_ref: str) -> tuple[str | None, str]:
-        parts = raw_ref.split(".")
+        # Strip backticks from each segment before validation
+        parts = [p.strip("`") for p in raw_ref.split(".")]
         if len(parts) == 1:
             table = parts[0]
             return None, table
         if len(parts) == 2:
             dataset, table = parts
             if dataset not in {self.allowed_dataset, self._allowed_dataset_id}:
-                raise SQLValidationError(f"Dataset '{dataset}' is not allowed.")
+                # Try relative dataset check
+                if dataset != self._allowed_dataset_id:
+                    raise SQLValidationError(f"Dataset '{dataset}' is not allowed.")
             return f"{self.allowed_dataset}.{table}", table
         if len(parts) == 3:
             project, dataset, table = parts
@@ -125,7 +155,8 @@ class SQLValidator:
                 raise SQLValidationError(f"Dataset '{dataset}' is not allowed.")
             if self._allowed_project and project != self._allowed_project:
                 raise SQLValidationError(f"Project '{project}' is not allowed.")
-            return raw_ref, table
+            return f"{project}.{dataset}.{table}", table
+        raise SQLValidationError(f"Invalid table reference: {raw_ref}")
         raise SQLValidationError(f"Invalid table reference: {raw_ref}")
 
     def _append_limit_if_missing(self, sql: str) -> str:

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Dict, List
 
 import pandas as pd
+import re
 
 from src.graph.state import AgentState
 from src.memory.report_actions import ReportActionStore
@@ -63,6 +64,7 @@ class WorkflowNodes:
     def reject_or_route(self, state: AgentState) -> Dict:
         intent = state["intent"]
         if intent == "destructive_report_op":
+            log_event(logger, "completed", request_id=state.get("request_id", ""), status="requires_confirmation")
             if self.report_store is None:
                 return {
                     "final_status": "requires_confirmation",
@@ -93,15 +95,50 @@ class WorkflowNodes:
                 "validated_sql": "",
                 "sql_error": "",
             }
+        if intent == "instruction_update":
+            if state["user_id"] != "ceo":
+                return {
+                    "final_status": "rejected",
+                    "final_report": "Only the CEO has permission to change global system instructions.",
+                }
+            # Proceed to update node
+            return state
+
         if intent == "unsupported":
+            log_event(logger, "completed", request_id=state.get("request_id", ""), status="rejected")
             return {
                 "final_status": "rejected",
-                "final_report": "I can only answer analytical retail questions and schema requests.",
+                "final_report": "Sorry, I can only help with retail analytics (sales, inventory, customers).",
                 "sql_candidate": "",
                 "validated_sql": "",
                 "sql_error": "",
             }
-        return {}
+        return state
+
+    @traced()
+    def apply_instruction_update(self, state: AgentState) -> Dict:
+        """Process the CEO's request to update persona instructions."""
+        question = state["question"]
+        request_id = state.get("request_id", "")
+        
+        # In a real implementation, we would use an LLM here to generate the new YAML content.
+        # For this prototype, we'll extract the core request.
+        log_event(logger, "apply_instruction_update", request_id=request_id, user_id=state["user_id"])
+        
+        # Simulate LLM extracting a more concise "voice" from the instruction
+        # or just use the instruction itself as the new voice for all personas.
+        new_voice = question.replace("daqui para frente use o tom ", "").replace("From now on, use a ", "").strip()
+        
+        self.report_generator.batch_update_personas(new_voice)
+        
+        return {
+            "final_status": "success",
+            "final_report": (
+                "System instructions successfully updated for all personas.\n"
+                f"New Tone: '{new_voice}'\n"
+                "Changes will take effect immediately in future reports."
+            ),
+        }
 
     @traced()
     def load_schema(self, state: AgentState) -> Dict:
@@ -129,6 +166,7 @@ class WorkflowNodes:
             report = "Available tables: orders, order_items, products, users. Ask for one table to list its columns."
 
         report = self.pii_masker.mask_text(report)
+        log_event(logger, "completed", request_id=state.get("request_id", ""), status="success")
         return {
             "final_status": "success",
             "final_report": report,
@@ -167,13 +205,16 @@ class WorkflowNodes:
             )
             return {"sql_candidate": sql}
 
-        sql = self.llm.generate_sql(
+        raw_sql = self.llm.generate_sql(
             question=state["question"],
             schemas=state.get("schema_context", {}),
             golden_examples=state.get("golden_examples", []),
         )
-        log_event(logger, "sql_generated", request_id=state["request_id"], sql=sql)
-        return {"sql_candidate": sql}
+        log_event(logger, "sql_generated", request_id=state["request_id"], sql=raw_sql)
+        cleaned = self._sanitize_sql(raw_sql)
+        if not cleaned:
+            raise ValueError("LLM did not return a parsable SQL statement.")
+        return {"sql_candidate": cleaned}
 
     @traced()
     def validate_sql(self, state: AgentState) -> Dict:
@@ -182,13 +223,7 @@ class WorkflowNodes:
             log_event(logger, "sql_validated", request_id=state["request_id"], sql=validated)
             return {"validated_sql": validated, "sql_error": "", "error_message": ""}
         except SQLValidationError as exc:
-            log_event(
-                logger,
-                "sql_validation_failed",
-                request_id=state["request_id"],
-                error=str(exc),
-                sql=state.get("sql_candidate", ""),
-            )
+            log_event(logger, "completed", request_id=state.get("request_id", ""), status="failed_validation")
             return {
                 "final_status": "failed_validation",
                 "error_message": str(exc),
@@ -225,13 +260,17 @@ class WorkflowNodes:
     @traced()
     def repair_sql(self, state: AgentState) -> Dict:
         next_retry = state.get("retry_count", 0) + 1
-        repaired = self.llm.repair_sql(
+        raw_repaired = self.llm.repair_sql(
             question=state["question"],
             failed_sql=state.get("validated_sql", state.get("sql_candidate", "")),
             error_message=state.get("sql_error", "Unknown SQL error"),
             schemas=state.get("schema_context", {}),
             golden_examples=state.get("golden_examples", []),
         )
+        repaired = self._sanitize_sql(raw_repaired)
+        if not repaired:
+            repaired = raw_repaired.strip()
+
         log_event(
             logger,
             "sql_repair_attempt",
@@ -240,6 +279,16 @@ class WorkflowNodes:
             repaired_sql=repaired,
         )
         return {"retry_count": next_retry, "sql_candidate": repaired, "error_message": ""}
+
+    @staticmethod
+    def _sanitize_sql(sql: str) -> str:
+        text = sql or ""
+        if "*/" in text:
+            text = text.split("*/", 1)[1]
+        match = re.search(r"(?mi)^[ 	]*(select|with)", text)
+        if match:
+            return text[match.start() :].strip()
+        return text.strip()
 
     @traced()
     def sanitize_results(self, state: AgentState) -> Dict:
@@ -280,6 +329,7 @@ class WorkflowNodes:
             preference_format=pref.get("format", "bullets"),
             golden_examples=state.get("golden_examples", []),
             removed_pii_columns=state.get("removed_pii_columns", []),
+            persona_id=state.get("user_id", "default"),
         )
         report = self.pii_masker.mask_text(report)
         if state.get("pii_request") and "Safety Note:" not in report:
@@ -288,45 +338,26 @@ class WorkflowNodes:
                 "and are not displayed. Provided aggregated results instead."
             )
 
+        status = "success" if rows else "empty_result"
+        log_event(logger, "completed", request_id=state.get("request_id", ""), status=status)
+
         return {
-            "final_status": "success",
+            "final_status": status,
             "final_report": report,
         }
 
     @traced()
     def finalize_response(self, state: AgentState) -> Dict:
-        status = state.get("final_status", "")
-
-        # If the pipeline arrived here without a final_status but with an
-        # error_message, it means BQ execution failed (possibly after retries).
-        if not status and state.get("error_message"):
-            status = "failed_execution"
-
-        # Fallback: if we still have no status, derive from available evidence.
-        if not status:
-            if state.get("result_rows"):
-                status = "success"
-            elif state.get("sql_error") or state.get("error_message"):
-                status = "failed_execution"
-            else:
-                status = "failed_execution"
-
+        # Acting purely as an error handler for unhandled execution failures
+        status = "failed_execution"
         log_event(
             logger,
             "completed",
-            request_id=state["request_id"],
+            request_id=state.get("request_id", ""),
             status=status,
         )
-
-        if status == "success":
-            return {}
-
-        if status in {"rejected", "requires_confirmation", "failed_validation", "empty_result"}:
-            return {"final_status": status}
-
-        # Execution failure – provide user-facing message
         return {
-            "final_status": "failed_execution",
+            "final_status": status,
             "final_report": (
                 "I hit a query execution issue after retry attempts. "
                 "Please rephrase the request or try a narrower question."

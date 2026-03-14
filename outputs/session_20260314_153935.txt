@@ -1,0 +1,86 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+Use '/confirm <TOKEN>' to confirm destructive Saved Reports actions
+Use '/candidates' and '/approve_candidate <ID>' for learning-loop promotion
+
+You> Quais sao os top produtos em receita e como se comparam ao mes passado?
+
+Assistant>
+I could not produce a safe SQL query for this request.
+
+[debug]
+status=failed_validation
+retry_count=0
+elapsed_ms=13973.92
+sql=/*
+Reasoning Steps:
+1.  Define a Common Table Expression (CTE) named `current_month_sales` to calculate the total revenue for each product in the current month.
+    a.  Join `bigquery-public-data.thelook_ecommerce.order_items` (oi) with `bigquery-public-data.thelook_ecommerce.orders` (o) on `order_id`.
+    b.  Join the result with `bigquery-public-data.thelook_ecommerce.products` (p) on `product_id`.
+    c.  Filter orders where `created_at` falls within the current calendar month using `DATE_TRUNC(o.created_at, MONTH) = DATE_TRUNC(CURRENT_DATE(), MONTH)`.
+    d.  Group by `p.id` and `p.name` and sum `oi.sale_price` to get `current_month_revenue`.
+2.  Define another CTE named `previous_month_sales` to calculate the total revenue for each product in the previous month.
+    a.  Follow the same join structure as `current_month_sales`.
+    b.  Filter orders where `created_at` falls within the previous calendar month using `DATE_TRUNC(o.created_at, MONTH) = DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)`.
+    c.  Group by `p.id` and `p.name` and sum `oi.sale_price` to get `previous_month_revenue`.
+3.  Perform a `FULL OUTER JOIN` between `current_month_sales` and `previous_month_sales` on `product_id` and `product_name`. This ensures that products that sold in only one of the months are still included.
+4.  Select the `product_name`.
+5.  Use `COALESCE` to display `current_month_revenue` and `previous_month_revenue` as 0.00 if a product had no sales in that respective month.
+6.  Calculate `revenue_difference` by subtracting `previous_month_revenue` from `current_month_revenue`.
+7.  Calculate `percentage_change` as `(revenue_difference / previous_month_revenue) * 100`. Use `NULLIF` to prevent division by zero if `previous_month_revenue` is 0, and `COALESCE` to show 0.00 if there's no previous month data or if the calculation results in NULL.
+8.  Order the final results by `current_month_revenue` in descending order to highlight the top products for the current month.
+9.  Limit the output to the top 10 products.
+10. Round all monetary and percentage values to two decimal places.
+*/
+WITH current_month_sales AS (
+  SELECT
+    p.id AS product_id,
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price), 2) AS current_month_revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE
+    DATE_TRUNC(o.created_at, MONTH) = DATE_TRUNC(CURRENT_DATE(), MONTH)
+  GROUP BY
+    p.id,
+    p.name
+), previous_month_sales AS (
+  SELECT
+    p.id AS product_id,
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price), 2) AS previous_month_revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE
+    DATE_TRUNC(o.created_at, MONTH) = DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)
+  GROUP BY
+    p.id,
+    p.name
+)
+SELECT
+  COALESCE(cms.product_name, pms.product_name) AS product_name,
+  COALESCE(cms.current_month_revenue, 0.00) AS current_month_revenue,
+  COALESCE(pms.previous_month_revenue, 0.00) AS previous_month_revenue,
+  ROUND(COALESCE(cms.current_month_revenue, 0.00) - COALESCE(pms.previous_month_revenue, 0.00), 2) AS revenue_difference,
+  ROUND(
+    COALESCE(
+      (COALESCE(cms.current_month_revenue, 0.00) - COALESCE(pms.previous_month_revenue, 0.00)) / NULLIF(COALESCE(pms.previous_month_revenue, 0.00), 0) * 100,
+      0.00
+    ),
+    2
+  ) AS percentage_change
+FROM current_month_sales AS cms
+FULL OUTER JOIN previous_month_sales AS pms
+  ON cms.product_id = pms.product_id
+ORDER BY
+  current_month_revenue DESC
+LIMIT 10
+trace_id=5ed26085-21bd-4cae-b2b4-fa437af20c76
+spans=14

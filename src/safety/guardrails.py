@@ -25,6 +25,14 @@ ANALYTICS_HINTS = {
 
 SCHEMA_HINTS = {"column", "columns", "schema", "structure", "fields"}
 PII_HINTS = {"email", "e-mail", "mail", "phone", "phone number", "contact"}
+INSTRUCTION_UPDATE_HINTS = {
+    "change tone",
+    "update persona",
+    "system instructions",
+    "from now on",
+    "change style",
+    "update instructions",
+}
 
 DESTRUCTIVE_PATTERNS = [
     r"\bdelete\b.*\breport",
@@ -37,6 +45,13 @@ DESTRUCTIVE_PATTERNS = [
 class Guardrails:
     def classify_intent(self, question: str) -> Dict[str, str]:
         q = question.strip().lower()
+
+        if any(token in q for token in INSTRUCTION_UPDATE_HINTS):
+            return {
+                "intent": "instruction_update",
+                "reason": "Detected request to update system instructions/tone.",
+            }
+
         if any(re.search(pattern, q) for pattern in DESTRUCTIVE_PATTERNS):
             return {
                 "intent": "destructive_report_op",

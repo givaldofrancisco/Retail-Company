@@ -1,0 +1,6 @@
+Retail Analytics Assistant
+Type 'exit' to quit
+Use '/format bullets' or '/format table' to set your report preference
+Use '/confirm <TOKEN>' to confirm destructive Saved Reports actions
+Use '/candidates' and '/approve_candidate <ID>' for learning-loop promotion
+Session ended (EOF on stdin).

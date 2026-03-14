@@ -205,7 +205,14 @@ gcloud auth application-default login
 ```
 
 ## 9.5) Streamlit Interface
-Run the Streamlit experience with `streamlit run streamlit_app.py`. The page preserves the business-first chat view, table render, and debug toggle described in the prototype plan. Use the `Testes & Demo` tab to replay curated prompts without leaving the UI.
+To run the Streamlit interface using the virtual environment:
+```bash
+source .venv/bin/activate
+streamlit run streamlit_app.py
+```
+The page preserves the business-first chat view, table render, and debug toggle described in the prototype plan. 
+**New Persona Feature:** Use the sidebar to switch between `Manager A`, `Manager B`, and `CEO` profiles to see different report styles and tones.
+Use the `Testes & Demo` tab to replay curated prompts without leaving the UI.
 
 ## 10) Command Line Interface
 The assistant supports several flags for different modes:
@@ -245,6 +252,7 @@ Evidence is stored in `outputs/` and can be summarized using the `qa-gate` tool.
 Inside CLI:
 - `/format table`
 - `/format bullets`
+- `/user <manager_a|manager_b|ceo>` (switch user profile/persona)
 - `/confirm DEL-XXXXXX` (confirm destructive Saved Reports deletion token)
 - `/candidates` (list pending learning candidates)
 - `/approve_candidate cand-...` (promote one candidate to golden bucket)
