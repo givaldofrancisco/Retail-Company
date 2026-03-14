@@ -150,16 +150,6 @@ def handle_question(question: str) -> Mapping[str, object] | None:
 
 
 
-def display_table() -> None:
-    rows = st.session_state.get("last_result", {}).get("rows") or []
-    if rows:
-        st.subheader("Tabular results")
-        st.dataframe(DataFrame(rows))
-    else:
-        st.subheader("Tabular results")
-        st.info("Tabular results will appear here when the query returns data.")
-
-
 def display_debug() -> None:
     if not st.session_state.debug:
         return
@@ -242,7 +232,7 @@ with tabs[0]:
     with summary_col:
         display_debug()
     st.markdown("---")
-    display_table()
+
 
 with tabs[1]:
     st.markdown("### Guided tests")
