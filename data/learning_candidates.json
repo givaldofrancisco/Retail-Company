@@ -327,5 +327,39 @@
     ],
     "created_at": 1773525438,
     "status": "pending"
+  },
+  {
+    "id": "cand-1773526235163",
+    "signature": "81a93aab9f2e0192",
+    "question": "Give me a summary of last quarter's performance vs this quarter.",
+    "sql": "WITH quarterly_metrics AS (\n    SELECT\n        CASE\n            WHEN DATE(o.created_at) >= DATE_TRUNC(CURRENT_DATE(), QUARTER) AND DATE(o.created_at) < DATE_ADD(DATE_TRUNC(CURRENT_DATE(), QUARTER), INTERVAL 1 QUARTER) THEN 'This Quarter'\n            WHEN DATE(o.created_at) >= DATE_SUB(DATE_TRUNC(CURRENT_DATE(), QUARTER), INTERVAL 1 QUARTER) AND DATE(o.created_at) < DATE_TRUNC(CURRENT_DATE(), QUARTER) THEN 'Last Quarter'\n            ELSE 'Other' -- Should not be reached with the outer WHERE clause\n        END AS quarter_period,\n        oi.sale_price,\n        o.order_id\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` o\n    ON\n        oi.order_id = o.order_id\n    WHERE\n        DATE(o.created_at) >= DATE_SUB(DATE_TRUNC(CURRENT_DATE(), QUARTER), INTERVAL 1 QUARTER)\n        AND DATE(o.created_at) < DATE_ADD(DATE_TRUNC(CURRENT_DATE(), QUARTER), INTERVAL 1 QUARTER)\n)\nSELECT\n    quarter_period,\n    ROUND(SUM(sale_price), 2) AS total_revenue,\n    COUNT(DISTINCT order_id) AS total_orders\nFROM quarterly_metrics\nWHERE\n    quarter_period IN ('This Quarter', 'Last Quarter')\nGROUP BY\n    quarter_period\nORDER BY\n    quarter_period ASC LIMIT 200",
+    "report": "Here's the executive summary:\n\nThis quarter, we didn't just grow; we dominated. The numbers speak for themselves:\n\n*   **Revenue Explosion:** We've shattered last quarter's revenue, pulling in an additional $452K \u2013 a nearly 40% surge. This isn't just growth; it's market capture.\n*   **Order Volume Surge:** Our order volume exploded by almost 40%, adding over 5,300 new transactions. This demonstrates undeniable customer demand and operational muscle.\n*   **Strategic Momentum:** This quarter's performance isn't just a win; it's a declaration. We're accelerating, dominating, and setting a new benchmark for what's possible. This momentum is our weapon.\n*   **Relentless Expansion:** The trajectory is clear: relentless expansion. We must leverage this surge to solidify our lead and aggressively pursue even greater market share. Complacency is not an option.\n\n**RISK NOTE:** While impressive, rapid growth can strain resources. We must ensure our infrastructure, supply chain, and talent acquisition scale at pace to avoid bottlenecks and maintain quality.",
+    "tags": [
+      "give",
+      "summary",
+      "last",
+      "quarters",
+      "performance",
+      "this"
+    ],
+    "created_at": 1773526235,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773526256273",
+    "signature": "95a667264a908411",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` o\n        ON oi.order_id = o.order_id\n    WHERE\n        DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)\n    GROUP BY\n        month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY\n    month LIMIT 200",
+    "report": "Our latest figures are a testament to relentless execution and strategic dominance. We've not just grown; we've accelerated, unleashing a powerful surge in revenue that solidifies our market position and sets a new benchmark for performance.\n\n| Metric             | Value        |\n| :----------------- | :----------- |\n| Current Month      | 2026-03      |\n| Previous Month     | 2026-02      |\n| Current Revenue    | $609,689.88  |\n| Previous Revenue   | $519,498.64  |\n| MoM Change         | +$90,191.24  |\n| MoM Growth         | +17.36%      |\n\nRISK NOTE: While this growth is formidable, complacency is our greatest enemy. Market dynamics are fluid; any slowdown in our aggressive innovation or execution could erode this momentum. We must remain vigilant against emerging competitors and potential shifts in consumer behavior that could dampen future expansion.\n\nNEXT ACTIONS:\n*   **Amplify Growth Drivers**: Identify and double down on the specific initiatives that fueled this 17.36% surge, ensuring their scalability.\n*   **Fortify Market Position**: Leverage this momentum to aggressively capture additional market share, leaving competitors in our wake.\n*   **Strategic Investment**: Reinvest a portion of this increased revenue into R&D and market expansion to secure future dominance.\n*   **Performance Review**: Conduct an immediate deep dive to understand the precise levers of this success and replicate them across all segments.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2026-01 | 283138.77 |\n| 2026-02 | 519498.64 |\n| 2026-03 | 609689.88 |",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773526256,
+    "status": "pending"
   }
 ]

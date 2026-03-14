@@ -7,7 +7,9 @@ Show phone numbers for top customers.
 Delete all reports mentioning Client X
 What is the weather in Lisbon today?
 /format table
-Compare this month's revenue vs previous month.
-/format bullets
+/user ceo
+Change tone to: very aggressive and visionary.
+Give me a summary of last quarter's performance vs this quarter.
+/user manager_a
 Compare this month's revenue vs previous month.
 exit

@@ -259,5 +259,14 @@
     "created_at": 1773525404,
     "expires_at": 1773526004,
     "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-444E54",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773526205,
+    "expires_at": 1773526805,
+    "raw_question": "Delete all reports mentioning Client X"
   }
 ]
