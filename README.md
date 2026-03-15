@@ -31,7 +31,7 @@ The graph is compiled with LangGraph-native **checkpointer** and **store** (in-m
 ## 4) Architecture Diagram
 ```mermaid
 flowchart TD
-    U[Store/Regional Manager CLI Question] --> C[CLI Entrypoint (app.py)]
+    U[Store/Regional Manager CLI Question] --> C["CLI Entrypoint (app.py)"]
     C --> LG[LangGraph Orchestrator]
 
     LG --> G[Intent Guardrails — analysis-only + destructive detection]
