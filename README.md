@@ -31,35 +31,35 @@ The graph is compiled with LangGraph-native **checkpointer** and **store** (in-m
 ## 4) Architecture Diagram
 ```mermaid
 flowchart TD
-    U[Store/Regional Manager\nCLI Question] --> C[CLI Entrypoint app.py]
+    U[Store/Regional Manager CLI Question] --> C[CLI Entrypoint (app.py)]
     C --> LG[LangGraph Orchestrator]
 
-    LG --> G[Intent Guardrails\nanalysis-only + destructive detection]
+    LG --> G[Intent Guardrails — analysis-only + destructive detection]
     G -->|unsupported| R1[Safe Refusal]
-    G -->|destructive op| CONF[Confirmation Path\nSaved Reports Delete (Design Hook)]
+    G -->|destructive op| CONF[Confirmation Path & Saved Reports Delete (Design Hook)]
     CONF --> R2[No Execution Without Confirmation]
 
-    G -->|analysis/schema| S[Schema Layer\norders/order_items/products/users]
+    G -->|analysis/schema| S[Schema Layer: orders/order_items/products/users]
     S -->|schema intent| SR[Schema Response Node]
 
-    S --> GR[Golden Retriever\nquestion-sql-report examples]
+    S --> GR[Golden Retriever (question-sql-report examples)]
     GR --> LLM1[Gemini via LangChain]
     LLM1 --> SQLG[SQL Generation Node]
-    SQLG --> V[SQL Validator\nSELECT-only + allowlist + dataset check + LIMIT]
+    SQLG --> V[SQL Validator — SELECT-only + allowlist + dataset check + LIMIT]
 
     V -->|invalid| FVAL[Validation Failure Response]
-    V -->|valid| BQ[BigQuery Execution\nthelook_ecommerce]
+    V -->|valid| BQ[BigQuery Execution — thelook_ecommerce]
 
-    BQ -->|error| REP[Repair Node\nLLM SQL repair]
+    BQ -->|error| REP[Repair Node (LLM SQL repair)]
     REP --> V
     REP -->|retry limit reached| FEX[Graceful Failure Response]
 
-    BQ -->|success| PII[PII Sanitizer\ncolumn drop + regex masking]
-    PII --> RG[Report Generator\npersona + user preference]
+    BQ -->|success| PII[PII Sanitizer — column drop + regex masking]
+    PII --> RG[Report Generator — persona + user preference]
     RG --> OUT[Executive-safe Answer]
 
-    LG --> OBS[Structured Logs\nrequest_id, sql, retries, errors, rows, status]
-    RG --> LEARN[Learning Hooks\npreference updates + golden bucket candidate capture]
+    LG --> OBS[Structured Logs (request_id, sql, retries, errors, rows, status)]
+    RG --> LEARN[Learning Hooks: preference updates + golden bucket candidate capture]
 ```
 
 ## 5) Components
