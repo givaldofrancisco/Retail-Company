@@ -11,8 +11,9 @@ The graph is compiled with LangGraph-native **checkpointer** and **store** (in-m
 
 ## 3) Prototype Scope
 ### Fully implemented end-to-end
-- `Safety & PII Masking`
-- `Resilience & Graceful Error Handling`
+- `Safety & PII Masking`: Automatic column removal and regex text masking.
+- `Resilience & Repair`: Bounded SQL repair loop on execution errors.
+- `Advanced Observability`: Structured traces, success/failure metrics, and automated quality signals (relevance/groundedness).
 
 ### Implemented as lightweight functional scaffolding
 - Hybrid intelligence (JSON golden trios + keyword retrieval)
@@ -241,24 +242,23 @@ When run with `--observability`, the assistant generates rich evidence of its in
 
 Evidence is stored in `outputs/` and can be summarized using the `qa-gate` tool.
 
-## 12) Supported Example Questions
+## 12) Example Questions
 - `What are the top 10 products by revenue?`
 - `Show monthly revenue trend for the last 12 months.`
-- `Who are the top customers by total spend?`
-- `What columns exist in the users table?`
 - `Compare this month's revenue vs previous month.`
 - `List customer emails with highest spend.` (safely handled, no PII leakage)
+- `Summarize quarterly performance trends for the CEO.`
+- `Using a very formal tone, list the top 5 regions by order count.`
 
-## 12) CLI Commands
+## 13) CLI Commands
 Inside CLI:
-- `/format table`
-- `/format bullets`
-- `/user <manager_a|manager_b|ceo>` (switch user profile/persona)
-- `/confirm DEL-XXXXXX` (confirm destructive Saved Reports deletion token)
-- `/candidates` (list pending learning candidates)
-- `/approve_candidate cand-...` (promote one candidate to golden bucket)
+- `/format table|bullets`: Set your report presentation preference.
+- `/user <manager_a|manager_b|ceo>`: Switch user profile/persona instantly.
+- `/confirm <TOKEN>`: Confirm a destructive Saved Reports deletion.
+- `/candidates`: List pending interactions captured for the learning loop.
+- `/approve_candidate <ID>`: Promote a candidate to the Golden bucket.
 
-Preferences are stored in `data/user_preferences.json`.
+Preferences and instructions are stored in `data/user_preferences.json`.
 
 ## 13) Testing
 ```bash

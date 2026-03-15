@@ -9,7 +9,8 @@ services:
       - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-}
       - OLLAMA_MODEL=${OLLAMA_MODEL:-}
-    # Run interactive by overriding command, e.g.: docker-compose run --rm cli
+      - LLM_PROVIDER=${LLM_PROVIDER:-gemini}
+    # Usage: docker-compose run --rm cli
 
   web:
     build:

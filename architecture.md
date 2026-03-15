@@ -20,9 +20,9 @@
 - Prints user-safe final response.
 
 2. LangGraph Orchestrator (`src/graph/workflow.py`)
-- Nodes: `classify_intent`, `load_schema`, `retrieve_golden_examples`, `generate_sql`, `validate_sql`, `execute_sql`, `repair_sql`, `sanitize_results`, `generate_report`, `finalize_response`.
-- Conditional routes for unsupported intent, schema lookup, and repair loop.
-- Compiled with `InMemorySaver` (checkpointer) and `InMemoryStore` for LangGraph-native memory wiring in prototype scope.
+- Nodes: `classify_intent`, `reject_or_route`, `apply_instruction_update`, `load_schema`, `generate_schema_response`, `retrieve_golden_examples`, `generate_sql`, `validate_sql`, `execute_sql`, `repair_sql`, `sanitize_results`, `generate_report`, `finalize_response`.
+- Conditional routes for unsupported intent, destructive operations, system instruction updates, and schema lookup.
+- Compiled with `InMemorySaver` (checkpointer) and `InMemoryStore` for persistence within a thread context.
 
 3. Guardrail Layer (`src/safety/guardrails.py`)
 - Keeps conversation within retail analytics boundaries (analysis/schema/admin-destructive).
@@ -39,8 +39,8 @@
 - Prototype uses simple retrieval; production path is designed for `>10K` examples.
 
 6. LLM Layer (`src/llm/client.py`)
-- Gemini via LangChain for SQL generation, SQL repair, and executive reporting.
-- Has deterministic heuristic fallback when model key is unavailable.
+- Gemini via LangChain for logic; supports local Ollama fallback.
+- Facilitates `instruction_update` flow where users can modify assistant behavior (e.g., tone, depth) at runtime.
 
 7. SQL Safety Layer (`src/tools/sql_validator.py`)
 - Enforces SELECT-only.
@@ -68,8 +68,12 @@
 - `thread_id` is passed via invoke config (`configurable.thread_id`) to isolate conversation state per user session.
 - Checkpointer/store are in-memory for prototype; production would replace with durable backing stores.
 
-12. Observability (`src/observability/logger.py`)
-- JSON logs containing request_id, question, SQL, retries, row_count, errors, status.
+12. Observability System (`src/observability/*`)
+- **Tracer**: Records fine-grained timing and input/outputs for every workflow node.
+- **QualityEvaluator**: Automates assessment of SQL correctness, persona alignment, and report groundedness.
+- **SecurityObserver**: Monitors for prompt injections and ensures PII sanitization is applied before logging.
+- **VersionRegistry**: Captures snapshots of model versions and prompts to ensure experiment reproducibility.
+- **Exporter**: Serializes session data to `outputs/observability_*.json` for audit and review.
 
 ## End-to-End Sequence
 1. CLI receives question and creates initial state.
@@ -87,7 +91,9 @@
    - if execution fails -> repair SQL and retry (bounded)
    - sanitize results for PII
    - generate report with persona + user preference
-8. Finalize with safe output and logs.
+9. For instruction updates:
+   - modify systemic assistant instructions based on user prompt (e.g., "be more formal").
+8. Finalize with safe output, observability export, and audit logs.
 
 ## Error Handling Model
 - SQL validation errors: immediate safe failure (no execution).
