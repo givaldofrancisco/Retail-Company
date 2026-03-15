@@ -32,7 +32,9 @@ def test_sanitize_dataframe_removes_sensitive_columns_and_masks_text():
     )
 
     result = masker.sanitize_dataframe(df)
-
+    print("sanitize_dataframe -> removed_columns:", result.removed_columns)
+    print("sanitize_dataframe -> remaining", list(result.dataframe.columns))
+    print("sanitize_dataframe -> note:", result.dataframe.iloc[0]["note"])
     assert "email" in result.removed_columns
     assert "phone_number" in result.removed_columns
     assert "email" not in result.dataframe.columns
@@ -46,6 +48,8 @@ def test_mask_text_masks_phone_and_email():
     masker = PIIMasker()
     text = "Contact me at jane@company.com or +1 (202) 555-0199"
     masked = masker.mask_text(text)
+    print("mask_text -> input:", text)
+    print("mask_text -> output:", masked)
     assert "jane@company.com" not in masked
     assert "555" not in masked
     assert "[REDACTED_EMAIL]" in masked

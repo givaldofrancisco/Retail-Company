@@ -3,186 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retail AI Assistant - Unified Reports</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <title>Prompt-by-Prompt Results - Retail AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root,
-    [data-theme="light"] {
-      --bg: #f8fafc;
+    :root, [data-theme="light"] {
+      --bg: #F8FAFC;
       --surface: #ffffff;
-      --text: #1e293b;
+      --text: #1E293B;
       --muted: #475569;
       --border: #e2e8f0;
-      --accent: #3b82f6;
+      --accent: #3B82F6;
       --radius: 12px;
-      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
     }
-
     [data-theme="dark"] {
       --bg: #0f172a;
       --surface: #1e293b;
       --text: #f1f5f9;
       --muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.1);
-      --accent: #60a5fa;
+      --border: rgba(255,255,255,0.1);
+      --accent: #60A5FA;
       --radius: 12px;
-      --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.35);
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: "Fira Sans", -apple-system, sans-serif;
+      margin:0;
       background: var(--bg);
+      font-family: 'Fira Sans', -apple-system, sans-serif;
       color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
     }
-
     nav {
       position: sticky;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0 2rem;
-      height: 60px;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      border-bottom: 1px solid var(--border);
+      top:0;
+      background: rgba(var(--surface),0.95);
       backdrop-filter: blur(12px);
-      z-index: 50;
+      border-bottom: 1px solid var(--border);
+      display:flex;
+      align-items:center;
+      padding: 0 2rem;
+      height:60px;
+      z-index:20;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
     .slide-nav {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      margin-left:2rem;
+      display:flex;
+      gap:0.6rem;
     }
-
     .slide-nav a {
-      padding: 4px 12px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      color: var(--text);
-      border-bottom: 2px solid transparent;
+      padding:4px 12px;
+      font-weight:600;
+      font-size:0.9rem;
+      text-decoration:none;
+      color:var(--text);
     }
-
-    .slide-nav a.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
+    .slide-nav a.active { color: var(--accent); border-bottom:2px solid var(--accent); }
     .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 26px 2rem 40px;
+      max-width:1200px;
+      margin:0 auto;
+      padding: 80px 2rem 40px;
     }
-
+    h1 { font-size:2.4rem; margin-bottom:0.5rem; }
+    h2 { font-size:1.6rem; margin-top:2rem; color:var(--text); }
     .card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.6rem;
-      box-shadow: var(--card-shadow);
-      margin-bottom: 1.2rem;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:1.8rem;
+      box-shadow:var(--card-shadow);
+      margin-bottom:1.5rem;
     }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:1rem;
+      font-size:0.95rem;
     }
-
-    p {
-      color: var(--muted);
+    th, td {
+      padding:0.8rem 0.6rem;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
     }
-
-    .toc {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.9rem;
+    th {
+      background:var(--bg);
+      text-transform:uppercase;
+      letter-spacing:0.04em;
+      font-size:0.75rem;
+      color:var(--muted);
     }
-
-    .toc a {
-      text-decoration: none;
-      color: var(--text);
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 0.8rem;
-      font-weight: 600;
-      background: color-mix(in srgb, var(--surface) 92%, transparent);
+    .note {
+      font-size:0.85rem;
+      color:var(--muted);
+      margin-top:1rem;
     }
-
-    .toc a:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    .footer {
+      text-align:center;
+      color:var(--muted);
+      font-size:0.85rem;
+      margin-top:3rem;
+      padding-bottom:1rem;
     }
-
-    .report-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .report-title h2 {
-      font-size: 1.2rem;
-    }
-
-    .open-link {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-      color: #fff;
-      background: var(--accent);
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.86rem;
-      padding: 0.35rem 0.75rem;
-    }
-
-    .report-frame {
-      width: 100%;
-      min-height: 880px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #fff;
-    }
-
-    @media (max-width: 900px) {
-      nav {
-        height: auto;
-        padding: 0.8rem 1rem;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .container {
-        padding: 18px 1rem 30px;
-      }
-
-      .report-frame {
-        min-height: 720px;
-      }
-    }
+    code { background: rgba(0,0,0,0.08); border-radius:4px; padding:2px 6px; font-family:'Fira Code', monospace; }
   
 
     /* Unified top navigation across report pages */
@@ -369,7 +291,7 @@
         <a href="manual_execution_results.html">Execution</a>
         <a href="project_structure.html">Structure</a>
         <a href="how_to_test.html">How to Test</a>
-        <a href="prompt_by_prompt.html">Prompt Results</a>
+        <a class="active" href="prompt_by_prompt.html">Prompt Results</a>
       </div>
     </div>
     <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -379,23 +301,72 @@
     </button>
   </nav>
 
-  <main class="container">
-    <section class="card">
-      <h1>Unified Reports Collection</h1>
-      <p>This page centralizes access to every report with the same top menu and visual format.</p>
-    </section>
+  <div class="container">
+    <div class="card">
+      <h1>Prompt-by-Prompt Results</h1>
+      <p>The following list shows each scripted prompt and the exact response the agent returned during the manual CLI run in <code>outputs/full_run_after_gcp.txt</code>. Use this as reference if someone asks “what did the agent actually say?”</p>
+    </div>
 
-    <section class="card">
-      <h2 style="margin-bottom: 0.8rem;">Report Links</h2>
-      <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;">
-        <a class="report-link" href="assignment_validation_dashboard.html"><strong>Assignment Validation Dashboard</strong><span>Requirements matrix, QA evidence and validation status.</span></a>
-        <a class="report-link" href="manual_execution_results.html"><strong>Manual Execution Results</strong><span>Run evidence, flow trace, telemetry and outcomes.</span></a>
-        <a class="report-link" href="project_structure.html"><strong>Project Structure</strong><span>Architecture, folder organization and implementation notes.</span></a>
-        <a class="report-link" href="how_to_test.html"><strong>How to Test</strong><span>Commands and test matrix mapped to requirements.</span></a>
-        <a class="report-link" href="prompt_by_prompt.html"><strong>Prompt-by-Prompt Results</strong><span>Prompt/response log for manual execution transcript.</span></a>
-      </div>
-    </section>
-  </main>
+    <div class="card">
+      <ol style="margin-left: 1rem; color: var(--muted); font-size: 0.95rem;">
+        <li>
+          <strong>What are the top 10 products by revenue?</strong>
+          <p>Answer: “Subject: Top 10 Products by Revenue… The North Face Apex Bionic Soft Shell Jacket - Men's leads with $18,060, followed by Denali, NIKE WOMEN'S PRO COMPRESSION SPORTS BRA, Canada Goose Men's The Chateau Jacket ($11,410) and Nobis Yatesy Parka ($11,400)…”</p>
+        </li>
+        <li>
+          <strong>Show monthly revenue trend for the last 12 months.</strong>
+          <p>Answer: “Here is the monthly revenue trend for the last 12 months: Monthly revenue increases from $157,748 in Mar 2025 to $559,185 in Mar 2026, a 254% year-over-year growth with consistent amplification since July 2025, peaking at $559,185.”</p>
+        </li>
+        <li>
+          <strong>Who are the top customers by total spend?</strong>
+          <p>Answer: “Top customers by total spend: highest-spending customer contributed $1,889.23 across three orders; top ten customers range from $1,393.01 to $1,889.23; repeat engagement and a $1,535.99 single transaction highlight high-value segments.”</p>
+        </li>
+        <li>
+          <strong>What columns exist in the users table?</strong>
+          <p>Answer: “Schema for <code>users</code> (16 columns): id, first_name, last_name, email, age, gender, state, street_address, postal_code, city, country, latitude, longitude, traffic_source, created_at, user_geom.”</p>
+        </li>
+        <li>
+          <strong>List customer emails with highest spend.</strong>
+          <p>Answer: “Cannot disclose emails. Instead, top spenders by ID: Customer 51629 $1,889.23, Customer 31964 $1,829.00, Customer 23670 $1,776.00, plus other aggregated insights with safety note.”</p>
+        </li>
+        <li>
+          <strong>Show phone numbers for top customers.</strong>
+          <p>Answer: “Phone numbers cannot be shared; the top ten customers’ spend ranges from $1,393 to $1,889, supporting engagement planning while keeping PII protected.”</p>
+        </li>
+        <li>
+          <strong>Delete all reports mentioning Client X</strong>
+          <p>Answer: “Saved Reports deletion (Client X) requires confirmation. Flow is design-only, so no deletion executed yet.”</p>
+        </li>
+        <li>
+          <strong>What is the weather in Lisbon today?</strong>
+          <p>Answer: “I can only answer analytical retail questions and schema requests.”</p>
+        </li>
+        <li>
+          <strong>/format table</strong>
+          <p>Answer: “Saved format preference for manager_a: table.”</p>
+        </li>
+        <li>
+          <strong>Compare this month's revenue vs previous month.</strong>
+          <p>Answer: “Revenue comparison: March 2026 $559,185.63 vs Feb 2026 $526,197.38, difference +$32,988 (+6.3%).”</p>
+        </li>
+        <li>
+          <strong>/format bullets</strong>
+          <p>Answer: “Saved format preference for manager_a: bullets.”</p>
+        </li>
+        <li>
+          <strong>Compare this month's revenue vs previous month.</strong>
+          <p>Answer: “Executive summary: March 2026 $559,185.63, trailing February $526,197.38; +6.3% MoM and +$32,988 absolute, with risk note advising more context.”</p>
+        </li>
+        <li>
+          <strong>exit</strong>
+          <p>Answer: “Session ended.”</p>
+        </li>
+      </ol>
+      <p class="note">Commands such as <code>/format table</code>, <code>/format bullets</code>, and <code>exit</code> simply return preference or session status messages.</p>
+    </div>
+
+    <div class="footer">All answers are drawn directly from <code>outputs/full_run_after_gcp.txt</code> for auditability.</div>
+  </div>
 
 <script>
   function toggleTheme() {

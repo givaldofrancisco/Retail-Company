@@ -327,5 +327,104 @@
     ],
     "created_at": 1773525438,
     "status": "pending"
+  },
+  {
+    "id": "cand-1773527042271",
+    "signature": "623c0152e7d11f93",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o\n    ON\n        oi.order_id = o.order_id\n    WHERE\n        DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)\n    GROUP BY\n        month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY\n    month LIMIT 200",
+    "report": "Revenue increased significantly month-over-month, indicating positive growth momentum.\n\n| Period    | Revenue      | MoM Change   | MoM % Change |\n| :-------- | :----------- | :----------- | :----------- |\n| 2026-02   | $519,498.64  | -            | -            |\n| 2026-03   | $609,689.88  | +$90,191.24  | +17.36%      |\n\n**Risk Note:**\nWhile positive, this analysis is based on a short-term trend. Sustained growth requires further monitoring and understanding of underlying drivers.\n\n**Next Actions:**\n*   Investigate the factors contributing to the revenue increase in March 2026.\n*   Analyze customer acquisition and retention metrics for the same period.\n*   Project Q2 revenue based on current trends and planned initiatives.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2026-01 | 283138.77 |\n| 2026-02 | 519498.64 |\n| 2026-03 | 609689.88 |",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773527042,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773527067468",
+    "signature": "f1dc44c9587048a2",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` o\n        ON oi.order_id = o.order_id\n    WHERE DATE(o.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)\n    GROUP BY month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY month LIMIT 200",
+    "report": "**Revenue Performance: Month-over-Month Comparison**\n\n*   Revenue for March 2026 reached $609,689.88.\n*   Revenue for February 2026 was $519,498.64.\n*   Month-over-month revenue increased by $90,191.24, representing a 17.36% growth.\n\n**Risk Note:**\nSustained growth is subject to market dynamics and operational efficiency.\n\n**Next Actions:**\n*   Investigate key drivers behind the revenue increase, such as sales volume or average transaction value.\n*   Assess the impact of recent initiatives or market changes on this performance.\n*   Develop strategies to maintain positive momentum into the next period.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773527067,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773527679715",
+    "signature": "1ccd40b1437b52f8",
+    "question": "Who are the top customers by total spend?",
+    "sql": "SELECT\n    t1.id AS customer_id,\n    ROUND(SUM(t2.sale_price), 2) AS total_spend\n  FROM `bigquery-public-data.thelook_ecommerce.users` AS t1\n    INNER JOIN `bigquery-public-data.thelook_ecommerce.order_items` AS t2 ON t1.id = t2.user_id\n  GROUP BY\n    customer_id\n  ORDER BY\n    total_spend DESC\n  LIMIT 10",
+    "report": "**Top Customers by Total Spend**\n\nAnalysis of customer spend data reveals a concentrated group of high-value customers.\n\n*   The top customer (ID 6305) recorded a total spend of $1,627.91.\n*   The top 10 customers collectively spent $14,564.73.\n*   Individual spend among these top customers ranges from $1,421.02 to $1,627.91.\n*   These customers represent a significant portion of high-value transactions, indicating strong engagement.\n\n**Risk Note:**\nOver-reliance on a small segment of high-spending customers can create revenue vulnerability if their purchasing behavior changes or they churn.\n\n**Next Actions:**\n*   Develop targeted retention strategies and loyalty programs for these high-value customers.\n*   Analyze purchasing patterns of these top customers to identify opportunities for personalized offers or product recommendations.\n*   Monitor engagement levels to proactively address potential churn risks.\n\nTop results (preview):\n| customer_id | total_spend |\n| --- | --- |\n| 6305 | 1627.91 |\n| 48690 | 1600.07 |\n| 97674 | 1532.97 |\n| 83099 | 1493.7 |\n| 44992 | 1465.41 |\n| 3247 | 1463.04 |\n| 43157 | 1459.93 |\n| 54669 | 1456.11 |\n| 25627 | 1444.57 |\n| 65439 | 1421.02 |",
+    "tags": [
+      "customers",
+      "total",
+      "spend"
+    ],
+    "created_at": 1773527679,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773527704906",
+    "signature": "e32d08b15034996a",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o\n        ON oi.order_id = o.order_id\n    WHERE\n        DATE(o.created_at) >= DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)\n        AND DATE(o.created_at) < DATE_TRUNC(DATE_ADD(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)\n    GROUP BY\n        month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY\n    month LIMIT 200",
+    "report": "Revenue increased significantly this month compared to the previous month, indicating positive momentum.\n\n| Metric        | Previous Month (2026-02) | Current Month (2026-03) | Change      | % Change |\n|---------------|--------------------------|-------------------------|-------------|----------|\n| Total Revenue | $519,498.64              | $609,689.88             | $90,191.24  | 17.36%   |\n\n**Risk Note:**\nSustaining this growth requires understanding the underlying drivers and market conditions.\n\n**Next Actions:**\n*   Analyze specific product categories or sales channels contributing to the revenue increase.\n*   Forecast next month's revenue based on current trends and planned initiatives.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2026-02 | 519498.64 |\n| 2026-03 | 609689.88 |",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773527704,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773527730289",
+    "signature": "6a95e0c93d6252cb",
+    "question": "Compare this month's revenue vs previous month.",
+    "sql": "WITH monthly AS (\n    SELECT\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) AS month,\n        SUM(oi.sale_price) AS revenue\n    FROM `bigquery-public-data.thelook_ecommerce.order_items` oi\n    JOIN `bigquery-public-data.thelook_ecommerce.orders` o\n        ON oi.order_id = o.order_id\n    WHERE\n        FORMAT_DATE('%Y-%m', DATE(o.created_at)) = FORMAT_DATE('%Y-%m', CURRENT_DATE())\n        OR FORMAT_DATE('%Y-%m', DATE(o.created_at)) = FORMAT_DATE('%Y-%m', DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))\n    GROUP BY\n        month\n)\nSELECT\n    month,\n    ROUND(revenue, 2) AS revenue\nFROM monthly\nORDER BY\n    month LIMIT 200",
+    "report": "**Revenue Performance: March 2026 vs. February 2026**\n\n*   Revenue for March 2026 reached $609,689.88.\n*   Revenue for February 2026 was $519,498.64.\n*   Month-over-month revenue increased by $90,191.24.\n*   This represents a 17.36% growth from February to March 2026.\n\n**Risk Note:**\nSustaining this growth requires continued market alignment and operational effectiveness.\n\n**Next Actions:**\n*   Analyze specific factors contributing to the March revenue increase to inform future strategies.\n*   Monitor early April revenue data to assess the continuation of this positive trend.\n\nMonth-over-month comparison: 2026-03 vs 2026-02. Revenue increase of 90191.24 (17.36%).",
+    "tags": [
+      "compare",
+      "this",
+      "months",
+      "revenue",
+      "previous",
+      "month"
+    ],
+    "created_at": 1773527730,
+    "status": "pending"
+  },
+  {
+    "id": "cand-1773530615740",
+    "signature": "7481a499032407db",
+    "question": "Show monthly revenue trend for the last 12 months.",
+    "sql": "SELECT\n    FORMAT_DATE('%Y-%m', DATE(t1.created_at)) AS month,\n    ROUND(SUM(t1.sale_price), 2) AS revenue\n  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS t1\n  WHERE\n    DATE(t1.created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)\n  GROUP BY\n    month\n  ORDER BY\n    month LIMIT 200",
+    "report": "**Revenue Trend: Last 12 Months**\n\nMonthly revenue has shown a strong upward trend over the last 12 months, more than doubling from April 2025 to March 2026.\n\n| Month | Revenue |\n| :------ | :------------ |\n| 2025-04 | $249,159.05 |\n| 2025-05 | $267,879.87 |\n| 2025-06 | $270,234.13 |\n| 2025-07 | $299,124.04 |\n| 2025-08 | $321,755.26 |\n| 2025-09 | $318,980.47 |\n| 2025-10 | $353,448.54 |\n| 2025-11 | $366,962.60 |\n| 2025-12 | $421,682.70 |\n| 2026-01 | $474,431.49 |\n| 2026-02 | $518,129.27 |\n| 2026-03 | $627,283.64 |\n\n**Key Observations:**\n\n*   Revenue increased by over 150% from $249,159 in April 2025 to $627,283 in March 2026.\n*   The trend indicates consistent month-over-month growth, with minor fluctuations observed in September 2025.\n*   The highest revenue figures were recorded in the most recent quarter (December 2025 - March 2026), demonstrating strong recent performance.\n*   Average monthly revenue for the period was approximately $374,089.\n\n**Risk Note:**\nSustaining this high growth rate may become challenging as the revenue base expands. External market factors or increased competition could impact future performance.\n\n**Next Actions:**\n\n*   Analyze key drivers of recent revenue growth to identify scalable strategies.\n*   Monitor market conditions and competitive landscape for potential impacts on future trends.\n*   Develop updated revenue forecasts based on current performance to inform resource allocation.\n\nTop results (preview):\n| month | revenue |\n| --- | --- |\n| 2025-03 | 140484.48 |\n| 2025-04 | 249159.05 |\n| 2025-05 | 267879.87 |\n| 2025-06 | 270234.13 |\n| 2025-07 | 299124.04 |\n| 2025-08 | 321755.26 |\n| 2025-09 | 318980.47 |\n| 2025-10 | 353448.54 |\n| 2025-11 | 366962.6 |\n| 2025-12 | 421682.7 |",
+    "tags": [
+      "show",
+      "monthly",
+      "revenue",
+      "trend",
+      "last",
+      "months"
+    ],
+    "created_at": 1773530615,
+    "status": "pending"
   }
 ]

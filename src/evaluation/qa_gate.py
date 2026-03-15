@@ -107,7 +107,7 @@ def _build_eval_app(base: Path):
         ),
         bq_runner=_FakeBigQueryRunner(),
         pii_masker=PIIMasker(),
-        report_generator=ReportGenerator(llm=_FakeLLM(), persona_file=base / "config" / "personas" / "default.yaml"),
+        report_generator=ReportGenerator(llm=_FakeLLM(), personas_dir=base / "config" / "personas"),
         preference_store=UserPreferenceStore(base / "data" / "user_preferences.json"),
         report_store=ReportActionStore(
             reports_path=base / "data" / "saved_reports.json",

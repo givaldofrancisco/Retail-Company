@@ -259,5 +259,32 @@
     "created_at": 1773525404,
     "expires_at": 1773526004,
     "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-A886C9",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773527031,
+    "expires_at": 1773527631,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-943871",
+    "user_id": "qa_gate",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773527266,
+    "expires_at": 1773527866,
+    "raw_question": "Delete all reports mentioning Client X"
+  },
+  {
+    "token": "DEL-7E52AA",
+    "user_id": "manager_a",
+    "scope": "Client X",
+    "scope_hash": "a1996d7280fe",
+    "created_at": 1773527694,
+    "expires_at": 1773528294,
+    "raw_question": "Delete all reports mentioning Client X"
   }
 ]

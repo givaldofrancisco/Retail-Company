@@ -105,7 +105,7 @@ class FakeReportGenerator:
     def __init__(self):
         self.last_preference = None
 
-    def generate(self, question, rows, preference_format, golden_examples, removed_pii_columns):
+    def generate(self, question, rows, preference_format, golden_examples, removed_pii_columns, persona_id="default"):
         self.last_preference = preference_format
         return (
             f"Format={preference_format}; rows={len(rows)}; "
@@ -205,7 +205,7 @@ def test_assignment_analysis_only_rejects_non_analytical_questions(tmp_path):
     )
 
     assert result["final_status"] == "rejected"
-    assert "only answer analytical" in result["final_report"].lower()
+    assert "sorry, i can only help" in result["final_report"].lower()
     assert fake_bq.execute_calls == 0
     assert result.get("validated_sql", "") == ""
 
@@ -260,7 +260,7 @@ def test_assignment_compare_months_adds_comparison_note(tmp_path):
     from src.reporting.report_generator import ReportGenerator
     from src.llm.client import LLMClient
     nodes.report_generator = ReportGenerator(
-        llm=LLMClient(), persona_file=Path(__file__).resolve().parents[1] / "config" / "personas" / "default.yaml"
+        llm=LLMClient(), personas_dir=Path(__file__).resolve().parents[1] / "config" / "personas"
     )
 
     result = _invoke(

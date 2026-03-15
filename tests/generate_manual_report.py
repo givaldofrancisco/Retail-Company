@@ -31,7 +31,7 @@ def parse_transcript(transcript_path):
         prompt = lines[0].strip()
         
         # Look for debug info
-        debug_match = re.search(r"\[debug\]\nstatus=(.*?)\nretry_count=(\d+)\nelapsed_ms=(.*?)\nsql=((?:.|\n)*?)trace_id=(.*?)\n", block)
+        debug_match = re.search(r"\[debug\]\s*\nstatus=(.*?)\nretry_count=(\d+)\n(?:elapsed_ms=(.*?)\n)?sql=((?:.|\n)*?)trace_id=(.*?)\n", block)
         if debug_match:
             status = debug_match.group(1).strip()
             retries = debug_match.group(2).strip()

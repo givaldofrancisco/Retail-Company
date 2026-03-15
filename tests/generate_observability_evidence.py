@@ -55,7 +55,7 @@ def _pfw(ok: bool, warn: bool = False) -> str:
 
 def run_app() -> tuple[str, str, int]:
     cmd = [
-        sys.executable, str(project_root / "app.py"),
+        str(project_root / ".venv" / "bin" / "python"), str(project_root / "app.py"),
         "--user-id", "manager_a",
         "--debug",
         "--observability",
